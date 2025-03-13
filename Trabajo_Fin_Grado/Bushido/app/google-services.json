@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "191109621999",
+    "project_id": "bushido-4b190",
+    "storage_bucket": "bushido-4b190.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191109621999:android:71490e5ed84662828d531a",
+        "android_client_info": {
+          "package_name": "com.example.bushido"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "191109621999-cop6nr969qpbd6t141jd4poc4plfhj1u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bushido",
+            "certificate_hash": "ff475de054d0daa0ec3225d5ea236b2bc23020c0"
+          }
+        },
+        {
+          "client_id": "191109621999-tgq3ra2l80spknohkn8ncsctnluv69jj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASNyXeYWeG-HfIJmzc_u_Rzi9sBaKOPxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "191109621999-tgq3ra2l80spknohkn8ncsctnluv69jj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
