@@ -14,12 +14,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.bushido.databinding.ActivityMainBinding
 import android.content.Intent
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import com.example.bushido.ui.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import objetos.UserSession
 
 class MainActivity : AppCompatActivity() {
 
@@ -64,6 +65,14 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        val headerView = navView.getHeaderView(0)
+        val tvUsername = headerView.findViewById<TextView>(R.id.tvusername)
+        val tvEmail = headerView.findViewById<TextView>(R.id.tvemail)
+
+        // Asigna los valores de UserSession a los TextViews
+        tvUsername.text = UserSession.nombre ?: "Nombre no disponible"
+        tvEmail.text = UserSession.email ?: "Email no disponible"
     }
 
 
