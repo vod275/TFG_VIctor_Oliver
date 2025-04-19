@@ -1,4 +1,4 @@
-package com.example.bushido.ui.slideshow
+package com.example.bushido.ui.bolos
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.bushido.databinding.FragmentSlideshowBinding
+import com.example.bushido.databinding.FragmentBolosBinding
 
-class SlideshowFragment : Fragment() {
+class BolosFragment : Fragment() {
 
-    private var _binding: FragmentSlideshowBinding? = null
+    private var _binding: FragmentBolosBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,14 +22,14 @@ class SlideshowFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val slideshowViewModel =
-            ViewModelProvider(this).get(SlideshowViewModel::class.java)
+        val BolosViewModel =
+            ViewModelProvider(this).get(BolosViewModel::class.java)
 
-        _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
+        _binding = FragmentBolosBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textSlideshow
-        slideshowViewModel.text.observe(viewLifecycleOwner) {
+        val textView: TextView = binding.textBolos
+        BolosViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root

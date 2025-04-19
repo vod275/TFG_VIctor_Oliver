@@ -22,4 +22,7 @@
     <string name="bienvenido">Bienvenido</string>
     <string name="por_favor_inicia_sesi_n_o_reg_strate">Por favor, inicia sesión o regístrate</string>
     <string name="error_al_autenticar_con_google">Error al autenticar con Google</string>
+    <string name="inicio">Inicio</string>
+    <string name="padel_tenis">Padel/Tenis</string>
+    <string name="bolos">Bolos</string>
 </resources>

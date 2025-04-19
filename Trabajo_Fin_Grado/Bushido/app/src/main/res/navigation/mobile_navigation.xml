@@ -8,18 +8,24 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.example.bushido.ui.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:label="@string/inicio"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.bushido.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_perfil"
+        android:name="com.example.bushido.ui.perfil.PerfilFragment"
+        android:label="@string/perfil"
+        tools:layout="@layout/fragment_perfil" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.bushido.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_padel_tenis"
+        android:name="com.example.bushido.ui.padel_tenis.Padel_tenisFragment"
+        android:label="@string/padel_tenis"
+        tools:layout="@layout/fragment_padel_tenis" />
+
+    <fragment
+        android:id="@+id/nav_bolos"
+        android:name="com.example.bushido.ui.bolos.BolosFragment"
+        android:label="@string/bolos"
+        tools:layout="@layout/fragment_padel_tenis" />
 </navigation>
