@@ -72,34 +72,69 @@ class HomeFragment : Fragment() {
     }
 
     private fun guardarImagenEnGaleria() {
-        val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.quieressabermas)
-        val bitmap = (drawable as BitmapDrawable).bitmap
+        val storageRef = FirebaseStorage.getInstance().reference.child("FotosPrecioSocios")
 
-        val filename = "precios_socios_${System.currentTimeMillis()}.png"
-        val contentValues = ContentValues().apply {
-            put(MediaStore.Images.Media.DISPLAY_NAME, filename)
-            put(MediaStore.Images.Media.MIME_TYPE, "image/png")
-            put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/MiApp")
-            put(MediaStore.Images.Media.IS_PENDING, 1)
-        }
+        storageRef.listAll()
+            .addOnSuccessListener { result ->
+                if (result.items.isEmpty()) {
+                    Toast.makeText(requireContext(), "No hay imágenes para descargar", Toast.LENGTH_SHORT).show()
+                    return@addOnSuccessListener
+                }
 
-        val resolver = requireContext().contentResolver
-        val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-
-        uri?.let {
-            resolver.openOutputStream(it).use { outputStream ->
-                if (outputStream != null) {
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                result.items.forEach { item ->
+                    item.downloadUrl.addOnSuccessListener { uri ->
+                        descargarYGuardarImagen(uri.toString())
+                    }.addOnFailureListener { e ->
+                        Toast.makeText(requireContext(), "Error obteniendo URL: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
-            contentValues.clear()
-            contentValues.put(MediaStore.Images.Media.IS_PENDING, 0)
-            resolver.update(uri, contentValues, null, null)
-            Toast.makeText(requireContext(), "Imagen guardada en la galería", Toast.LENGTH_SHORT).show()
-        } ?: run {
-            Toast.makeText(requireContext(), "Error al guardar la imagen", Toast.LENGTH_SHORT).show()
-        }
+            .addOnFailureListener { e ->
+                Toast.makeText(requireContext(), "Error accediendo a Firebase: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
+
+
+
+    private fun descargarYGuardarImagen(url: String) {
+        Picasso.get().load(url).into(object : com.squareup.picasso.Target {
+            override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+                if (bitmap == null) return
+
+                val filename = "precios_socios_${System.currentTimeMillis()}.png"
+                val contentValues = ContentValues().apply {
+                    put(MediaStore.Images.Media.DISPLAY_NAME, filename)
+                    put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+                    put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/MiApp")
+                    put(MediaStore.Images.Media.IS_PENDING, 1)
+                }
+
+                val resolver = requireContext().contentResolver
+                val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+                uri?.let {
+                    resolver.openOutputStream(it).use { outputStream ->
+                        if (outputStream != null) {
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                        }
+                    }
+                    contentValues.clear()
+                    contentValues.put(MediaStore.Images.Media.IS_PENDING, 0)
+                    resolver.update(uri, contentValues, null, null)
+                    Toast.makeText(requireContext(), "Imagen guardada: $filename", Toast.LENGTH_SHORT).show()
+                } ?: run {
+                    Toast.makeText(requireContext(), "Error al guardar imagen", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onBitmapFailed(e: java.lang.Exception?, errorDrawable: android.graphics.drawable.Drawable?) {
+                Toast.makeText(requireContext(), "Fallo al descargar imagen", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onPrepareLoad(placeHolderDrawable: android.graphics.drawable.Drawable?) {}
+        })
+    }
+
 
     private val handler = Handler(Looper.getMainLooper())
     private val storage = FirebaseStorage.getInstance()
