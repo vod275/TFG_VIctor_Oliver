@@ -26,13 +26,13 @@
             android:layout_width="143dp"
             android:layout_height="60dp"
             android:text="Entar"
-            android:textColor="@color/VerdeFont"
+            android:textColor="@color/AzulOscuro"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.669"
-            app:strokeColor="@color/VerdeFont" />
+            app:strokeColor="@color/AzulOscuro" />
 
 
         <Button
@@ -57,13 +57,13 @@
             android:layout_width="285dp"
             android:layout_height="86dp"
             android:hint="@string/contrase_a"
-            android:textColorHint="@color/VerdeFont"
+            android:textColorHint="@color/AzulOscuro"
             android:textStyle="bold"
-            app:boxStrokeColor="@color/VerdeFont"
-            app:cursorColor="@color/VerdeFont"
+            app:boxStrokeColor="@color/AzulOscuro"
+            app:cursorColor="@color/AzulOscuro"
             app:endIconMode="password_toggle"
-            app:endIconTint="@color/VerdeFont"
-            app:hintTextColor="@color/VerdeFont"
+            app:endIconTint="@color/AzulOscuro"
+            app:hintTextColor="@color/AzulOscuro"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -73,8 +73,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
                 android:inputType="textPassword"
-                android:textColor="@color/VerdeFont" />
+                android:textColor="@color/AzulOscuro" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -82,13 +83,13 @@
             android:layout_width="285dp"
             android:layout_height="86dp"
             android:hint="@string/email"
-            android:textColorHint="@color/VerdeFont"
+            android:textColorHint="@color/AzulOscuro"
             android:textStyle="bold"
-            app:boxStrokeColor="@color/VerdeFont"
-            app:cursorColor="@color/VerdeFont"
+            app:boxStrokeColor="@color/AzulOscuro"
+            app:cursorColor="@color/AzulOscuro"
             app:endIconMode="clear_text"
-            app:endIconTint="@color/VerdeFont"
-            app:hintTextColor="@color/VerdeFont"
+            app:endIconTint="@color/AzulOscuro"
+            app:hintTextColor="@color/AzulOscuro"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.518"
@@ -97,10 +98,13 @@
             app:layout_constraintVertical_bias="0.118">
 
             <com.google.android.material.textfield.TextInputEditText
+                style="@style/EditTextCustomStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/VerdeFont"
+                android:backgroundTint="@android:color/transparent"
+                android:textColor="@color/AzulOscuro"
                 android:textCursorDrawable="@drawable/custom_cursor" />
+
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

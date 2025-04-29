@@ -34,38 +34,34 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Asegúrate de que el binding no sea null
+        _binding?.let { binding ->
 
-        // Aplicar la animación cada 7 segundos
-        val handler = android.os.Handler()
-        val shakeRunnable = object : Runnable {
-            override fun run() {
-                val shake = AnimationUtils.loadAnimation(requireContext(), R.anim.descargar_anim)
-                binding.ibPrecioSocios.startAnimation(shake)
-                handler.postDelayed(this, 7000) // cada 7 segundos
+            // Aplicar la animación cada 7 segundos
+            val handler = android.os.Handler()
+            val shakeRunnable = object : Runnable {
+                override fun run() {
+                    val shake = AnimationUtils.loadAnimation(requireContext(), R.anim.descargar_anim)
+                    binding.ibPrecioSocios.startAnimation(shake)
+                    handler.postDelayed(this, 7000) // cada 7 segundos
+                }
+            }
+
+            handler.post(shakeRunnable)
+
+            val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.flecha_anim)
+            val scaleAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.agrandar_click)
+            binding.ibflecha.startAnimation(anim)
+
+            binding.ibPrecioSocios.setOnClickListener {
+                binding.ibPrecioSocios.startAnimation(scaleAnim)
+                guardarImagenEnGaleria()
+            }
+
+            binding.ibInfo.setOnClickListener {
+                binding.ibInfo.startAnimation(scaleAnim)
             }
         }
-
-        handler.post(shakeRunnable)
-
-
-        val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.flecha_anim)
-        val scaleAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.agrandar_click)
-        binding.ibflecha.startAnimation(anim)
-
-
-        binding.ibPrecioSocios.setOnClickListener {
-            binding.ibPrecioSocios.startAnimation(scaleAnim)
-            guardarImagenEnGaleria()
-        }
-
-        binding.ibInfo.setOnClickListener {
-            binding.ibInfo.startAnimation(scaleAnim)
-
-        }
-
-
-
-
     }
 
     private fun guardarImagenEnGaleria() {

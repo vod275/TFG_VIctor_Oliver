@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         val tvUsername = headerView.findViewById<TextView>(R.id.tvusername)
         val tvEmail = headerView.findViewById<TextView>(R.id.tvemail)
 
-        // Asigna los valores de UserSession a los TextViews
+
         tvUsername.text = UserSession.nombre ?: "Nombre no disponible"
         tvEmail.text = UserSession.email ?: "Email no disponible"
     }

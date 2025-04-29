@@ -4,4 +4,5 @@ object UserSession {
     var email: String? = null
     var nombre: String? = null
     var id: String? = null
+    var fechaCreacion: String? = null
 }
