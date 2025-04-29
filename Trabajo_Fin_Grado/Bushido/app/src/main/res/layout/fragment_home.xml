@@ -40,14 +40,6 @@
             app:layout_constraintVertical_bias="0.107"
             app:srcCompat="@drawable/iconinfo" />
 
-        <ImageView
-            android:id="@+id/imbQuieres"
-            android:layout_width="210dp"
-            android:layout_height="207dp"
-            android:src="@drawable/quieressabermas"
-            tools:layout_editor_absoluteX="-2dp"
-            tools:layout_editor_absoluteY="-1dp" />
-
         <ImageButton
             android:id="@+id/ibflecha"
             android:layout_width="95dp"
@@ -57,7 +49,6 @@
             android:src="@drawable/flecha"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.591"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.111" />
@@ -86,16 +77,37 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.86" />
 
+
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/hazteSocio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/russoone_regular"
+            android:shadowRadius="1"
             android:text="@string/hazte_socio"
+            android:textColor="#50c8ef"
+            android:textSize="32sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.759" />
+
+        <TextView
+            android:id="@+id/tvMasSobreNosotros"
+            android:layout_width="183dp"
+            android:layout_height="114dp"
+            android:fontFamily="@font/russoone_regular"
+            android:text="@string/quieres_saber_m_s_de_nosotros"
+            android:textColor="#50c8ef"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.075" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

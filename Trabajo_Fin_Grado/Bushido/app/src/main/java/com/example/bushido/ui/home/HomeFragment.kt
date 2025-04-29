@@ -42,6 +42,8 @@ class HomeFragment : Fragment() {
         binding.ibPrecioSocios.setOnClickListener {
             guardarImagenEnGaleria()
         }
+
+
     }
 
     private fun guardarImagenEnGaleria() {
