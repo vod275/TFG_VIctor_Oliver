@@ -2,29 +2,28 @@ package com.example.bushido.ui.home
 
 import android.content.ContentValues
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.os.Bundle
-import android.os.Environment
+import android.os.*
 import android.provider.MediaStore
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import android.os.Handler
-import android.os.Looper
-import android.view.animation.AlphaAnimation
+import com.example.bushido.databinding.FragmentHomeBinding
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
-import com.example.bushido.R
-import com.example.bushido.databinding.FragmentHomeBinding
-import android.view.animation.AnimationUtils
+import android.graphics.drawable.Drawable
+import com.squareup.picasso.Target
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private val handler = Handler(Looper.getMainLooper())
+    private val storage = FirebaseStorage.getInstance()
+    private var listaUrls = mutableListOf<String>()
+    private var indiceActual = 0
+    private var animacionVaivenRunnable: Runnable? = null
+    private var rotarRunnable: Runnable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,37 +37,34 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Asegúrate de que el binding no sea null
-        _binding?.let { binding ->
+        val animFlecha = AnimationUtils.loadAnimation(requireContext(), com.example.bushido.R.anim.flecha_anim)
+        val animClick = AnimationUtils.loadAnimation(requireContext(), com.example.bushido.R.anim.agrandar_click)
+        val animVaiven = AnimationUtils.loadAnimation(requireContext(), com.example.bushido.R.anim.descargar_anim)
 
-            // Aplicar la animación cada 7 segundos
-            val handler = android.os.Handler()
-            val shakeRunnable = object : Runnable {
-                override fun run() {
-                    val shake = AnimationUtils.loadAnimation(requireContext(), R.anim.descargar_anim)
-                    binding.ibPrecioSocios.startAnimation(shake)
-                    binding.ibInfo.startAnimation(shake)
-                    handler.postDelayed(this, 7000) // cada 7 segundos
-                }
-            }
+        binding.ibflecha.startAnimation(animFlecha)
 
-            handler.post(shakeRunnable)
+        // Animación de vaivén inicial
+        binding.ibInfo.startAnimation(animVaiven)
+        binding.ibPrecioSocios.startAnimation(animVaiven)
 
-            val anim = AnimationUtils.loadAnimation(requireContext(), R.anim.flecha_anim)
-            val scaleAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.agrandar_click)
-            binding.ibflecha.startAnimation(anim)
-
-            binding.ibPrecioSocios.setOnClickListener {
-                binding.ibPrecioSocios.startAnimation(scaleAnim)
-                guardarImagenEnGaleria()
-            }
-
-            binding.ibInfo.setOnClickListener {
-                binding.ibInfo.startAnimation(scaleAnim)
-            }
-
-            cargarImagenesRotativas()
+        binding.ibPrecioSocios.setOnClickListener {
+            binding.ibPrecioSocios.startAnimation(animClick)
+            guardarImagenEnGaleria()
         }
+
+        binding.ibInfo.setOnClickListener {
+            binding.ibInfo.startAnimation(animClick)
+        }
+
+        // Cargar imágenes rotativas y comenzar las animaciones al crear la vista
+        cargarImagenesRotativas()
+        iniciarAnimacionesVaiven()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        cargarImagenesRotativas()
+        iniciarAnimacionesVaiven()
     }
 
     private fun guardarImagenEnGaleria() {
@@ -76,30 +72,57 @@ class HomeFragment : Fragment() {
 
         storageRef.listAll()
             .addOnSuccessListener { result ->
-                if (result.items.isEmpty()) {
-                    Toast.makeText(requireContext(), "No hay imágenes para descargar", Toast.LENGTH_SHORT).show()
+                val items = result.items
+                if (items.isEmpty()) {
+                    if (isAdded) Toast.makeText(requireContext(), "No hay imágenes para descargar", Toast.LENGTH_SHORT).show()
                     return@addOnSuccessListener
                 }
 
-                result.items.forEach { item ->
+                var descargadas = 0
+                val total = items.size
+
+                items.forEach { item ->
                     item.downloadUrl.addOnSuccessListener { uri ->
-                        descargarYGuardarImagen(uri.toString())
-                    }.addOnFailureListener { e ->
-                        Toast.makeText(requireContext(), "Error obteniendo URL: ${e.message}", Toast.LENGTH_SHORT).show()
+                        descargarYGuardarImagen(uri.toString()) {
+                            descargadas++
+                            if (descargadas == total && isAdded) {
+                                Toast.makeText(requireContext(), "Se han guardado $descargadas imágenes", Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    }.addOnFailureListener {
+                        if (isAdded) Toast.makeText(requireContext(), "Error obteniendo URL de ${item.name}", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
             .addOnFailureListener { e ->
-                Toast.makeText(requireContext(), "Error accediendo a Firebase: ${e.message}", Toast.LENGTH_SHORT).show()
+                if (isAdded) Toast.makeText(requireContext(), "Error accediendo a Firebase: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 
+    private fun iniciarAnimacionesVaiven() {
+        val animVaiven = AnimationUtils.loadAnimation(requireContext(), com.example.bushido.R.anim.descargar_anim)
 
+        animacionVaivenRunnable = object : Runnable {
+            override fun run() {
+                if (!isAdded || _binding == null) return
 
-    private fun descargarYGuardarImagen(url: String) {
-        Picasso.get().load(url).into(object : com.squareup.picasso.Target {
+                binding.ibInfo.startAnimation(animVaiven)
+                binding.ibPrecioSocios.startAnimation(animVaiven)
+
+                handler.postDelayed(this, 7000)
+            }
+        }
+
+        handler.post(animacionVaivenRunnable!!)
+    }
+
+    private fun descargarYGuardarImagen(url: String, onImagenGuardada: () -> Unit) {
+        Picasso.get().load(url).into(object : Target {
             override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
-                if (bitmap == null) return
+                if (bitmap == null) {
+                    onImagenGuardada()
+                    return
+                }
 
                 val filename = "precios_socios_${System.currentTimeMillis()}.png"
                 val contentValues = ContentValues().apply {
@@ -114,95 +137,85 @@ class HomeFragment : Fragment() {
 
                 uri?.let {
                     resolver.openOutputStream(it).use { outputStream ->
-                        if (outputStream != null) {
-                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-                        }
+                        outputStream?.let { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
                     }
                     contentValues.clear()
                     contentValues.put(MediaStore.Images.Media.IS_PENDING, 0)
                     resolver.update(uri, contentValues, null, null)
-                    Toast.makeText(requireContext(), "Imagen guardada: $filename", Toast.LENGTH_SHORT).show()
-                } ?: run {
-                    Toast.makeText(requireContext(), "Error al guardar imagen", Toast.LENGTH_SHORT).show()
                 }
+
+                onImagenGuardada()
             }
 
-            override fun onBitmapFailed(e: java.lang.Exception?, errorDrawable: android.graphics.drawable.Drawable?) {
-                Toast.makeText(requireContext(), "Fallo al descargar imagen", Toast.LENGTH_SHORT).show()
+            override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+                onImagenGuardada()
             }
 
-            override fun onPrepareLoad(placeHolderDrawable: android.graphics.drawable.Drawable?) {}
+            override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
         })
     }
-
-
-    private val handler = Handler(Looper.getMainLooper())
-    private val storage = FirebaseStorage.getInstance()
-    private var listaUrls = mutableListOf<String>()
-    private var indiceActual = 0
 
     private fun cargarImagenesRotativas() {
         val storageRef = storage.reference.child("FotosHome")
         storageRef.listAll().addOnSuccessListener { result ->
             if (result.items.isEmpty()) {
-                Toast.makeText(requireContext(), "No hay imágenes en FotosHome", Toast.LENGTH_SHORT).show()
+                if (isAdded) Toast.makeText(requireContext(), "No hay imágenes en FotosHome", Toast.LENGTH_SHORT).show()
             }
-            result.items.forEachIndexed { index, item ->
-                item.downloadUrl
-                    .addOnSuccessListener { uri ->
-                        listaUrls.add(uri.toString())
-
-                        // Mostrar la primera imagen apenas esté lista
-                        if (listaUrls.size == 1) {
-                            Picasso.get().load(listaUrls[0]).into(binding.ivHome)
-                        }
-
-                        // Iniciar rotación cuando todas las URLs estén listas
-                        if (listaUrls.size == result.items.size) {
-                            rotarImagenes()
-                        }
+            result.items.forEach { item ->
+                item.downloadUrl.addOnSuccessListener { uri ->
+                    listaUrls.add(uri.toString())
+                    if (listaUrls.size == 1 && isAdded) {
+                        Picasso.get().load(listaUrls[0]).into(binding.ivHome)
                     }
-                    .addOnFailureListener { e ->
-                        Toast.makeText(requireContext(), "Error al obtener URL: ${e.message}", Toast.LENGTH_SHORT).show()
+                    if (listaUrls.size == result.items.size) {
+                        iniciarRotacion()
                     }
+                }.addOnFailureListener { e ->
+                    if (isAdded) Toast.makeText(requireContext(), "Error al obtener URL: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
             }
         }.addOnFailureListener { e ->
-            Toast.makeText(requireContext(), "Fallo en listAll(): ${e.message}", Toast.LENGTH_LONG).show()
-            e.printStackTrace()
+            if (isAdded) Toast.makeText(requireContext(), "Fallo en listAll(): ${e.message}", Toast.LENGTH_LONG).show()
         }
     }
 
-    private fun rotarImagenes() {
-        if (listaUrls.isEmpty()) return
+    private fun iniciarRotacion() {
+        val slideOut = AnimationUtils.loadAnimation(requireContext(), com.example.bushido.R.anim.moverfotoizq)
+        val slideIn = AnimationUtils.loadAnimation(requireContext(), com.example.bushido.R.anim.moverfotoder)
 
-        val slideOut = AnimationUtils.loadAnimation(requireContext(), R.anim.moverfotoizq)
-        val slideIn = AnimationUtils.loadAnimation(requireContext(), R.anim.moverfotoder)
-
-        handler.postDelayed(object : Runnable {
+        rotarRunnable = object : Runnable {
             override fun run() {
-                // Animación de salida
+                if (!isAdded || _binding == null) return
+
                 binding.ivHome.startAnimation(slideOut)
 
-                slideOut.setAnimationListener(object : android.view.animation.Animation.AnimationListener {
-                    override fun onAnimationStart(animation: android.view.animation.Animation?) {}
+                // Esperamos el tiempo de la animación (ajusta si tu animación dura diferente)
+                handler.postDelayed({
+                    if (!isAdded || _binding == null) return@postDelayed
 
-                    override fun onAnimationEnd(animation: android.view.animation.Animation?) {
-                        // Cambiar imagen y aplicar animación de entrada
-                        Picasso.get().load(listaUrls[indiceActual]).into(binding.ivHome)
-                        binding.ivHome.startAnimation(slideIn)
-                    }
+                    // Cambiamos la imagen
+                    Picasso.get().load(listaUrls[indiceActual]).into(binding.ivHome)
 
-                    override fun onAnimationRepeat(animation: android.view.animation.Animation?) {}
-                })
+                    // Lanzamos animación de entrada
+                    binding.ivHome.startAnimation(slideIn)
 
-                indiceActual = (indiceActual + 1) % listaUrls.size
-                handler.postDelayed(this, 7000)
+                    // Avanzamos al siguiente índice
+                    indiceActual = (indiceActual + 1) % listaUrls.size
+
+                    // Programamos la próxima rotación
+                    handler.postDelayed(this, 7000)
+
+                }, slideOut.duration)
             }
-        }, 7000)
+        }
+
+        handler.post(rotarRunnable!!)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        animacionVaivenRunnable?.let { handler.removeCallbacks(it) }
+        rotarRunnable?.let { handler.removeCallbacks(it) }
         _binding = null
     }
 }

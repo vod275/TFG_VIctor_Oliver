@@ -28,4 +28,8 @@
     <string name="precios">precios</string>
     <string name="hazte_socio">¡HAZTE SOCIO!</string>
     <string name="quieres_saber_m_s_de_nosotros">¿QUIERES SABER MÁS DE NOSOTROS?</string>
+    <string name="nombre">nombre</string>
+    <string name="apelidos">apelidos</string>
+    <string name="fecha_de_nacimiento">fecha de nacimiento</string>
+    <string name="introduce_tu_fecha_de_nacimiento">Introduce tu fecha de nacimiento</string>
 </resources>
