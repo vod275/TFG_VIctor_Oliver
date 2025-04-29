@@ -26,6 +26,78 @@
         android:background="#C4FFFFFF"
         tools:layout_editor_absoluteY="-1dp">
 
+        <ImageButton
+            android:id="@+id/ibInfo"
+            android:layout_width="57dp"
+            android:layout_height="58dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.923"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.107"
+            app:srcCompat="@drawable/iconinfo" />
+
+        <ImageView
+            android:id="@+id/imbQuieres"
+            android:layout_width="210dp"
+            android:layout_height="207dp"
+            android:src="@drawable/quieressabermas"
+            tools:layout_editor_absoluteX="-2dp"
+            tools:layout_editor_absoluteY="-1dp" />
+
+        <ImageButton
+            android:id="@+id/ibflecha"
+            android:layout_width="95dp"
+            android:layout_height="54dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/flecha"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.591"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.111" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="433dp"
+            android:layout_height="467dp"
+            android:src="@drawable/padel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.445" />
+
+        <ImageButton
+            android:id="@+id/ibPrecioSocios"
+            android:layout_width="95dp"
+            android:layout_height="54dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/descargar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.86" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hazte_socio"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.759" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
