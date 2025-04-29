@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+
 import com.example.bushido.databinding.FragmentBolosBinding
 
 class BolosFragment : Fragment() {
@@ -21,6 +21,8 @@ class BolosFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
+
+
     ): View {
         val BolosViewModel =
             ViewModelProvider(this).get(BolosViewModel::class.java)
@@ -28,12 +30,17 @@ class BolosFragment : Fragment() {
         _binding = FragmentBolosBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textBolos
-        BolosViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+
+
+        binding.buttonPrueba.setOnClickListener {
+            //findNavController().navigate(R.id.nav_bolosInfo)
         }
+
+
         return root
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

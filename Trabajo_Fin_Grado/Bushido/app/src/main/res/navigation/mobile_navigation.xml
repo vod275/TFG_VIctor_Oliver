@@ -11,6 +11,7 @@
         android:label="@string/inicio"
         tools:layout="@layout/fragment_home" />
 
+
     <fragment
         android:id="@+id/nav_perfil"
         android:name="com.example.bushido.ui.perfil.PerfilFragment"
@@ -27,5 +28,7 @@
         android:id="@+id/nav_bolos"
         android:name="com.example.bushido.ui.bolos.BolosFragment"
         android:label="@string/bolos"
-        tools:layout="@layout/fragment_padel_tenis" />
+        tools:layout="@layout/fragment_bolos" />
+
+
 </navigation>
