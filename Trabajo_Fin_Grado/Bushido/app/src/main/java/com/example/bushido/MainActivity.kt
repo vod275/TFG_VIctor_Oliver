@@ -67,11 +67,10 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         val headerView = navView.getHeaderView(0)
-        val tvUsername = headerView.findViewById<TextView>(R.id.tvusername)
         val tvEmail = headerView.findViewById<TextView>(R.id.tvemail)
 
 
-        tvUsername.text = UserSession.nombre ?: "Nombre no disponible"
+
         tvEmail.text = UserSession.email ?: "Email no disponible"
     }
 
