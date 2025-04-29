@@ -12,7 +12,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import android.os.Handler
+import android.os.Looper
+import android.view.animation.AlphaAnimation
+import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
 import com.example.bushido.R
 import com.example.bushido.databinding.FragmentHomeBinding
 import android.view.animation.AnimationUtils
@@ -43,6 +47,7 @@ class HomeFragment : Fragment() {
                 override fun run() {
                     val shake = AnimationUtils.loadAnimation(requireContext(), R.anim.descargar_anim)
                     binding.ibPrecioSocios.startAnimation(shake)
+                    binding.ibInfo.startAnimation(shake)
                     handler.postDelayed(this, 7000) // cada 7 segundos
                 }
             }
@@ -61,6 +66,8 @@ class HomeFragment : Fragment() {
             binding.ibInfo.setOnClickListener {
                 binding.ibInfo.startAnimation(scaleAnim)
             }
+
+            cargarImagenesRotativas()
         }
     }
 
@@ -92,6 +99,71 @@ class HomeFragment : Fragment() {
         } ?: run {
             Toast.makeText(requireContext(), "Error al guardar la imagen", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private val handler = Handler(Looper.getMainLooper())
+    private val storage = FirebaseStorage.getInstance()
+    private var listaUrls = mutableListOf<String>()
+    private var indiceActual = 0
+
+    private fun cargarImagenesRotativas() {
+        val storageRef = storage.reference.child("FotosHome")
+        storageRef.listAll().addOnSuccessListener { result ->
+            if (result.items.isEmpty()) {
+                Toast.makeText(requireContext(), "No hay imágenes en FotosHome", Toast.LENGTH_SHORT).show()
+            }
+            result.items.forEachIndexed { index, item ->
+                item.downloadUrl
+                    .addOnSuccessListener { uri ->
+                        listaUrls.add(uri.toString())
+
+                        // Mostrar la primera imagen apenas esté lista
+                        if (listaUrls.size == 1) {
+                            Picasso.get().load(listaUrls[0]).into(binding.ivHome)
+                        }
+
+                        // Iniciar rotación cuando todas las URLs estén listas
+                        if (listaUrls.size == result.items.size) {
+                            rotarImagenes()
+                        }
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(requireContext(), "Error al obtener URL: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            }
+        }.addOnFailureListener { e ->
+            Toast.makeText(requireContext(), "Fallo en listAll(): ${e.message}", Toast.LENGTH_LONG).show()
+            e.printStackTrace()
+        }
+    }
+
+    private fun rotarImagenes() {
+        if (listaUrls.isEmpty()) return
+
+        val slideOut = AnimationUtils.loadAnimation(requireContext(), R.anim.moverfotoizq)
+        val slideIn = AnimationUtils.loadAnimation(requireContext(), R.anim.moverfotoder)
+
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                // Animación de salida
+                binding.ivHome.startAnimation(slideOut)
+
+                slideOut.setAnimationListener(object : android.view.animation.Animation.AnimationListener {
+                    override fun onAnimationStart(animation: android.view.animation.Animation?) {}
+
+                    override fun onAnimationEnd(animation: android.view.animation.Animation?) {
+                        // Cambiar imagen y aplicar animación de entrada
+                        Picasso.get().load(listaUrls[indiceActual]).into(binding.ivHome)
+                        binding.ivHome.startAnimation(slideIn)
+                    }
+
+                    override fun onAnimationRepeat(animation: android.view.animation.Animation?) {}
+                })
+
+                indiceActual = (indiceActual + 1) % listaUrls.size
+                handler.postDelayed(this, 7000)
+            }
+        }, 7000)
     }
 
     override fun onDestroyView() {
