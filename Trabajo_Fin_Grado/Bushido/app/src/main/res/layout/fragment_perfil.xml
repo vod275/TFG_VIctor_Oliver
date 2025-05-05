@@ -47,14 +47,14 @@
             android:layout_width="240dp"
             android:layout_height="93dp"
             android:hint="@string/nombre"
-            android:textColorHint="@color/AzulOscuro"
-            app:boxStrokeColor="@color/AzulOscuro"
-            app:cursorColor="@color/AzulOscuro"
-            app:endIconTint="@color/AzulOscuro"
+            android:textColorHint="@color/AzulTexto"
+            app:boxStrokeColor="@color/AzulTexto"
+            app:cursorColor="@color/AzulTexto"
+            app:endIconTint="@color/AzulTexto"
             app:endIconMode="clear_text"
             app:helperTextEnabled="true"
-            app:helperTextTextColor="@color/AzulOscuro"
-            app:hintTextColor="@color/AzulOscuro"
+            app:helperTextTextColor="@color/AzulTexto"
+            app:hintTextColor="@color/AzulTexto"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,11 +64,12 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="61dp"
-                android:textColor="@color/AzulOscuro"
-                android:textSelectHandle="@drawable/cursor"
                 android:backgroundTint="@android:color/transparent"
+                android:fontFamily="@font/russoone_regular"
+                android:textColor="@color/AzulTexto"
+                android:textSelectHandle="@drawable/cursor"
                 android:textSelectHandleLeft="@drawable/cursor"
-                android:textSelectHandleRight="@drawable/cursor"/>
+                android:textSelectHandleRight="@drawable/cursor" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -77,14 +78,14 @@
             android:layout_width="240dp"
             android:layout_height="93dp"
             android:hint="@string/apelidos"
-            android:textColorHint="@color/AzulOscuro"
-            app:boxStrokeColor="@color/AzulOscuro"
-            app:cursorColor="@color/AzulOscuro"
+            android:textColorHint="@color/AzulTexto"
+            app:boxStrokeColor="@color/AzulTexto"
+            app:cursorColor="@color/AzulTexto"
             app:endIconMode="clear_text"
-            app:endIconTint="@color/AzulOscuro"
+            app:endIconTint="@color/AzulTexto"
             app:helperTextEnabled="true"
-            app:helperTextTextColor="@color/AzulOscuro"
-            app:hintTextColor="@color/AzulOscuro"
+            app:helperTextTextColor="@color/AzulTexto"
+            app:hintTextColor="@color/AzulTexto"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -94,11 +95,12 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/AzulOscuro"
                 android:backgroundTint="@android:color/transparent"
+                android:fontFamily="@font/russoone_regular"
+                android:textColor="@color/AzulTexto"
                 android:textSelectHandle="@drawable/cursor"
                 android:textSelectHandleLeft="@drawable/cursor"
-                android:textSelectHandleRight="@drawable/cursor"/>
+                android:textSelectHandleRight="@drawable/cursor" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,31 +109,32 @@
             android:layout_width="240dp"
             android:layout_height="93dp"
             android:hint="@string/fecha_de_nacimiento"
-            android:textColorHint="@color/AzulOscuro"
-            app:boxStrokeColor="@color/AzulOscuro"
+            android:textColorHint="@color/AzulTexto"
+            app:boxStrokeColor="@color/AzulTexto"
             app:boxStrokeWidthFocused="2dp"
-            app:cursorColor="@color/AzulOscuro"
+            app:cursorColor="@color/AzulTexto"
             app:endIconMode="clear_text"
-            app:endIconTint="@color/AzulOscuro"
+            app:endIconTint="@color/AzulTexto"
             app:helperText="@string/introduce_tu_fecha_de_nacimiento"
             app:helperTextEnabled="true"
-            app:helperTextTextColor="@color/AzulOscuro"
-            app:hintTextColor="@color/AzulOscuro"
+            app:helperTextTextColor="@color/AzulTexto"
+            app:hintTextColor="@color/AzulTexto"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.661"
             app:startIconDrawable="@drawable/baseline_calendar_month_24"
-            app:startIconTint="@color/AzulOscuro">
+            app:startIconTint="@color/AzulTexto">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etFechaNacimientoEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:backgroundTint="@android:color/transparent"
+                android:fontFamily="@font/russoone_regular"
                 android:inputType="datetime"
-                android:textColor="@color/AzulOscuro" />
+                android:textColor="@color/AzulTexto" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -139,14 +142,15 @@
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/russoone_regular"
             android:text="@string/guardar"
-            android:textColor="@color/AzulOscuro"
+            android:textColor="@color/AzulTexto"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.819"
-            app:strokeColor="@color/AzulOscuro" />
+            app:strokeColor="@color/AzulTexto" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

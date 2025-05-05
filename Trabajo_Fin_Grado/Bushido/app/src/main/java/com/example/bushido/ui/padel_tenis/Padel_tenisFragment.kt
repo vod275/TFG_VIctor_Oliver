@@ -18,7 +18,6 @@ class Padel_tenisFragment : Fragment() {
 
     private var _binding: FragmentPadelTenisBinding? = null
     private val binding get() = _binding!!
-
     private val handler = Handler(Looper.getMainLooper())
     private val storage = FirebaseStorage.getInstance()
     private var listaUrls = mutableListOf<String>()
@@ -40,15 +39,17 @@ class Padel_tenisFragment : Fragment() {
 
         val animFlecha = AnimationUtils.loadAnimation(requireContext(), com.example.bushido.R.anim.flecha_anim)
         val animClick = AnimationUtils.loadAnimation(requireContext(), com.example.bushido.R.anim.agrandar_click)
-        val animVaiven = AnimationUtils.loadAnimation(requireContext(), com.example.bushido.R.anim.descargar_anim)
 
         binding.ibflecha.startAnimation(animFlecha)
-
         cargarImagenesRotativas()
 
         binding.ibPrecioPistas.setOnClickListener {
             binding.ibPrecioPistas.startAnimation(animClick)
             guardarImagenEnGaleria()
+        }
+
+        binding.btnReservarPista.setOnClickListener {
+            binding.btnReservarPista.startAnimation(animClick)
         }
 
         cargarImagenesRotativas()
@@ -88,6 +89,38 @@ class Padel_tenisFragment : Fragment() {
         }
     }
 
+    private fun guardarImagenEnGaleria() {
+        val storageRef = FirebaseStorage.getInstance().reference.child("FotosPrecioPistas")
+
+        storageRef.listAll()
+            .addOnSuccessListener { result ->
+                val items = result.items
+                if (items.isEmpty()) {
+                    if (isAdded) Toast.makeText(requireContext(), "No hay imágenes para descargar", Toast.LENGTH_SHORT).show()
+                    return@addOnSuccessListener
+                }
+
+                var descargadas = 0
+                val total = items.size
+
+                items.forEach { item ->
+                    item.downloadUrl.addOnSuccessListener { uri ->
+                        descargarYGuardarImagen(uri.toString()) {
+                            descargadas++
+                            if (descargadas == total && isAdded) {
+                                Toast.makeText(requireContext(), "Se han guardado $descargadas imágenes", Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    }.addOnFailureListener {
+                        if (isAdded) Toast.makeText(requireContext(), "Error obteniendo URL de ${item.name}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                if (isAdded) Toast.makeText(requireContext(), "Error accediendo a Firebase: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
     private fun iniciarAnimacionesVaiven() {
         val animVaiven = AnimationUtils.loadAnimation(requireContext(), com.example.bushido.R.anim.descargar_anim)
 
@@ -95,7 +128,7 @@ class Padel_tenisFragment : Fragment() {
             override fun run() {
                 if (!isAdded || _binding == null) return
 
-                binding.ibInfo.startAnimation(animVaiven)
+                binding.btnReservarPista.startAnimation(animVaiven)
                 binding.ibPrecioPistas.startAnimation(animVaiven)
 
                 handler.postDelayed(this, 7000)
@@ -168,38 +201,6 @@ class Padel_tenisFragment : Fragment() {
 
             override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
         })
-    }
-
-    private fun guardarImagenEnGaleria() {
-        val storageRef = FirebaseStorage.getInstance().reference.child("FotosPrecioPistas")
-
-        storageRef.listAll()
-            .addOnSuccessListener { result ->
-                val items = result.items
-                if (items.isEmpty()) {
-                    if (isAdded) Toast.makeText(requireContext(), "No hay imágenes para descargar", Toast.LENGTH_SHORT).show()
-                    return@addOnSuccessListener
-                }
-
-                var descargadas = 0
-                val total = items.size
-
-                items.forEach { item ->
-                    item.downloadUrl.addOnSuccessListener { uri ->
-                        descargarYGuardarImagen(uri.toString()) {
-                            descargadas++
-                            if (descargadas == total && isAdded) {
-                                Toast.makeText(requireContext(), "Se han guardado $descargadas imágenes", Toast.LENGTH_LONG).show()
-                            }
-                        }
-                    }.addOnFailureListener {
-                        if (isAdded) Toast.makeText(requireContext(), "Error obteniendo URL de ${item.name}", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-            .addOnFailureListener { e ->
-                if (isAdded) Toast.makeText(requireContext(), "Error accediendo a Firebase: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
     }
 
     override fun onDestroyView() {
