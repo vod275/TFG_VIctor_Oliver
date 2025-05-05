@@ -14,12 +14,16 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.bushido.databinding.ActivityMainBinding
 import android.content.Intent
 import android.view.MenuItem
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.bumptech.glide.Glide
 import objetos.UserSession
 
 class MainActivity : AppCompatActivity() {
@@ -28,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var storageRef: StorageReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,16 +40,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Inicializa FirebaseAuth
         auth = FirebaseAuth.getInstance()
 
         // Inicializa Google Sign-In
         val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id)) // Usa tu ID de cliente de la consola de Firebase
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
+
+        // Inicializa referencia al storage
+        storageRef = FirebaseStorage.getInstance().reference
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
@@ -66,14 +73,28 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        // Header del Navigation Drawer
         val headerView = navView.getHeaderView(0)
         val tvEmail = headerView.findViewById<TextView>(R.id.tvemail)
+        val ibFotoPerfil = headerView.findViewById<ImageButton>(R.id.ibFotoPerfil)
 
-
-
+        // Mostrar email del usuario
         tvEmail.text = UserSession.email ?: "Email no disponible"
+
+        // Cargar foto de perfil desde Firebase Storage
+        cargarFotoPerfil(ibFotoPerfil)
     }
 
+    private fun cargarFotoPerfil(ibFotoPerfil: ImageButton) {
+        val uid = UserSession.id ?: return
+        val ref = storageRef.child("FotosUser/$uid.jpg")
+        ref.downloadUrl.addOnSuccessListener { uri ->
+            Glide.with(this).load(uri).into(ibFotoPerfil)
+        }.addOnFailureListener {
+            // Si no existe la imagen o falla la descarga, puedes dejar una imagen por defecto si quieres
+            ibFotoPerfil.setImageResource(R.drawable.default_profile_image)
+        }
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
@@ -83,7 +104,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_salir -> {
-                showLogoutDialog() // Mostrar el diálogo de confirmación de cerrar sesión
+                showLogoutDialog()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
@@ -94,27 +115,18 @@ class MainActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Cerrar sesión")
         builder.setMessage("¿Estás seguro de que quieres cerrar sesión?")
-        builder.setPositiveButton("Sí") { _, _ ->
-            logout() // Llamar a la función para cerrar sesión
-        }
-        builder.setNegativeButton("No") { dialog, _ ->
-            dialog.dismiss() // Cerrar el diálogo si el usuario elige "No"
-        }
+        builder.setPositiveButton("Sí") { _, _ -> logout() }
+        builder.setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
         builder.show()
     }
 
     private fun logout() {
-        // Si estás utilizando Firebase para cerrar sesión:
         auth.signOut()
-
-        // Si también estás usando Google SignIn:
         googleSignInClient.signOut()
-
-        // Regresar al LoginActivity
         val intent = Intent(this, LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP // Asegura que el usuario no pueda regresar a MainActivity
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
-        finish() // Cierra la actividad actual
+        finish()
     }
 
     override fun onSupportNavigateUp(): Boolean {

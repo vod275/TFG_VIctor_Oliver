@@ -32,4 +32,6 @@
     <string name="apelidos">apelidos</string>
     <string name="fecha_de_nacimiento">fecha de nacimiento</string>
     <string name="introduce_tu_fecha_de_nacimiento">Introduce tu fecha de nacimiento</string>
+    <string name="guardar">Guardar</string>
+    <string name="consulta_precios">CONSULTA PRECIOS</string>
 </resources>

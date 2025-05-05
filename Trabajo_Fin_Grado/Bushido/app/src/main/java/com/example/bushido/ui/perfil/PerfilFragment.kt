@@ -24,6 +24,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import objetos.UserSession
 import java.io.ByteArrayOutputStream
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class PerfilFragment : Fragment() {
 
@@ -36,7 +38,7 @@ class PerfilFragment : Fragment() {
     private val TAKE_PHOTO = 1002
     private var currentPhotoUri: Uri? = null
 
-    // Launcher para pedir permiso de cámara
+
     private val requestCameraPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
@@ -57,31 +59,44 @@ class PerfilFragment : Fragment() {
         cargarFotoPerfil()
 
         binding.ibFotoPerfil.setOnClickListener { mostrarOpcionesFoto() }
+        binding.btnGuardar.setOnClickListener {
+            guardarDatosUsuario()
+        }
 
         return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        guardarDatos()
         _binding = null
     }
 
-    private fun guardarDatos() {
-        val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        prefs.edit {
-            putString("nombre", binding.tvNombreAjustes.editText?.text.toString())
-            putString("apellidos", binding.tvApellidos.editText?.text.toString())
-            putString("fecha", binding.etFechaNacimiento.editText?.text.toString())
-        }
-    }
+
 
     private fun cargarDatosGuardados() {
-        val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        binding.tvNombreAjustes.editText?.setText(prefs.getString("nombre", ""))
-        binding.tvApellidos.editText?.setText(prefs.getString("apellidos", ""))
-        binding.etFechaNacimiento.editText?.setText(prefs.getString("fecha", ""))
+        val uid = UserSession.id ?: return
+        val db = com.google.firebase.firestore.FirebaseFirestore.getInstance()
+
+        db.collection("usuarios").document(uid).get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    // Obtener los datos de Firestore
+                    val nombre = document.getString("nombre") ?: ""
+                    val apellidos = document.getString("apellidos") ?: ""
+                    val fechaNacimiento = document.getString("fechaNacimiento") ?: ""
+
+                    // Establecer los valores en los campos de texto
+                    binding.tvNombreAjustes.editText?.setText(nombre)
+                    binding.tvApellidos.editText?.setText(apellidos)
+                    binding.etFechaNacimiento.editText?.setText(fechaNacimiento)
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Error al cargar los datos", Toast.LENGTH_SHORT).show()
+            }
     }
+
+
 
     private fun mostrarOpcionesFoto() {
         val opciones = arrayOf("Galería", "Cámara")
@@ -145,11 +160,15 @@ class PerfilFragment : Fragment() {
         val uid = UserSession.id ?: return
         val ref = storageRef.child("FotosUser/$uid.jpg")
 
-        ref.delete().addOnCompleteListener {
-            ref.putFile(uri).addOnSuccessListener {
+        ref.putFile(uri)
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "Imagen subida correctamente", Toast.LENGTH_SHORT).show()
                 cargarFotoPerfil()
             }
-        }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Error al subir la imagen", Toast.LENGTH_SHORT).show()
+            }
+
     }
 
     private fun cargarFotoPerfil() {
@@ -159,4 +178,47 @@ class PerfilFragment : Fragment() {
             Glide.with(this).load(uri).into(binding.ibFotoPerfil)
         }
     }
+
+
+
+    private fun guardarDatosUsuario() {
+        val uid = UserSession.id ?: return
+        val db = com.google.firebase.firestore.FirebaseFirestore.getInstance()
+
+        val nombre = binding.tvNombreAjustes.editText?.text.toString().trim()
+        val apellidos = binding.tvApellidos.editText?.text.toString().trim()
+        var fechaNacimiento = binding.etFechaNacimiento.editText?.text.toString().trim()
+
+
+        if (nombre.isEmpty() || apellidos.isEmpty() || fechaNacimiento.isEmpty()) {
+            Toast.makeText(requireContext(), "Todos los campos deben ser llenados", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        try {
+            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val date = sdf.parse(fechaNacimiento)
+            fechaNacimiento = sdf.format(date) // Aseguramos que la fecha esté en el formato correcto
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), "Fecha inválida. Debe ser en formato dd/MM/yyyy", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val datos = mapOf(
+            "nombre" to nombre,
+            "apellidos" to apellidos,
+            "fechaNacimiento" to fechaNacimiento
+        )
+
+        db.collection("usuarios").document(uid)  // Usamos el uid como identificador único
+            .set(datos)
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "Datos guardados correctamente", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(requireContext(), "Error al guardar los datos: ${exception.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+
 }

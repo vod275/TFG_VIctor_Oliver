@@ -100,7 +100,7 @@
             android:layout_height="114dp"
             android:fontFamily="@font/russoone_regular"
             android:text="@string/quieres_saber_m_s_de_nosotros"
-            android:textColor="#50c8ef"
+            android:textColor="@color/AzulTexto"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
