@@ -18,7 +18,7 @@ class BolosFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val bolosViewModel = ViewModelProvider(this).get(BolosViewModel::class.java)
+
 
         _binding = FragmentBolosBinding.inflate(inflater, container, false)
         val root: View = binding.root

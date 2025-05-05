@@ -20,25 +20,45 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import objetos.UserSession
+
 private const val RC_SIGN_IN = 9001
+
+/**
+ * LoginActivity gestiona el inicio de sesión con correo y con Google.
+ * Utiliza Firebase Authentication para autenticar a los usuarios
+ * y Firestore para posibles futuras operaciones con base de datos.
+ */
 class LoginActivity : AppCompatActivity() {
 
+    // View binding para acceder a los elementos de la interfaz
     private lateinit var binding: ActivityLoginBinding
+
+    // Instancia de FirebaseAuth para autenticación
     private lateinit var auth: FirebaseAuth
+
+    // Cliente para One Tap Sign-In de Google
     private lateinit var oneTapClient: SignInClient
+
+    // Solicitud de inicio de sesión con Google
     private lateinit var signInRequest: BeginSignInRequest
+
+    // Cliente tradicional de Google Sign-In
     private lateinit var googleSignInClient: GoogleSignInClient
+
+    // Instancia perezosa de Firestore (aún no se usa activamente aquí)
     private val firestore: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Inflar layout y asignar binding
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Inicializar FirebaseAuth
         auth = FirebaseAuth.getInstance()
 
-        // Configuración de Google Sign-In
+        // Configurar One Tap Sign-In de Google
         oneTapClient = Identity.getSignInClient(this)
         signInRequest = BeginSignInRequest.builder()
             .setGoogleIdTokenRequestOptions(
@@ -47,20 +67,23 @@ class LoginActivity : AppCompatActivity() {
                     .setServerClientId(getString(R.string.default_web_client_id))
                     .setFilterByAuthorizedAccounts(false)
                     .build()
-            )
-            .build()
+            ).build()
 
+        // Configurar Google Sign-In tradicional (por compatibilidad)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        // Configurar botones de autenticación
+        // Configurar botones
         binding.googleSignInButton.setOnClickListener { signInWithGoogle() }
         binding.loginButton.setOnClickListener { handleEmailSignIn() }
     }
 
+    /**
+     * Valida campos de email y contraseña, y realiza el login con correo si son válidos.
+     */
     private fun handleEmailSignIn() {
         val email = binding.emailInput.editText?.text.toString().trim()
         val password = binding.passwordInput.editText?.text.toString().trim()
@@ -76,6 +99,9 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Realiza autenticación con correo electrónico y contraseña en Firebase.
+     */
     private fun signIn(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
@@ -90,24 +116,34 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
+    /**
+     * Inicia el proceso de autenticación con Google.
+     * Intenta usar One Tap, y si falla, usa el flujo tradicional.
+     */
     private fun signInWithGoogle() {
         oneTapClient.beginSignIn(signInRequest)
             .addOnSuccessListener(this) { result ->
                 try {
+                    // Lanza One Tap Sign-In
                     signInLauncher.launch(IntentSenderRequest.Builder(result.pendingIntent).build())
                 } catch (e: android.content.IntentSender.SendIntentException) {
                     Log.e("GoogleSignIn", "Couldn't start One Tap UI:" + e.localizedMessage)
+                    // Fallback a Google Sign-In tradicional
                     val signInIntent = googleSignInClient.signInIntent
                     startActivityForResult(signInIntent, RC_SIGN_IN)
                 }
             }
             .addOnFailureListener { e ->
                 Log.w("GoogleSignIn", "One Tap Sign-In failed", e)
+                // Fallback a Google Sign-In tradicional
                 val signInIntent = googleSignInClient.signInIntent
                 startActivityForResult(signInIntent, RC_SIGN_IN)
             }
     }
 
+    /**
+     * Callback que recibe el resultado del intent lanzado para One Tap Sign-In.
+     */
     private val signInLauncher =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
@@ -128,15 +164,22 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+    /**
+     * Si el usuario está autenticado, guarda sus datos en UserSession
+     * y lo redirige al MainActivity. Si no, muestra mensaje de error.
+     */
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
             val userEmail = user.email
             val userName = user.displayName ?: getString(R.string.usuario_sin_nombre)
             val userId = user.uid
+
+            // Guardar datos en sesión global
             UserSession.id = userId
             UserSession.email = userEmail
             UserSession.nombre = userName
 
+            // Ir a la pantalla principal
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
@@ -145,10 +188,16 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Muestra un mensaje Toast breve.
+     */
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
+    /**
+     * Comprueba si el usuario ya ha iniciado sesión al arrancar la actividad.
+     */
     override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
