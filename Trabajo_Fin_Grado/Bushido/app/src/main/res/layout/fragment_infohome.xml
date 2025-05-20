@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeInfoFragment">
+
+    <ImageView
+        android:id="@+id/backgroundImage"
+        android:layout_width="412dp"
+        android:layout_height="734dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/precios"
+        android:scaleType="centerCrop"
+        android:src="@drawable/fondo2"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-2dp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/transparentContainer"
+        android:layout_width="411dp"
+        android:layout_height="734dp"
+        android:background="#C4FFFFFF"
+        tools:layout_editor_absoluteY="-1dp"
+        tools:ignore="MissingConstraints">
+
+
+        <ImageView
+            android:id="@+id/cir"
+            android:layout_width="409dp"
+            android:layout_height="615dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/cir"
+            android:tint="@color/AzulOscuro"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.302"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="342dp"
+            android:layout_height="118dp"
+            android:fontFamily="@font/russoone_regular"
+            android:text="Para los amantes del tenis, disponemos de canchas al aire libre y cubiertas, bien mantenidas y listas para que juegues sin importar el clima. Organizamos clases, torneos y partidas libres para todos los niveles, desde principiantes hasta jugadores avanzados."
+            android:textColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.594"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.78" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="341dp"
+            android:layout_height="137dp"
+            android:fontFamily="@font/russoone_regular"
+            android:text="En nuestro centro de ocio, creemos que el tiempo libre debe disfrutarse al máximo. Somos un espacio diseñado para el entretenimiento, la actividad física y la diversión en familia o con amigos. Contamos con instalaciones modernas, seguras y pensadas para que cada visita sea una experiencia inolvidable."
+            android:textColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.14" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="337dp"
+            android:layout_height="126dp"
+            android:fontFamily="@font/russoone_regular"
+            android:text="Nuestra bolera cuenta con varias pistas completamente automatizadas, ideales tanto para principiantes como para jugadores experimentados. Disponemos de ambiente animado, iluminación especial y una zona de descanso donde podrás disfrutar de bebidas y snacks mientras esperas tu turno."
+            android:textColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.621"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.393" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="342dp"
+            android:layout_height="118dp"
+            android:fontFamily="@font/russoone_regular"
+            android:text="Si te apasiona el deporte, nuestras pistas de pádel te ofrecen la oportunidad de practicar en un entorno profesional. Ya sea que vengas a entrenar, competir o simplemente divertirte, aquí encontrarás el lugar perfecto para mejorar tu técnica y compartir buenos momentos."
+            android:textColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.666"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.59" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,12 @@
         android:label="@string/inicio"
         tools:layout="@layout/fragment_home" />
 
+    <fragment
+        android:id="@+id/nav_homeInfo"
+        android:name="com.example.bushido.ui.home.HomeInfoFragment"
+        android:label="@string/quienes_somos"
+        tools:layout="@layout/fragment_infohome" />
+
 
     <fragment
         android:id="@+id/nav_perfil"
@@ -29,6 +35,7 @@
         android:name="com.example.bushido.ui.bolos.BolosFragment"
         android:label="@string/bolos"
         tools:layout="@layout/fragment_bolos" />
+
 
 
 </navigation>

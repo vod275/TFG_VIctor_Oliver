@@ -12,7 +12,11 @@ import com.example.bushido.databinding.FragmentHomeBinding
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 import android.graphics.drawable.Drawable
+import androidx.navigation.fragment.findNavController
+import com.example.bushido.R
 import com.squareup.picasso.Target
+
+
 
 class HomeFragment : Fragment() {
 
@@ -70,6 +74,12 @@ class HomeFragment : Fragment() {
         binding.ibInfo.setOnClickListener {
             binding.ibInfo.startAnimation(animClick)
         }
+
+        binding.ibInfo.setOnClickListener {
+            binding.ibInfo.startAnimation(animClick)
+            findNavController().navigate(R.id.nav_homeInfo)
+        }
+
 
         // Se vuelven a cargar las imágenes y se inicia la animación vaivén
         cargarImagenesRotativas()

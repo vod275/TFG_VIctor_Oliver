@@ -7,12 +7,9 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <!-- Permisos necesarios para la autenticación con Google -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- Permisos necesarios para la autenticación con Google -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -24,33 +21,32 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bushido"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ui.home.HomeInfoFragment"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:theme="@style/Theme.Bushido.NoActionBar"/>
-
+            android:theme="@style/Theme.Bushido.NoActionBar" />
         <activity
             android:name=".LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Bushido.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+                <action android:name="android.intent.action.MAIN" />
 
-        <!-- Configuración de Google Sign-In -->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> <!-- Configuración de Google Sign-In -->
         <meta-data
             android:name="com.google.android.gms.auth.api.signin"
-            android:value="@string/default_web_client_id"/>
+            android:value="@string/default_web_client_id" />
 
         <activity
             android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:exported="false"/>
-
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>
