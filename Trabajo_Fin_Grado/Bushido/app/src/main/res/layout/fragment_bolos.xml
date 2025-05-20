@@ -28,17 +28,91 @@
         tools:ignore="MissingConstraints">
 
 
-        <Button
-            android:id="@+id/buttonPrueba"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button"
+        <ImageView
+            android:id="@+id/ivBolos"
+            android:layout_width="433dp"
+            android:layout_height="467dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.17"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.153" />
+            app:layout_constraintVertical_bias="0.344" />
+
+        <ImageButton
+            android:id="@+id/ibPrecioPistasBolos"
+            android:layout_width="95dp"
+            android:layout_height="54dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/descargar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.949"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.067" />
+
+        <TextView
+            android:id="@+id/hazteSocio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/russoone_regular"
+            android:shadowRadius="1"
+            android:text="¡¡DEMUESTRA QUE ERES EL MEJOR Y HAZ UN PLENO!!"
+            android:textColor="#50c8ef"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.757" />
+
+        <ImageButton
+            android:id="@+id/ibflecha"
+            android:layout_width="95dp"
+            android:layout_height="54dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/flecha"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.067" />
+
+        <TextView
+            android:id="@+id/tvConsultaPrecios"
+            android:layout_width="183dp"
+            android:layout_height="114dp"
+            android:fontFamily="@font/russoone_regular"
+            android:text="CONSULTA PRECIOS"
+            android:textColor="@color/AzulTexto"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.075" />
+
+
+        <Button
+            android:id="@+id/btnReservarPista"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/russoone_regular"
+            android:text="@string/reservar_pista"
+            android:textColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.862"
+            app:strokeColor="@color/AzulTexto" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
