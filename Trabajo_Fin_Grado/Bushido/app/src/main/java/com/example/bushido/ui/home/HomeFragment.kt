@@ -67,7 +67,7 @@ class HomeFragment : Fragment() {
         // Al pulsar el botón de precios, se animará y descargará imágenes
         binding.ibPrecioSocios.setOnClickListener {
             binding.ibPrecioSocios.startAnimation(animClick)
-            guardarImagenEnGaleria()
+            findNavController().navigate(R.id.nav_homePrecios)
         }
 
         // Animación al pulsar el botón de info (no tiene funcionalidad extra)
