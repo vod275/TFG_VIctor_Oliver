@@ -35,12 +35,24 @@
         android:name="com.example.bushido.ui.padel_tenis.Padel_tenisFragment"
         android:label="@string/padel_tenis"
         tools:layout="@layout/fragment_padel_tenis" />
+    <fragment
+        android:id="@+id/nav_precios_padel_tenis"
+        android:name="com.example.bushido.ui.padel_tenis.Padel_tenisPreciosFragment"
+        android:label="@string/padel_tenis"
+        tools:layout="@layout/fragment_precio_padel_tenis" />
 
     <fragment
         android:id="@+id/nav_bolos"
         android:name="com.example.bushido.ui.bolos.BolosFragment"
         android:label="@string/bolos"
         tools:layout="@layout/fragment_bolos" />
+
+
+    <fragment
+        android:id="@+id/nav_admin"
+        android:name="com.example.bushido.ui.admin.AdminFragment"
+        android:label="Administrador"
+        tools:layout="@layout/fragment_admin" />
 
 
 

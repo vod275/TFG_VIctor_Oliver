@@ -37,5 +37,9 @@
     <string name="quienes_somos">¿Quienes Somos?</string>
     <string name="hazte_socio">¡HAZTE SOCIO!</string>
     <string name="telefono">Teléfono</string>
+    <string name="administrador">Administrador</string>
+    <string name="un_centro_de_ocio_pensado_para_disfrutar_en_familia_o_con_amigos_ofrecemos_diversi_n_deporte_y_relax_en_instalaciones_modernas_y_seguras">Un centro de ocio pensado para disfrutar en familia o con amigos. Ofrecemos diversión, deporte y relax en instalaciones modernas y seguras.</string>
+    <string name="pistas_profesionales_para_jugar_entrenar_o_competir">Pistas profesionales para jugar, entrenar o competir.</string>
+    <string name="pistas_automatizadas_con_ambiente_animado_y_zona_de_snacks">Pistas automatizadas con ambiente animado y zona de snacks.</string>
 
 </resources>

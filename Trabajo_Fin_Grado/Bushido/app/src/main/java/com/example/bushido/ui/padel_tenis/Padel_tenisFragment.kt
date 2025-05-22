@@ -9,6 +9,8 @@ import android.view.*
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.bushido.R
 import com.example.bushido.databinding.FragmentPadelTenisBinding
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
@@ -60,10 +62,10 @@ class Padel_tenisFragment : Fragment() {
         // Iniciar la rotación de imágenes desde Firebase
         cargarImagenesRotativas()
 
-        // Botón para descargar imágenes de precios
+        // Botón para ir a ver los precios
         binding.ibPrecioPistas.setOnClickListener {
             binding.ibPrecioPistas.startAnimation(animClick)
-            guardarImagenEnGaleria()
+            findNavController().navigate(R.id.nav_precios_padel_tenis)
         }
 
         // Botón para reservar pista (solo animación aquí)
