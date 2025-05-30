@@ -17,6 +17,12 @@
         android:label="@string/quienes_somos"
         tools:layout="@layout/fragment_infohome" />
 
+    <fragment
+        android:id="@+id/nav_homePrecios"
+        android:name="com.example.bushido.ui.home.HomePreciosFragment"
+        android:label="@string/hazte_socio"
+        tools:layout="@layout/fragment_precioshome" />
+
 
     <fragment
         android:id="@+id/nav_perfil"

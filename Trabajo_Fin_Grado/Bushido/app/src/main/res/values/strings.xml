@@ -26,7 +26,6 @@
     <string name="padel_tenis">Padel/Tenis</string>
     <string name="bolos">Bolos</string>
     <string name="precios">precios</string>
-    <string name="hazte_socio">¡HAZTE SOCIO!</string>
     <string name="quieres_saber_m_s_de_nosotros">¿QUIERES SABER MÁS DE NOSOTROS?</string>
     <string name="nombre">nombre</string>
     <string name="apelidos">apelidos</string>
@@ -36,4 +35,7 @@
     <string name="consulta_precios">CONSULTA PRECIOS</string>
     <string name="reservar_pista">RESERVAR PISTA</string>
     <string name="quienes_somos">¿Quienes Somos?</string>
+    <string name="hazte_socio">¡HAZTE SOCIO!</string>
+    <string name="telefono">Teléfono</string>
+
 </resources>

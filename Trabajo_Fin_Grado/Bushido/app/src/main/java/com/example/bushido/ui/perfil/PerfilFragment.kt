@@ -91,16 +91,19 @@ class PerfilFragment : Fragment() {
                     val nombre = document.getString("nombre") ?: ""
                     val apellidos = document.getString("apellidos") ?: ""
                     val fechaNacimiento = document.getString("fechaNacimiento") ?: ""
+                    val telefono = document.getString("telefono") ?: ""
 
                     binding.tvNombreAjustes.editText?.setText(nombre)
                     binding.tvApellidos.editText?.setText(apellidos)
                     binding.etFechaNacimiento.editText?.setText(fechaNacimiento)
+                    binding.tvTelefono.editText?.setText(telefono)
                 }
             }
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "Error al cargar los datos", Toast.LENGTH_SHORT).show()
             }
     }
+
 
     /**
      * Muestra un diálogo con opciones para seleccionar foto de galería o tomar una nueva
@@ -213,39 +216,26 @@ class PerfilFragment : Fragment() {
         val uid = UserSession.id ?: return
         val db = com.google.firebase.firestore.FirebaseFirestore.getInstance()
 
-        val nombre = binding.tvNombreAjustes.editText?.text.toString().trim()
-        val apellidos = binding.tvApellidos.editText?.text.toString().trim()
-        var fechaNacimiento = binding.etFechaNacimiento.editText?.text.toString().trim()
+        // Obtener los valores de los campos
+        val nombre = binding.tvNombreAjustes.editText?.text.toString()
+        val apellidos = binding.tvApellidos.editText?.text.toString()
+        val fechaNacimiento = binding.etFechaNacimiento.editText?.text.toString()
+        val telefono = binding.tvTelefono.editText?.text.toString()
 
-        if (nombre.isEmpty() || apellidos.isEmpty() || fechaNacimiento.isEmpty()) {
-            Toast.makeText(requireContext(), "Todos los campos deben ser llenados", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        // Validación del formato de fecha
-        try {
-            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            val date = sdf.parse(fechaNacimiento)
-            fechaNacimiento = sdf.format(date)
-        } catch (e: Exception) {
-            Toast.makeText(requireContext(), "Fecha inválida. Debe ser en formato dd/MM/yyyy", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val datos = mapOf(
+        val usuarioMap = hashMapOf(
             "nombre" to nombre,
             "apellidos" to apellidos,
-            "fechaNacimiento" to fechaNacimiento
+            "fechaNacimiento" to fechaNacimiento,
+            "telefono" to telefono
         )
 
-        // Guardar en Firestore
         db.collection("usuarios").document(uid)
-            .set(datos)
+            .set(usuarioMap)
             .addOnSuccessListener {
                 Toast.makeText(requireContext(), "Datos guardados correctamente", Toast.LENGTH_SHORT).show()
             }
-            .addOnFailureListener { exception ->
-                Toast.makeText(requireContext(), "Error al guardar los datos: ${exception.message}", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Error al guardar los datos", Toast.LENGTH_SHORT).show()
             }
     }
 }

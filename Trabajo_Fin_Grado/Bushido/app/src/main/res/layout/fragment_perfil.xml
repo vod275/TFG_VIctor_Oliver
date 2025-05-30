@@ -137,6 +137,39 @@
                 android:textColor="@color/AzulTexto" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tvTelefono"
+            android:layout_width="240dp"
+            android:layout_height="93dp"
+            android:hint="@string/telefono"
+            android:textColorHint="@color/AzulTexto"
+            app:boxStrokeColor="@color/AzulTexto"
+            app:cursorColor="@color/AzulTexto"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/AzulTexto"
+            app:helperTextEnabled="true"
+            app:helperTextTextColor="@color/AzulTexto"
+            app:hintTextColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.56" >  <!-- Ajusta el bias para que no se superponga -->
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                android:fontFamily="@font/russoone_regular"
+                android:textColor="@color/AzulTexto"
+                android:inputType="phone"
+                android:textSelectHandle="@drawable/cursor"
+                android:textSelectHandleLeft="@drawable/cursor"
+                android:textSelectHandleRight="@drawable/cursor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
         <Button
             android:id="@+id/btnGuardar"
             style="?attr/materialButtonOutlinedStyle"
