@@ -26,7 +26,8 @@
         android:layout_height="734dp"
         android:background="#C4FFFFFF"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="-1dp">
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="-2dp">
 
 
         <TextView
@@ -41,7 +42,7 @@
             app:layout_constraintHorizontal_bias="0.585"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.092" />
+            app:layout_constraintVertical_bias="0.204" />
 
         <TextView
             android:id="@+id/textView2"
@@ -52,10 +53,10 @@
             android:textColor="@color/AzulTexto"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.839"
+            app:layout_constraintHorizontal_bias="0.797"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.397" />
+            app:layout_constraintVertical_bias="0.522" />
 
         <TextView
             android:id="@+id/textView"
@@ -66,10 +67,10 @@
             android:textColor="@color/AzulTexto"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.845"
+            app:layout_constraintHorizontal_bias="0.887"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.637" />
+            app:layout_constraintVertical_bias="0.759" />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -82,7 +83,7 @@
             app:layout_constraintHorizontal_bias="0.117"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.36" />
+            app:layout_constraintVertical_bias="0.468" />
 
         <ImageView
             android:id="@+id/imageView3"
@@ -90,8 +91,12 @@
             android:layout_height="59dp"
             android:src="@drawable/bolos"
             android:tint="@color/AzulSecundario"
-            tools:layout_editor_absoluteX="41dp"
-            tools:layout_editor_absoluteY="403dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.119"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.708" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
