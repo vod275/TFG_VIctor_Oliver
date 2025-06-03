@@ -9,6 +9,8 @@ import android.view.*
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.bushido.R
 import com.example.bushido.databinding.FragmentBolosBinding
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
@@ -48,6 +50,11 @@ class BolosFragment : Fragment() {
         binding.ibPrecioPistasBolos.setOnClickListener {
             binding.ibPrecioPistasBolos.startAnimation(animClick)
             guardarImagenEnGaleria()
+        }
+
+        binding.ibPrecioPistasBolos.setOnClickListener {
+            binding.ibPrecioPistasBolos.startAnimation(animClick)
+            findNavController().navigate(R.id.nav_precios_bolos)
         }
 
         binding.btnReservarPista.setOnClickListener {

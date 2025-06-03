@@ -38,13 +38,19 @@
     <fragment
         android:id="@+id/nav_precios_padel_tenis"
         android:name="com.example.bushido.ui.padel_tenis.Padel_tenisPreciosFragment"
-        android:label="@string/padel_tenis"
+        android:label="Precios Pistas"
         tools:layout="@layout/fragment_precio_padel_tenis" />
 
     <fragment
         android:id="@+id/nav_bolos"
         android:name="com.example.bushido.ui.bolos.BolosFragment"
         android:label="@string/bolos"
+        tools:layout="@layout/fragment_bolos" />
+
+    <fragment
+        android:id="@+id/nav_precios_bolos"
+        android:name="com.example.bushido.ui.bolos.BolosPreciosFragment"
+        android:label="@string/precio_bolos"
         tools:layout="@layout/fragment_bolos" />
 
 

@@ -24,6 +24,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.bumptech.glide.Glide
+import com.google.firebase.firestore.FirebaseFirestore
 import objetos.UserSession
 
 /**
@@ -80,7 +81,7 @@ class MainActivity : AppCompatActivity() {
         // Configuración de las secciones principales del Drawer
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_perfil, R.id.nav_padel_tenis, R.id.nav_bolos
+                R.id.nav_home, R.id.nav_perfil, R.id.nav_padel_tenis, R.id.nav_bolos, R.id.nav_admin
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -90,10 +91,29 @@ class MainActivity : AppCompatActivity() {
         val headerView = navView.getHeaderView(0)
         val tvEmail = headerView.findViewById<TextView>(R.id.tvemail)
         val ibFotoPerfil = headerView.findViewById<ImageButton>(R.id.ibFotoPerfil)
+        val db = FirebaseFirestore.getInstance()
+        val userId = UserSession.id
 
-        // Mostrar el email del usuario
-        tvEmail.text = UserSession.email ?: "Email no disponible"
+        // Mostrar el nombre del usuario en tiempo real
+        if (userId != null) {
+            db.collection(getString(R.string.usuarios)).document(userId)
+                .addSnapshotListener { document, error ->
+                    if (error != null) {
+                        tvEmail.text = getString(R.string.error_al_obtener_usuario)
+                        return@addSnapshotListener
+                    }
 
+                    if (document != null && document.exists()) {
+                        val nombre = document.getString("nombre") ?: getString(R.string.nombre_no_disponible)
+                        tvEmail.text = nombre
+                        UserSession.nombre = nombre // Opcional: actualizar el singleton
+                    } else {
+                        tvEmail.text = getString(R.string.usuario_no_encontrado)
+                    }
+                }
+        } else {
+            tvEmail.text = getString(R.string.id_no_disponible)
+        }
         // Cargar la foto de perfil del usuario desde Firebase Storage
         cargarFotoPerfil(ibFotoPerfil)
     }

@@ -44,7 +44,8 @@
             android:layout_height="54dp"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
-            android:src="@drawable/descargar"
+            android:src="@drawable/bolos"
+            android:tint="@color/AzulTexto"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.949"
@@ -71,19 +72,20 @@
 
         <ImageButton
             android:id="@+id/ibflecha"
-            android:layout_width="95dp"
-            android:layout_height="54dp"
+            android:layout_width="86dp"
+            android:layout_height="45dp"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
             android:src="@drawable/flecha"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.067" />
+            app:layout_constraintVertical_bias="0.078" />
 
         <TextView
-            android:id="@+id/tvConsultaPrecios"
+            android:id="@+id/tvPreciosIndividual"
             android:layout_width="183dp"
             android:layout_height="114dp"
             android:fontFamily="@font/russoone_regular"
