@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.bolos.BolosPreciosFragment">
+    tools:context=".ui.admin.AdminBolosFragment">
 
-    <!-- Imagen de fondo -->
+
     <ImageView
         android:id="@+id/backgroundImage"
         android:layout_width="412dp"
@@ -22,7 +21,6 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="-2dp" />
 
-    <!-- Contenedor transparente para los campos -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/transparentContainer"
         android:layout_width="411dp"
@@ -31,23 +29,7 @@
         tools:layout_editor_absoluteY="-1dp"
         tools:ignore="MissingConstraints">
 
-        <!-- Título principal -->
-        <TextView
-            android:id="@+id/tvPreciosBolos"
-            android:layout_width="380dp"
-            android:layout_height="94dp"
-            android:fontFamily="@font/russoone_regular"
-            android:text="@string/bolos_precio_por_partida"
-            android:textColor="@color/AzulTexto"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.838"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.173" />
 
-        <!-- Campo para precio Socio -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tvPreciosBoloslPista"
             android:layout_width="131dp"
@@ -63,26 +45,23 @@
             app:hintTextColor="@color/AzulTexto"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.189"
+            app:layout_constraintHorizontal_bias="0.146"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.343">
+            app:layout_constraintVertical_bias="0.166">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="61dp"
                 android:backgroundTint="@android:color/transparent"
-                android:enabled="true"
-                android:focusable="false"
-                android:clickable="false"
                 android:fontFamily="@font/russoone_regular"
                 android:textColor="@color/AzulTexto"
                 android:textSelectHandle="@drawable/cursor"
                 android:textSelectHandleLeft="@drawable/cursor"
                 android:textSelectHandleRight="@drawable/cursor" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Campo para precio Invitado -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tvPreciosBolosPistaInvitado"
             android:layout_width="131dp"
@@ -98,24 +77,53 @@
             app:hintTextColor="@color/AzulTexto"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.864"
+            app:layout_constraintHorizontal_bias="0.767"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.343">
+            app:layout_constraintVertical_bias="0.166">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="61dp"
                 android:backgroundTint="@android:color/transparent"
-                android:enabled="true"
-                android:focusable="false"
-                android:clickable="false"
                 android:fontFamily="@font/russoone_regular"
                 android:textColor="@color/AzulTexto"
                 android:textSelectHandle="@drawable/cursor"
                 android:textSelectHandleLeft="@drawable/cursor"
                 android:textSelectHandleRight="@drawable/cursor" />
+
         </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnPreciosBolosAceptar"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/russoone_regular"
+            android:text="@string/subir_precios_bolos"
+            android:textColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.433"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.344"
+            app:strokeColor="@color/AzulTexto" />
+
+        <Button
+            android:id="@+id/btnSubirFotosBolos"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/russoone_regular"
+            android:text="@string/subir_fotos_a_bolos"
+            android:textColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.426"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/AzulTexto" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

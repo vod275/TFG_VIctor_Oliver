@@ -61,5 +61,11 @@
     <string name="invitado_tierra_batida">Invitado tirerra batida</string>
     <string name="socio_tierra_batida">Socio tierra batida</string>
     <string name="precio_bolos">Precio Bolos</string>
+    <string name="bolos_precio_por_partida">BOLOS PRECIO POR PARTIDA</string>
+    <string name="subir_fotos_a_bolos">SUBIR FOTOS A BOLOS</string>
+    <string name="subir_precios_bolos">SUBIR PRECIOS BOLOS</string>
+    <string name="precios_bolos">PRECIOS BOLOS</string>
+    <string name="precios_padel_tenis">PRECIOS PADEL/TENIS</string>
+    <string name="precios_socios">PRECIOS SOCIOS</string>
 
 </resources>

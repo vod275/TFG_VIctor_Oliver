@@ -22,6 +22,9 @@
         android:theme="@style/Theme.Bushido"
         tools:targetApi="31">
         <activity
+            android:name=".ui.admin.AdminBolosFragment"
+            android:exported="false" />
+        <activity
             android:name=".ui.bolos.BolosPreciosFragment"
             android:exported="false" />
         <activity
