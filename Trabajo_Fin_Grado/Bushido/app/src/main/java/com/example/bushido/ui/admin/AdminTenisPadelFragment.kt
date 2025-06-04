@@ -89,13 +89,13 @@ class AdminTenisPadelFragment : Fragment() {
     }
 
     private fun mostrarOpcionesImagen() {
-        val opciones = arrayOf("Galería", "Cámara")
+        val opciones = arrayOf("Hacer foto", "Elegir de galería")
         AlertDialog.Builder(requireContext())
             .setTitle("Seleccionar imagen")
             .setItems(opciones) { _, which ->
                 when (which) {
-                    0 -> launcherGallery.launch("image/*")
-                    1 -> abrirCamara()
+                    0 -> abrirCamara()
+                    1 -> launcherGallery.launch("image/*")
                 }
             }
             .show()

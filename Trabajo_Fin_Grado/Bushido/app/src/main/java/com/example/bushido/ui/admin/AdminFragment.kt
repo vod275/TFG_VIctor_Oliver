@@ -38,6 +38,10 @@ class AdminFragment : Fragment() {
             findNavController().navigate(R.id.nav_admin_TenisPadel)
         }
 
+        binding.btnPreciosSocios.setOnClickListener {
+            findNavController().navigate(R.id.nav_admin_Socios)
+        }
+
         return binding.root
     }
 

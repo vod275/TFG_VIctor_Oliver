@@ -73,5 +73,12 @@
     <string name="subir_fotos_padel">SUBIR FOTOS PADEL</string>
     <string name="subir_precios_tenis_padel">SUBIR PRECIOS TENIS/PADEL</string>
     <string name="subir_fotos_tenis_padel">SUBIR FOTOS TENIS/PADEL</string>
+    <string name="subir_precios_socios">SUBIR PRECIOS SOCIOS</string>
+    <string name="subir_fotos_socios">SUBIR FOTOS SOCIOS</string>
+    <string name="pareja">PAREJA</string>
+    <string name="individuales">INDIVIDUALES</string>
+    <string name="familiar">FAMILIAR</string>
+    <string name="familiar_hasta_4_personas_ni_os_21_a_os">Familiar hasta 4 personas (niños 21 años)</string>
+    <string name="subir_fotos_home">SUBIR FOTOS HOME</string>
 
 </resources>
