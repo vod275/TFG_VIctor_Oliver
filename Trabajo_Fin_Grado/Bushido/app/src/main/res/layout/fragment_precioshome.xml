@@ -47,7 +47,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tvAbonosMañanasIndividual"
+            android:id="@+id/tvAbonosMananasIndividual"
             android:layout_width="240dp"
             android:layout_height="93dp"
             android:hint="@string/abono_ma_anas"
@@ -182,7 +182,7 @@
             android:id="@+id/tvAbonoFamiliar"
             android:layout_width="382dp"
             android:layout_height="92dp"
-            android:hint="Familiar hasta 4 personas (niños 21 años)"
+            android:hint="@string/familiar_hasta_4_personas_ni_os_21_a_os"
             android:textColorHint="@color/AzulTexto"
             app:boxStrokeColor="@color/AzulTexto"
             app:cursorColor="@color/AzulTexto"
