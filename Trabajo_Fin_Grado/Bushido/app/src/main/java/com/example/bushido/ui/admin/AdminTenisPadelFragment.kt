@@ -50,17 +50,21 @@ class AdminTenisPadelFragment : Fragment() {
 
         binding.btnPreciosTenisPadelAceptar.setOnClickListener {
             val precios = mapOf(
-                "padelSocio" to binding.tvPreciosPadelPista.editText?.text.toString(),
-                "padelInvitado" to binding.tvPreciosPadelPistaInvitado.editText?.text.toString(),
-                "tenisSocio" to binding.tvPreciosTenisPistaSocio.editText?.text.toString(),
-                "tenisInvitado" to binding.tvPreciosTenisPistaInvitado.editText?.text.toString(),
-                "tenisSocioTierra" to binding.tvPreciosTenisPistaSocioTierra.editText?.text.toString(),
-                "tenisInvitadoTierra" to binding.tvPreciosTenisPistaInvitadoTierra.editText?.text.toString()
+                "padelSocio" to binding.tvPreciosPadelPista.editText?.text?.toString().orEmpty(),
+                "padelInvitado" to binding.tvPreciosPadelPistaInvitado.editText?.text?.toString().orEmpty(),
+                "tenisSocio" to binding.tvPreciosTenisPistaSocio.editText?.text?.toString().orEmpty(),
+                "tenisInvitado" to binding.tvPreciosTenisPistaInvitado.editText?.text?.toString().orEmpty(),
+                "tenisSocioTierra" to binding.tvPreciosTenisPistaSocioTierra.editText?.text?.toString().orEmpty(),
+                "tenisInvitadoTierra" to binding.tvPreciosTenisPistaInvitadoTierra.editText?.text?.toString().orEmpty()
             )
 
             docRef.set(precios)
-                .addOnSuccessListener { Toast.makeText(requireContext(), "Precios actualizados", Toast.LENGTH_SHORT).show() }
-                .addOnFailureListener { Toast.makeText(requireContext(), "Error al guardar", Toast.LENGTH_SHORT).show() }
+                .addOnSuccessListener {
+                    Toast.makeText(requireContext(), "Precios actualizados", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(requireContext(), "Error al guardar", Toast.LENGTH_SHORT).show()
+                }
         }
 
         binding.btnSubirFotosPadelTenis.setOnClickListener {
@@ -71,6 +75,7 @@ class AdminTenisPadelFragment : Fragment() {
     private fun cargarPrecios() {
         docRef.get().addOnSuccessListener { document ->
             document?.let {
+                // Para cada TextInputLayout, aseguramos que su editText no sea nulo antes de setText
                 binding.tvPreciosPadelPista.editText?.setText(it.getString("padelSocio") ?: "")
                 binding.tvPreciosPadelPistaInvitado.editText?.setText(it.getString("padelInvitado") ?: "")
                 binding.tvPreciosTenisPistaSocio.editText?.setText(it.getString("tenisSocio") ?: "")
@@ -78,6 +83,8 @@ class AdminTenisPadelFragment : Fragment() {
                 binding.tvPreciosTenisPistaSocioTierra.editText?.setText(it.getString("tenisSocioTierra") ?: "")
                 binding.tvPreciosTenisPistaInvitadoTierra.editText?.setText(it.getString("tenisInvitadoTierra") ?: "")
             }
+        }.addOnFailureListener {
+            Toast.makeText(requireContext(), "Error al cargar precios", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -118,4 +125,3 @@ class AdminTenisPadelFragment : Fragment() {
         _binding = null
     }
 }
-
