@@ -62,8 +62,14 @@
     <fragment
         android:id="@+id/nav_admin_Bolos"
         android:name="com.example.bushido.ui.admin.AdminBolosFragment"
-        android:label="¡CAMBIAR pRECIOS BOLOS"
+        android:label="¡CAMBIAR PRECIOS BOLOS"
         tools:layout="@layout/fragment_admin_bolos" />
+
+    <fragment
+        android:id="@+id/nav_admin_TenisPadel"
+        android:name="com.example.bushido.ui.admin.AdminTenisPadelFragment"
+        android:label="¡CAMBIAR TENIS Y PADEL!"
+        tools:layout="@layout/fragment_admin_tenis_padel" />
 
 
 

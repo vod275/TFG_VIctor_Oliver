@@ -67,5 +67,11 @@
     <string name="precios_bolos">PRECIOS BOLOS</string>
     <string name="precios_padel_tenis">PRECIOS PADEL/TENIS</string>
     <string name="precios_socios">PRECIOS SOCIOS</string>
+    <string name="padel">PADEL</string>
+    <string name="tenis">TENIS</string>
+    <string name="subir_fotos_tenis">SUBIR FOTOS TENIS</string>
+    <string name="subir_fotos_padel">SUBIR FOTOS PADEL</string>
+    <string name="subir_precios_tenis_padel">SUBIR PRECIOS TENIS/PADEL</string>
+    <string name="subir_fotos_tenis_padel">SUBIR FOTOS TENIS/PADEL</string>
 
 </resources>

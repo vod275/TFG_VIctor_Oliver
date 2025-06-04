@@ -43,7 +43,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.172"
+            app:layout_constraintVertical_bias="0.255"
             app:strokeColor="@color/AzulTexto" />
 
         <Button
@@ -59,7 +59,7 @@
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.313"
+            app:layout_constraintVertical_bias="0.364"
             app:strokeColor="@color/AzulTexto" />
 
         <Button
@@ -75,7 +75,22 @@
             app:layout_constraintHorizontal_bias="0.516"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.441"
+            app:layout_constraintVertical_bias="0.482"
+            app:strokeColor="@color/AzulTexto" />
+
+        <Button
+            android:id="@+id/btnPreciosGym"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/russoone_regular"
+            android:text="PRECIOS GIMNASIO"
+            android:textColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.591"
             app:strokeColor="@color/AzulTexto" />
 
 

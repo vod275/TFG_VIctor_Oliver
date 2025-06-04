@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.admin.AdminTenisPadelFragment">
+
+
+    <ImageView
+        android:id="@+id/backgroundImage"
+        android:layout_width="412dp"
+        android:layout_height="734dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/precios"
+        android:scaleType="centerCrop"
+        android:src="@drawable/fondo2"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-2dp" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/transparentContainer"
+        android:layout_width="411dp"
+        android:layout_height="734dp"
+        android:background="#C4FFFFFF"
+        tools:layout_editor_absoluteY="-1dp"
+        tools:ignore="MissingConstraints">
+
+
+        <TextView
+            android:id="@+id/tvPreciosPadel"
+            android:layout_width="136dp"
+            android:layout_height="87dp"
+            android:fontFamily="@font/russoone_regular"
+            android:text="@string/padel"
+            android:textColor="@color/AzulTexto"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.607"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.024" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tvPreciosPadelPista"
+            android:layout_width="131dp"
+            android:layout_height="96dp"
+            android:hint="@string/socio"
+            android:textColorHint="@color/AzulTexto"
+            app:boxStrokeColor="@color/AzulTexto"
+            app:cursorColor="@color/AzulTexto"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/AzulTexto"
+            app:helperTextEnabled="true"
+            app:helperTextTextColor="@color/AzulTexto"
+            app:hintTextColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.225"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.098">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:backgroundTint="@android:color/transparent"
+                android:fontFamily="@font/russoone_regular"
+                android:textColor="@color/AzulTexto"
+                android:textSelectHandle="@drawable/cursor"
+                android:textSelectHandleLeft="@drawable/cursor"
+                android:textSelectHandleRight="@drawable/cursor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tvPreciosPadelPistaInvitado"
+            android:layout_width="131dp"
+            android:layout_height="96dp"
+            android:hint="@string/invitado"
+            android:textColorHint="@color/AzulTexto"
+            app:boxStrokeColor="@color/AzulTexto"
+            app:cursorColor="@color/AzulTexto"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/AzulTexto"
+            app:helperTextEnabled="true"
+            app:helperTextTextColor="@color/AzulTexto"
+            app:hintTextColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.785"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.097">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:backgroundTint="@android:color/transparent"
+                android:fontFamily="@font/russoone_regular"
+                android:textColor="@color/AzulTexto"
+                android:textSelectHandle="@drawable/cursor"
+                android:textSelectHandleLeft="@drawable/cursor"
+                android:textSelectHandleRight="@drawable/cursor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:id="@+id/tvPreciosTenis"
+            android:layout_width="136dp"
+            android:layout_height="87dp"
+            android:fontFamily="@font/russoone_regular"
+            android:text="@string/tenis"
+            android:textColor="@color/AzulTexto"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.607"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.301" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tvPreciosTenisPistaSocio"
+            android:layout_width="132dp"
+            android:layout_height="87dp"
+            android:hint="@string/socio"
+            android:textColorHint="@color/AzulTexto"
+            app:boxStrokeColor="@color/AzulTexto"
+            app:cursorColor="@color/AzulTexto"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/AzulTexto"
+            app:helperTextEnabled="true"
+            app:helperTextTextColor="@color/AzulTexto"
+            app:hintTextColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.222"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.38">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:backgroundTint="@android:color/transparent"
+                android:fontFamily="@font/russoone_regular"
+                android:textColor="@color/AzulTexto"
+                android:textSelectHandle="@drawable/cursor"
+                android:textSelectHandleLeft="@drawable/cursor"
+                android:textSelectHandleRight="@drawable/cursor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tvPreciosTenisPistaInvitado"
+            android:layout_width="132dp"
+            android:layout_height="87dp"
+            android:hint="@string/invitado"
+            android:textColorHint="@color/AzulTexto"
+            app:boxStrokeColor="@color/AzulTexto"
+            app:cursorColor="@color/AzulTexto"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/AzulTexto"
+            app:helperTextEnabled="true"
+            app:helperTextTextColor="@color/AzulTexto"
+            app:hintTextColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.784"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.381">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:backgroundTint="@android:color/transparent"
+                android:fontFamily="@font/russoone_regular"
+                android:textColor="@color/AzulTexto"
+                android:textSelectHandle="@drawable/cursor"
+                android:textSelectHandleLeft="@drawable/cursor"
+                android:textSelectHandleRight="@drawable/cursor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tvPreciosTenisPistaSocioTierra"
+            android:layout_width="259dp"
+            android:layout_height="89dp"
+            android:hint="@string/socio_tierra_batida"
+            android:textColorHint="@color/AzulTexto"
+            app:boxStrokeColor="@color/AzulTexto"
+            app:cursorColor="@color/AzulTexto"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/AzulTexto"
+            app:helperTextEnabled="true"
+            app:helperTextTextColor="@color/AzulTexto"
+            app:hintTextColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.551">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:backgroundTint="@android:color/transparent"
+                android:fontFamily="@font/russoone_regular"
+                android:textColor="@color/AzulTexto"
+                android:textSelectHandle="@drawable/cursor"
+                android:textSelectHandleLeft="@drawable/cursor"
+                android:textSelectHandleRight="@drawable/cursor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tvPreciosTenisPistaInvitadoTierra"
+            android:layout_width="259dp"
+            android:layout_height="89dp"
+            android:hint="@string/invitado_tierra_batida"
+            android:textColorHint="@color/AzulTexto"
+            app:boxStrokeColor="@color/AzulTexto"
+            app:cursorColor="@color/AzulTexto"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/AzulTexto"
+            app:helperTextEnabled="true"
+            app:helperTextTextColor="@color/AzulTexto"
+            app:hintTextColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.688">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:backgroundTint="@android:color/transparent"
+                android:fontFamily="@font/russoone_regular"
+                android:textColor="@color/AzulTexto"
+                android:textSelectHandle="@drawable/cursor"
+                android:textSelectHandleLeft="@drawable/cursor"
+                android:textSelectHandleRight="@drawable/cursor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnPreciosTenisPadelAceptar"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/russoone_regular"
+            android:text="@string/subir_precios_tenis_padel"
+            android:textColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.79"
+            app:strokeColor="@color/AzulTexto" />
+
+        <Button
+            android:id="@+id/btnSubirFotosPadelTenis"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/russoone_regular"
+            android:text="@string/subir_fotos_tenis_padel"
+            android:textColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.89"
+            app:strokeColor="@color/AzulTexto" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

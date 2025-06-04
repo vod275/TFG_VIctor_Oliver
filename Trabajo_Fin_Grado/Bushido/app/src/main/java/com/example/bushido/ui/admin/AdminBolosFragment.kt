@@ -1,16 +1,14 @@
 package com.example.bushido.ui.admin
 
-import android.app.Activity
 import android.app.AlertDialog
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.bushido.databinding.FragmentAdminBolosBinding
 import com.google.firebase.firestore.FirebaseFirestore
@@ -25,28 +23,35 @@ class AdminBolosFragment : Fragment() {
 
     private val firestore = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
+    private val storageRef = storage.reference.child("FotosBolos")
 
     private var tempImageUri: Uri? = null
 
-    override fun onCreateView(
-        inflater: android.view.LayoutInflater,
-        container: android.view.ViewGroup?,
-        savedInstanceState: Bundle?
-    ): android.view.View {
-        _binding = FragmentAdminBolosBinding.inflate(inflater, container, false)
-        val view = binding.root
+    private val launcherGallery = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        uri?.let { subirImagen(it) }
+    }
 
-        // Ajuste para insets (opcional)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+    private val launcherCamera = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+        if (success) {
+            tempImageUri?.let { subirImagen(it) }
+        } else {
+            Toast.makeText(requireContext(), "Foto cancelada", Toast.LENGTH_SHORT).show()
         }
+    }
 
-        // --- Aquí cargas los precios desde Firestore para que aparezcan en los campos ---
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentAdminBolosBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         cargarPrecios()
 
-        // Botón para guardar cambios
         binding.btnPreciosBolosAceptar.setOnClickListener {
             val socio = binding.tvPreciosBoloslPista.editText?.text.toString()
             val invitado = binding.tvPreciosBolosPistaInvitado.editText?.text.toString()
@@ -69,14 +74,10 @@ class AdminBolosFragment : Fragment() {
             }
         }
 
-        // Otros botones como subir fotos
         binding.btnSubirFotosBolos.setOnClickListener {
             mostrarDialogoImagen()
         }
-
-        return view
     }
-
 
     private fun cargarPrecios() {
         firestore.collection("BolosPrecio").document("actual")
@@ -87,49 +88,32 @@ class AdminBolosFragment : Fragment() {
             }
     }
 
-    private val seleccionarImagenGaleria = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.data?.let { subirImagen(it) }
-        }
-    }
-
-    private val tomarFoto = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
-        if (success && tempImageUri != null) {
-            subirImagen(tempImageUri!!)
-        }
-    }
-
     private fun mostrarDialogoImagen() {
         val opciones = arrayOf("Hacer foto", "Elegir de galería")
         AlertDialog.Builder(requireContext())
             .setTitle("Seleccionar imagen")
             .setItems(opciones) { _, which ->
                 when (which) {
-                    0 -> {
-                        val uri = crearUriTemporal()
-                        tempImageUri = uri
-                        tomarFoto.launch(uri)
-                    }
-                    1 -> {
-                        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                        seleccionarImagenGaleria.launch(intent)
-                    }
+                    0 -> abrirCamara()
+                    1 -> launcherGallery.launch("image/*")
                 }
             }
             .show()
     }
 
-    private fun crearUriTemporal(): Uri {
-        val archivo = File.createTempFile("foto_bolos", ".jpg", requireContext().cacheDir)
-        return FileProvider.getUriForFile(requireContext(), "com.example.bushido.fileprovider", archivo)
+    private fun abrirCamara() {
+        val photoFile = File.createTempFile("foto_bolos_temp", ".jpg", requireContext().cacheDir)
+        tempImageUri = FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.provider", photoFile)
+        launcherCamera.launch(tempImageUri)
     }
 
     private fun subirImagen(uri: Uri) {
         val nombreArchivo = "IMG_${UUID.randomUUID()}.jpg"
-        val referencia = storage.reference.child("FotosBolos/$nombreArchivo")
+        val referencia = storageRef.child(nombreArchivo)
+
         referencia.putFile(uri)
             .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Imagen subida", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Imagen subida con éxito", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "Error al subir imagen", Toast.LENGTH_SHORT).show()
