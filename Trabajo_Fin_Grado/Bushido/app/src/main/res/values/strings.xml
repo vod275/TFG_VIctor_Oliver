@@ -80,5 +80,8 @@
     <string name="familiar">FAMILIAR</string>
     <string name="familiar_hasta_4_personas_ni_os_21_a_os">Familiar hasta 4 personas (niños 21 años)</string>
     <string name="subir_fotos_home">SUBIR FOTOS HOME</string>
+    <string name="correo">Correo</string>
+    <string name="precios_gimnasio">PRECIOS GIMNASIO</string>
+    <string name="a_adir_admin">AÑADIR ADMIN</string>
 
 </resources>

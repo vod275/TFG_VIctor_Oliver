@@ -27,9 +27,25 @@
         android:layout_width="411dp"
         android:layout_height="734dp"
         android:background="#C4FFFFFF"
-        tools:layout_editor_absoluteY="-1dp"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-2dp">
 
+
+        <Button
+            android:id="@+id/btnPreciosGym"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/russoone_regular"
+            android:text="@string/precios_gimnasio"
+            android:textColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.425"
+            app:strokeColor="@color/AzulTexto" />
 
         <Button
             android:id="@+id/btnPreciosSocios"
@@ -43,7 +59,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.255"
+            app:layout_constraintVertical_bias="0.087"
             app:strokeColor="@color/AzulTexto" />
 
         <Button
@@ -59,7 +75,7 @@
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.364"
+            app:layout_constraintVertical_bias="0.198"
             app:strokeColor="@color/AzulTexto" />
 
         <Button
@@ -75,22 +91,86 @@
             app:layout_constraintHorizontal_bias="0.516"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.482"
+            app:layout_constraintVertical_bias="0.314"
             app:strokeColor="@color/AzulTexto" />
 
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tvContrasenaNuevoAdmin"
+            android:layout_width="173dp"
+            android:layout_height="99dp"
+            android:hint="@string/contrase_a"
+            android:textColorHint="@color/AzulTexto"
+            app:boxStrokeColor="@color/AzulTexto"
+            app:cursorColor="@color/AzulTexto"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/AzulTexto"
+            app:helperTextEnabled="true"
+            app:helperTextTextColor="@color/AzulTexto"
+            app:hintTextColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.792">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:backgroundTint="@android:color/transparent"
+                android:fontFamily="@font/russoone_regular"
+                android:textColor="@color/AzulTexto"
+                android:textSelectHandle="@drawable/cursor"
+                android:textSelectHandleLeft="@drawable/cursor"
+                android:textSelectHandleRight="@drawable/cursor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tvCorreoNuevoAdmin"
+            android:layout_width="238dp"
+            android:layout_height="98dp"
+            android:hint="@string/correo"
+            android:textColorHint="@color/AzulTexto"
+            app:boxStrokeColor="@color/AzulTexto"
+            app:cursorColor="@color/AzulTexto"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/AzulTexto"
+            app:helperTextEnabled="true"
+            app:helperTextTextColor="@color/AzulTexto"
+            app:hintTextColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.45"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.597">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="61dp"
+                android:backgroundTint="@android:color/transparent"
+                android:fontFamily="@font/russoone_regular"
+                android:textColor="@color/AzulTexto"
+                android:textSelectHandle="@drawable/cursor"
+                android:textSelectHandleLeft="@drawable/cursor"
+                android:textSelectHandleRight="@drawable/cursor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <Button
-            android:id="@+id/btnPreciosGym"
+            android:id="@+id/btnAnadirAdmin"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/russoone_regular"
-            android:text="PRECIOS GIMNASIO"
+            android:text="@string/a_adir_admin"
             android:textColor="@color/AzulTexto"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.591"
+            app:layout_constraintVertical_bias="0.899"
             app:strokeColor="@color/AzulTexto" />
 
 

@@ -87,12 +87,40 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        // Ocultar o mostrar "Admin" según rol o email root
+        val menu = navView.menu
+        val db = FirebaseFirestore.getInstance()
+        val userId = UserSession.id
+        val email = UserSession.email
+
+        if (email == "vod27577@hotmail.com") {
+            // Usuario root admin precreado
+            UserSession.rol = "admin"
+            menu.findItem(R.id.nav_admin)?.isVisible = true
+        } else if (userId != null) {
+            // Consultar Firestore para el rol del usuario
+            db.collection(getString(R.string.usuarios)).document(userId)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        val rol = document.getString("rol") ?: "usuario"
+                        UserSession.rol = rol
+                        menu.findItem(R.id.nav_admin)?.isVisible = rol == "admin"
+                    } else {
+                        menu.findItem(R.id.nav_admin)?.isVisible = false
+                    }
+                }
+                .addOnFailureListener {
+                    menu.findItem(R.id.nav_admin)?.isVisible = false
+                }
+        } else {
+            menu.findItem(R.id.nav_admin)?.isVisible = false
+        }
+
         // Obtener el header del NavigationView
         val headerView = navView.getHeaderView(0)
         val tvEmail = headerView.findViewById<TextView>(R.id.tvemail)
         val ibFotoPerfil = headerView.findViewById<ImageButton>(R.id.ibFotoPerfil)
-        val db = FirebaseFirestore.getInstance()
-        val userId = UserSession.id
 
         // Mostrar el nombre del usuario en tiempo real
         if (userId != null) {
@@ -114,9 +142,11 @@ class MainActivity : AppCompatActivity() {
         } else {
             tvEmail.text = getString(R.string.id_no_disponible)
         }
+
         // Cargar la foto de perfil del usuario desde Firebase Storage
         cargarFotoPerfil(ibFotoPerfil)
     }
+
 
     /**
      * Carga la foto de perfil del usuario desde Firebase Storage en el botón de imagen del Drawer.

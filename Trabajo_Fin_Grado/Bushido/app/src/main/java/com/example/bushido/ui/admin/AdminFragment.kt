@@ -4,23 +4,31 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.bushido.R
 import com.example.bushido.databinding.FragmentAdminBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class AdminFragment : Fragment() {
 
     private var _binding: FragmentAdminBinding? = null
     private val binding get() = _binding!!
+    private lateinit var auth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAdminBinding.inflate(inflater, container, false)
+
+        auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
 
         // Ajuste de insets del sistema
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
@@ -41,6 +49,39 @@ class AdminFragment : Fragment() {
         binding.btnPreciosSocios.setOnClickListener {
             findNavController().navigate(R.id.nav_admin_Socios)
         }
+
+        // Añadir nuevo admin
+        binding.btnAnadirAdmin.setOnClickListener {
+            val email = binding.tvCorreoNuevoAdmin.editText?.text.toString().trim()
+            val password = binding.tvContrasenaNuevoAdmin.editText?.text.toString().trim()
+
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                auth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val uid = task.result?.user?.uid
+                            if (uid != null) {
+                                val adminData = hashMapOf("rol" to "admin")
+                                firestore.collection("usuarios").document(uid)
+                                    .set(adminData)  //
+                                    .addOnSuccessListener {
+                                        Toast.makeText(requireContext(), "Admin añadido correctamente", Toast.LENGTH_SHORT).show()
+                                        binding.tvCorreoNuevoAdmin.editText?.setText("")
+                                        binding.tvContrasenaNuevoAdmin.editText?.setText("")
+                                    }
+                                    .addOnFailureListener { e ->
+                                        Toast.makeText(requireContext(), "Error al guardar en Firestore: ${e.message}", Toast.LENGTH_LONG).show()
+                                    }
+                            }
+                        } else {
+                            Toast.makeText(requireContext(), "Error al crear usuario: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                        }
+                    }
+            } else {
+                Toast.makeText(requireContext(), "Introduce un correo y una contraseña", Toast.LENGTH_SHORT).show()
+            }
+        }
+
 
         return binding.root
     }

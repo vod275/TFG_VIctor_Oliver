@@ -19,28 +19,22 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.bushido.databinding.FragmentPerfilBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import objetos.UserSession
 import java.io.ByteArrayOutputStream
-import java.text.SimpleDateFormat
-import java.util.*
 
 class PerfilFragment : Fragment() {
 
-    // Binding para el fragmento
     private var _binding: FragmentPerfilBinding? = null
     private val binding get() = _binding!!
 
-    private val PREFS_NAME = "PerfilPrefs"
     private val storageRef = FirebaseStorage.getInstance().reference
 
-    // Códigos para identificar la acción realizada (galería o cámara)
     private val PICK_IMAGE = 1001
     private val TAKE_PHOTO = 1002
 
-    private var currentPhotoUri: Uri? = null
-
-    // Permiso de cámara
+    // Lanzador para pedir permiso de cámara
     private val requestCameraPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
@@ -55,20 +49,14 @@ class PerfilFragment : Fragment() {
     ): View {
         _binding = FragmentPerfilBinding.inflate(inflater, container, false)
 
-        // Obtener UID actual del usuario
+        // Obtener UID actual del usuario y guardar en UserSession
         UserSession.id = FirebaseAuth.getInstance().currentUser?.uid
 
-        // Cargar datos y foto del usuario
         cargarDatosGuardados()
         cargarFotoPerfil()
 
-        // Acciones para seleccionar o tomar foto de perfil
         binding.ibFotoPerfil.setOnClickListener { mostrarOpcionesFoto() }
-
-        // Acción para guardar los datos del perfil
-        binding.btnGuardar.setOnClickListener {
-            guardarDatosUsuario()
-        }
+        binding.btnGuardar.setOnClickListener { guardarDatosUsuario() }
 
         return binding.root
     }
@@ -78,9 +66,6 @@ class PerfilFragment : Fragment() {
         _binding = null
     }
 
-    /**
-     * Carga los datos guardados del usuario desde Firestore
-     */
     private fun cargarDatosGuardados() {
         val uid = UserSession.id ?: return
         val db = com.google.firebase.firestore.FirebaseFirestore.getInstance()
@@ -88,15 +73,10 @@ class PerfilFragment : Fragment() {
         db.collection("usuarios").document(uid).get()
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
-                    val nombre = document.getString("nombre") ?: ""
-                    val apellidos = document.getString("apellidos") ?: ""
-                    val fechaNacimiento = document.getString("fechaNacimiento") ?: ""
-                    val telefono = document.getString("telefono") ?: ""
-
-                    binding.tvNombreAjustes.editText?.setText(nombre)
-                    binding.tvApellidos.editText?.setText(apellidos)
-                    binding.etFechaNacimiento.editText?.setText(fechaNacimiento)
-                    binding.tvTelefono.editText?.setText(telefono)
+                    binding.tvNombreAjustes.editText?.setText(document.getString("nombre") ?: "")
+                    binding.tvApellidos.editText?.setText(document.getString("apellidos") ?: "")
+                    binding.etFechaNacimiento.editText?.setText(document.getString("fechaNacimiento") ?: "")
+                    binding.tvTelefono.editText?.setText(document.getString("telefono") ?: "")
                 }
             }
             .addOnFailureListener {
@@ -104,10 +84,6 @@ class PerfilFragment : Fragment() {
             }
     }
 
-
-    /**
-     * Muestra un diálogo con opciones para seleccionar foto de galería o tomar una nueva
-     */
     private fun mostrarOpcionesFoto() {
         val opciones = arrayOf("Galería", "Cámara")
         AlertDialog.Builder(requireContext())
@@ -120,43 +96,26 @@ class PerfilFragment : Fragment() {
             }.show()
     }
 
-    /**
-     * Verifica si el permiso de cámara está concedido o lo solicita
-     */
     private fun verificarPermisoYCamara() {
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.CAMERA
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             tomarFotoConCamara()
         } else {
             requestCameraPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
     }
 
-    /**
-     * Abre la galería para seleccionar una imagen
-     */
     private fun seleccionarDesdeGaleria() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, PICK_IMAGE)
     }
 
-    /**
-     * Abre la cámara para tomar una foto
-     */
     private fun tomarFotoConCamara() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent, TAKE_PHOTO)
     }
 
-    /**
-     * Recibe el resultado de la galería o cámara y procesa la imagen
-     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 PICK_IMAGE -> {
@@ -171,9 +130,6 @@ class PerfilFragment : Fragment() {
         }
     }
 
-    /**
-     * Convierte un Bitmap a Uri para subirlo a Firebase
-     */
     private fun bitmapToUri(bitmap: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
@@ -181,9 +137,6 @@ class PerfilFragment : Fragment() {
         return Uri.parse(path)
     }
 
-    /**
-     * Sube una imagen a Firebase Storage y actualiza la imagen de perfil
-     */
     private fun subirImagenAFirebase(uri: Uri) {
         val uid = UserSession.id ?: return
         val ref = storageRef.child("FotosUser/$uid.jpg")
@@ -198,9 +151,6 @@ class PerfilFragment : Fragment() {
             }
     }
 
-    /**
-     * Carga la imagen de perfil desde Firebase Storage usando Glide
-     */
     private fun cargarFotoPerfil() {
         val uid = UserSession.id ?: return
         val ref = storageRef.child("FotosUser/$uid.jpg")
@@ -209,14 +159,10 @@ class PerfilFragment : Fragment() {
         }
     }
 
-    /**
-     * Guarda los datos del usuario en Firestore tras validarlos
-     */
     private fun guardarDatosUsuario() {
         val uid = UserSession.id ?: return
         val db = com.google.firebase.firestore.FirebaseFirestore.getInstance()
 
-        // Obtener los valores de los campos
         val nombre = binding.tvNombreAjustes.editText?.text.toString()
         val apellidos = binding.tvApellidos.editText?.text.toString()
         val fechaNacimiento = binding.etFechaNacimiento.editText?.text.toString()
@@ -230,7 +176,7 @@ class PerfilFragment : Fragment() {
         )
 
         db.collection("usuarios").document(uid)
-            .set(usuarioMap)
+            .set(usuarioMap, SetOptions.merge())
             .addOnSuccessListener {
                 Toast.makeText(requireContext(), "Datos guardados correctamente", Toast.LENGTH_SHORT).show()
             }
