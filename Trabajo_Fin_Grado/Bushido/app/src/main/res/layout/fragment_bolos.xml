@@ -60,7 +60,7 @@
             android:fontFamily="@font/russoone_regular"
             android:shadowRadius="1"
             android:text="¡¡DEMUESTRA QUE ERES EL MEJOR Y HAZ UN PLENO!!"
-            android:textColor="#50c8ef"
+            android:textColor="@color/AzulTexto"
             android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -77,6 +77,7 @@
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
             android:src="@drawable/flecha"
+            android:tint="@color/AzulTexto"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -110,10 +111,10 @@
             android:textColor="@color/AzulTexto"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.862"
+            app:layout_constraintVertical_bias="0.861"
             app:strokeColor="@color/AzulTexto" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

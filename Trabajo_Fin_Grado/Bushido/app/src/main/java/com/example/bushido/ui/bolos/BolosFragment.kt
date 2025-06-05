@@ -59,6 +59,7 @@ class BolosFragment : Fragment() {
 
         binding.btnReservarPista.setOnClickListener {
             binding.btnReservarPista.startAnimation(animClick)
+            findNavController().navigate(R.id.nav_reservas_bolos)
         }
 
         iniciarAnimacionesVaiven()

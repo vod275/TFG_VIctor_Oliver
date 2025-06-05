@@ -84,5 +84,6 @@
     <string name="precios_gimnasio">PRECIOS GIMNASIO</string>
     <string name="a_adir_admin">AÑADIR ADMIN</string>
     <string name="a_adir_usuario">AÑADIR USUARIO</string>
+    <string name="lista_de_reservas">Lista de Reservas</string>
 
 </resources>

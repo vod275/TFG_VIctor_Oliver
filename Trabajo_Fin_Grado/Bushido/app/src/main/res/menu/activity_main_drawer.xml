@@ -23,6 +23,11 @@
             android:title="@string/bolos" />
 
         <item
+            android:id="@+id/nav_listaReservas"
+            android:icon="@drawable/listareservas"
+            android:title="@string/lista_de_reservas" />
+
+        <item
             android:id="@+id/nav_admin"
             android:icon="@drawable/perfil"
             android:title="@string/administrador" />

@@ -51,7 +51,19 @@
         android:id="@+id/nav_precios_bolos"
         android:name="com.example.bushido.ui.bolos.BolosPreciosFragment"
         android:label="@string/precio_bolos"
-        tools:layout="@layout/fragment_bolos" />
+        tools:layout="@layout/fragment_precio_bolos" />
+
+    <fragment
+        android:id="@+id/nav_reservas_bolos"
+        android:name="com.example.bushido.ui.bolos.BolosReservasFragment"
+        android:label="Reservas Pista de Bolos"
+        tools:layout="@layout/fragment_bolos_reservas" />
+
+    <fragment
+        android:id="@+id/nav_listaReservas"
+        android:name="com.example.bushido.ui.reservasLista.ListaReservasFragment"
+        android:label="@string/lista_de_reservas"
+        tools:layout="@layout/fragment_lista_reservas" />
 
 
     <fragment

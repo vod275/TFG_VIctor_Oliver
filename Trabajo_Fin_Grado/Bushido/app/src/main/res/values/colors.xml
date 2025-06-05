@@ -5,7 +5,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="VerdeFont">#265006</color>
-    <color name="AzulTexto">#50c8ef</color>
+    <color name="AzulTexto">#29B2CC</color>
     <color name="AzulOscuro">#003DFF</color>
     <color name="AzulSecundario">#021845</color>
 </resources>
