@@ -7,7 +7,7 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- Permisos necesarios para la autenticación con Google -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -21,12 +21,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bushido"
         tools:targetApi="31">
+
         <activity
             android:name=".ui.admin.AdminHomeFragment"
-            android:exported="false" />
-        <activity
-            android:name=".ui.admin.AdminHomeFragment1"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -40,40 +39,57 @@
 
         <activity
             android:name=".ui.admin.AdminTenisPadelFragment"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.admin.AdminBolosFragment"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.bolos.BolosPreciosFragment"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.admin.AdminFragment"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.padel_tenis.Padel_tenisPreciosFragment"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.home.HomePreciosFragment"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.home.HomeInfoFragment"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:theme="@style/Theme.Bushido.NoActionBar" />
+            android:theme="@style/Theme.Bushido.NoActionBar"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Bushido.NoActionBar">
+            android:theme="@style/Theme.Bushido.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Configuración de Google Sign-In -->
+        </activity>
+
         <meta-data
             android:name="com.google.android.gms.auth.api.signin"
             android:value="@string/default_web_client_id" />
@@ -81,7 +97,7 @@
         <activity
             android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
             android:exported="false"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:screenOrientation="portrait" />
     </application>
-
 </manifest>
