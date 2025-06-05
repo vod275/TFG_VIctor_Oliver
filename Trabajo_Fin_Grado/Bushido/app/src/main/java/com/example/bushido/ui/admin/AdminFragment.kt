@@ -82,6 +82,43 @@ class AdminFragment : Fragment() {
             }
         }
 
+        // Añadir nuevo usuario normal (no admin)
+        binding.btnAnadirUsuario.setOnClickListener {
+            val email = binding.tvCorreoNuevoAdmin.editText?.text.toString().trim()
+            val password = binding.tvContrasenaNuevoAdmin.editText?.text.toString().trim()
+
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                auth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val uid = task.result?.user?.uid
+                            if (uid != null) {
+                                // No ponemos rol, solo creamos el documento vacío o con campos básicos si quieres
+                                val userData = hashMapOf<String, Any>(
+                                    "email" to email  // Opcional: puedes guardar otros datos básicos si quieres
+                                )
+
+                                firestore.collection("usuarios").document(uid)
+                                    .set(userData)
+                                    .addOnSuccessListener {
+                                        Toast.makeText(requireContext(), "Usuario normal añadido correctamente", Toast.LENGTH_SHORT).show()
+                                        binding.tvCorreoNuevoAdmin.editText?.setText("")
+                                        binding.tvContrasenaNuevoAdmin.editText?.setText("")
+                                    }
+                                    .addOnFailureListener { e ->
+                                        Toast.makeText(requireContext(), "Error al guardar en Firestore: ${e.message}", Toast.LENGTH_LONG).show()
+                                    }
+                            }
+                        } else {
+                            Toast.makeText(requireContext(), "Error al crear usuario: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                        }
+                    }
+            } else {
+                Toast.makeText(requireContext(), "Introduce un correo y una contraseña", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
 
         return binding.root
     }

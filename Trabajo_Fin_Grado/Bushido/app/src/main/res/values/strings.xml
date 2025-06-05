@@ -83,5 +83,6 @@
     <string name="correo">Correo</string>
     <string name="precios_gimnasio">PRECIOS GIMNASIO</string>
     <string name="a_adir_admin">AÑADIR ADMIN</string>
+    <string name="a_adir_usuario">AÑADIR USUARIO</string>
 
 </resources>
