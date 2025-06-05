@@ -6,15 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.bushido.R
-import com.google.android.material.button.MaterialButton
 import com.example.bushido.databinding.FragmentBolosReservasBinding
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.FirebaseFirestore
 import objetos.UserSession
 import java.util.Calendar
@@ -23,12 +22,9 @@ class BolosReservasFragment : Fragment() {
 
     private var _binding: FragmentBolosReservasBinding? = null
     private val binding get() = _binding!!
+
     private var pistaSeleccionada: MaterialButton? = null
-    private var horasBloqueadas: List<String> = emptyList()
     private val pistasBloqueadas = mutableMapOf<Int, MutableSet<String>>() // pista -> horas bloqueadas
-
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -98,7 +94,6 @@ class BolosReservasFragment : Fragment() {
         cargarBloqueosDePistas(fechaClave)
     }
 
-
     private fun cargarBloqueosDePistas(fecha: String) {
         val db = FirebaseFirestore.getInstance()
         pistasBloqueadas.clear()
@@ -141,7 +136,6 @@ class BolosReservasFragment : Fragment() {
                 val horaSeleccionada = parent.getItemAtPosition(position).toString()
                 actualizarBotonesPistas(horaSeleccionada)
 
-                // Si la pista seleccionada está bloqueada para esta hora, deseleccionar
                 pistaSeleccionada?.let { boton ->
                     val pistaTexto = boton.text.toString()
                     val numero = pistaTexto.substringAfter("PISTA ").toIntOrNull()
@@ -159,22 +153,16 @@ class BolosReservasFragment : Fragment() {
         }
     }
 
-
-
-
-
     private fun configurarBotonesPistas() {
-        val botones: List<MaterialButton> = listOf(
+        val botones = listOf(
             binding.btnPista1,
             binding.btnPista2,
             binding.btnPista3,
             binding.btnPista4
         )
 
-
         for (boton in botones) {
             boton.setOnClickListener {
-                // Restaurar estilo de botón anterior si existe
                 pistaSeleccionada?.apply {
                     backgroundTintList = ContextCompat.getColorStateList(requireContext(), android.R.color.transparent)
                     setTextColor(ContextCompat.getColor(requireContext(), R.color.AzulTexto))
@@ -187,7 +175,6 @@ class BolosReservasFragment : Fragment() {
                 boton.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
                 boton.strokeColor = ContextCompat.getColorStateList(requireContext(), R.color.AzulTexto)
 
-                // Actualizar horas disponibles si ya hay fecha seleccionada
                 val fechaTexto = binding.etFechaReserva.text.toString()
                 if (fechaTexto.isNotEmpty()) {
                     val partes = fechaTexto.split("/")
@@ -199,10 +186,8 @@ class BolosReservasFragment : Fragment() {
                     }
                 }
             }
-
         }
     }
-
 
     private fun realizarReserva() {
         val userId = UserSession.id
@@ -221,72 +206,89 @@ class BolosReservasFragment : Fragment() {
             return
         }
 
-        // Validar que la pista no esté ya reservada en esa hora
-        val bloqueadas = pistasBloqueadas[numeroPistaBolos]
-        if (bloqueadas != null && bloqueadas.contains(hora)) {
-            Toast.makeText(requireContext(), "Esa pista no está disponible a esa hora", Toast.LENGTH_LONG).show()
-            binding.spinnerHoras.setSelection(0)
-            return
-        }
-
         val db = FirebaseFirestore.getInstance()
+        val fechaFirestore = fecha.replace("/", "-")
+        val horaDocumento = hora.replace(":", "-")
 
-        // Obtener el precio y guardar la reserva
-        val precioRef = db.collection("BolosPrecio").document("actual")
-        precioRef.get().addOnSuccessListener { doc ->
-            val precioString = if (esSocio) doc.getString("socio") else doc.getString("invitado")
-            val precio = precioString?.toDoubleOrNull()
+        // Verificación de bloqueo en tiempo real
+        val bloqueoRef = db.collection("Bolos")
+            .document("PistaBolos")
+            .collection("bloqueos")
+            .document("pista$numeroPistaBolos")
+            .collection(fechaFirestore)
+            .document(horaDocumento)
 
-            if (precio == null) {
-                Toast.makeText(requireContext(), "No se pudo obtener un precio válido", Toast.LENGTH_SHORT).show()
+        bloqueoRef.get().addOnSuccessListener { bloqueoDoc ->
+            if (bloqueoDoc.exists()) {
+                Toast.makeText(requireContext(), "Esa pista ya está ocupada a esa hora", Toast.LENGTH_LONG).show()
                 return@addOnSuccessListener
             }
 
-            val reserva = hashMapOf(
-                "usuarioId" to userId,
-                "nombre" to userName,
-                "numeroPistaBolos" to numeroPistaBolos,
-                "fecha" to fecha,
-                "hora" to hora,
-                "precio" to precio
-            )
-
-            val idReserva = "${userId}_${fecha.replace("/", "-")}_${hora.replace(":", "-")}"
-
-            db.collection("reservas")
-                .document(idReserva)
-                .set(reserva)
-                .addOnSuccessListener {
-                    Toast.makeText(requireContext(), "Reserva realizada correctamente", Toast.LENGTH_SHORT).show()
-                    bloquearHoraPista(numeroPistaBolos, fecha, hora)
+            // Verificar si el usuario ya tiene una reserva a esa fecha y hora
+            val idReserva = "${userId}_${fechaFirestore}_${horaDocumento}"
+            db.collection("reservas").document(idReserva).get().addOnSuccessListener { doc ->
+                if (doc.exists()) {
+                    Toast.makeText(requireContext(), "Ya tienes una reserva a esa hora", Toast.LENGTH_SHORT).show()
+                    return@addOnSuccessListener
                 }
-                .addOnFailureListener {
-                    Toast.makeText(requireContext(), "Error al guardar la reserva", Toast.LENGTH_SHORT).show()
+
+                // Obtener precio y proceder a reservar
+                db.collection("BolosPrecio").document("actual").get().addOnSuccessListener { docPrecio ->
+                    val precioString = if (esSocio) docPrecio.getString("socio") else docPrecio.getString("invitado")
+                    val precio = precioString?.toDoubleOrNull()
+
+                    if (precio == null) {
+                        Toast.makeText(requireContext(), "No se pudo obtener un precio válido", Toast.LENGTH_SHORT).show()
+                        return@addOnSuccessListener
+                    }
+
+                    val reserva = hashMapOf(
+                        "usuarioId" to userId,
+                        "nombre" to userName,
+                        "numeroPistaBolos" to numeroPistaBolos,
+                        "fecha" to fecha,
+                        "hora" to hora,
+                        "precio" to precio
+                    )
+
+                    db.collection("reservas").document(idReserva).set(reserva)
+                        .addOnSuccessListener {
+                            Toast.makeText(requireContext(), "Reserva realizada correctamente", Toast.LENGTH_SHORT).show()
+                            bloquearHoraPista(numeroPistaBolos, fecha, hora)
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(requireContext(), "Error al guardar la reserva", Toast.LENGTH_SHORT).show()
+                        }
+
+                }.addOnFailureListener {
+                    Toast.makeText(requireContext(), "Error al obtener el precio", Toast.LENGTH_SHORT).show()
                 }
+
+            }.addOnFailureListener {
+                Toast.makeText(requireContext(), "Error al verificar reservas del usuario", Toast.LENGTH_SHORT).show()
+            }
+
         }.addOnFailureListener {
-            Toast.makeText(requireContext(), "Error al obtener el precio", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Error al verificar bloqueos", Toast.LENGTH_SHORT).show()
         }
     }
 
 
-
     private fun bloquearHoraPista(numeroPista: Int, fecha: String, hora: String) {
         val db = FirebaseFirestore.getInstance()
-        val bloqueo = hashMapOf(
-            "hora" to hora
-        )
+        val bloqueo = hashMapOf("hora" to hora)
 
         db.collection("Bolos")
             .document("PistaBolos")
             .collection("bloqueos")
             .document("pista$numeroPista")
-            .collection(fecha.replace("/", "-")) // Fecha como subcolección (opcional)
-            .document(hora.replace(":", "-")) // Documento por hora
+            .collection(fecha.replace("/", "-"))
+            .document(hora.replace(":", "-"))
             .set(bloqueo)
     }
 
     private fun actualizarBotonesPistas(horaSeleccionada: String) {
-        val botones: List<MaterialButton> = listOf(
+        val botones = listOf(
             binding.btnPista1,
             binding.btnPista2,
             binding.btnPista3,
@@ -305,15 +307,10 @@ class BolosReservasFragment : Fragment() {
             }
         }
 
-        // Si la pista seleccionada quedó deshabilitada, deseleccionarla
         if (pistaSeleccionada != null && !pistaSeleccionada!!.isEnabled) {
             pistaSeleccionada = null
         }
     }
-
-
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()
