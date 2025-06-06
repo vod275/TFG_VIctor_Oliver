@@ -197,6 +197,7 @@ class BolosReservasFragment : Fragment() {
 
         val pistaTexto = pistaSeleccionada?.text?.toString()
         val numeroPistaBolos = pistaTexto?.substringAfter("PISTA ")?.toIntOrNull()
+        val tipo = getString(R.string.bolos)
 
         val fecha = binding.etFechaReserva.text.toString()
         val hora = binding.spinnerHoras.selectedItem?.toString()
@@ -248,7 +249,8 @@ class BolosReservasFragment : Fragment() {
                         "numeroPistaBolos" to numeroPistaBolos,
                         "fecha" to fecha,
                         "hora" to hora,
-                        "precio" to precio
+                        "precio" to precio,
+                        "tipo" to tipo
                     )
 
                     db.collection("reservas").document(idReserva).set(reserva)
@@ -274,18 +276,23 @@ class BolosReservasFragment : Fragment() {
     }
 
 
-    private fun bloquearHoraPista(numeroPista: Int, fecha: String, hora: String) {
+    private fun bloquearHoraPista(pista: Int, fecha: String, hora: String) {
         val db = FirebaseFirestore.getInstance()
-        val bloqueo = hashMapOf("hora" to hora)
+        val fechaFirestore = fecha.replace("/", "-")
+        val horaFirestore = hora.replace(":", "-")
 
-        db.collection("Bolos")
+        val bloqueoRef = db.collection("Bolos")
             .document("PistaBolos")
             .collection("bloqueos")
-            .document("pista$numeroPista")
-            .collection(fecha.replace("/", "-"))
-            .document(hora.replace(":", "-"))
-            .set(bloqueo)
+            .document("pista$pista")
+            .collection(fechaFirestore)
+            .document(horaFirestore)
+
+        val data = hashMapOf("bloqueada" to true)
+
+        bloqueoRef.set(data)
     }
+
 
     private fun actualizarBotonesPistas(horaSeleccionada: String) {
         val botones = listOf(
