@@ -98,31 +98,27 @@ class BolosReservasFragment : Fragment() {
         val db = FirebaseFirestore.getInstance()
         pistasBloqueadas.clear()
 
-        var pistasCargadas = 0
-        for (i in 1..4) {
-            val bloqueos = mutableSetOf<String>()
-            val ref = db.collection("Bolos")
-                .document("PistaBolos")
-                .collection("bloqueos")
-                .document("pista$i")
-                .collection(fecha)
-
-            ref.get().addOnSuccessListener { snapshot ->
+        db.collection("reservas")
+            .whereEqualTo("fecha", fecha)
+            .get()
+            .addOnSuccessListener { snapshot ->
                 for (doc in snapshot.documents) {
-                    doc.getString("hora")?.let { bloqueos.add(it) }
-                }
-                pistasBloqueadas[i] = bloqueos
-
-                pistasCargadas++
-                if (pistasCargadas == 4) {
-                    setupHoraSpinnerListener()
-                    val horaSeleccionada = binding.spinnerHoras.selectedItem?.toString()
-                    if (horaSeleccionada != null) {
-                        actualizarBotonesPistas(horaSeleccionada)
+                    val pista = doc.getLong("numeroPistaBolos")?.toInt()
+                    val hora = doc.getString("hora")
+                    if (pista != null && hora != null) {
+                        val setHoras = pistasBloqueadas.getOrPut(pista) { mutableSetOf() }
+                        setHoras.add(hora)
                     }
                 }
+                setupHoraSpinnerListener()
+                val horaSeleccionada = binding.spinnerHoras.selectedItem?.toString()
+                if (horaSeleccionada != null) {
+                    actualizarBotonesPistas(horaSeleccionada)
+                }
             }
-        }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Error al cargar reservas", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun setupHoraSpinnerListener() {
@@ -209,94 +205,76 @@ class BolosReservasFragment : Fragment() {
 
         val db = FirebaseFirestore.getInstance()
         val fechaFirestore = fecha.replace("/", "-")
-        val horaDocumento = hora.replace(":", "-")
+        val horaFirestore = hora.replace(":", "-")
 
-        // Referencia al bloqueo de la pista para esa fecha y hora
-        val bloqueoRef = db.collection("Bolos")
-            .document("PistaBolos")
-            .collection("bloqueos")
-            .document("pista$numeroPistaBolos")
-            .collection(fechaFirestore)
-            .document(horaDocumento)
+        // ID único de la reserva
+        val idReserva = "${userId}_${fechaFirestore}_${horaFirestore}"
 
-        bloqueoRef.get().addOnSuccessListener { bloqueoDoc ->
-            if (bloqueoDoc.exists()) {
-                Toast.makeText(requireContext(), "Esa pista ya está ocupada a esa hora", Toast.LENGTH_LONG).show()
-                return@addOnSuccessListener
-            }
-
-            // ID único de la reserva
-            val idReserva = "${userId}_${fechaFirestore}_${horaDocumento}"
-
-            // Comprobar si el usuario ya tiene una reserva a esa fecha y hora
-            db.collection("reservas").document(idReserva).get().addOnSuccessListener { doc ->
-                if (doc.exists()) {
-                    Toast.makeText(requireContext(), "Ya tienes una reserva a esa hora", Toast.LENGTH_SHORT).show()
+        // Buscar si ya existe una reserva para esa pista, fecha y hora (bloqueo)
+        db.collection("reservas")
+            .whereEqualTo("numeroPistaBolos", numeroPistaBolos)
+            .whereEqualTo("fecha", fecha)
+            .whereEqualTo("hora", hora)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+                    Toast.makeText(requireContext(), "Esa pista ya está ocupada a esa hora", Toast.LENGTH_LONG).show()
                     return@addOnSuccessListener
                 }
 
-                // Obtener el precio según tipo de usuario
-                db.collection("BolosPrecio").document("actual").get().addOnSuccessListener { docPrecio ->
-                    val precioString = if (esSocio) docPrecio.getString("socio") else docPrecio.getString("invitado")
-                    val precio = precioString?.toDoubleOrNull()
+                // Verificar si el usuario ya tiene reserva a esa hora
+                db.collection("reservas").document(idReserva).get()
+                    .addOnSuccessListener { doc ->
+                        if (doc.exists()) {
+                            Toast.makeText(requireContext(), "Ya tienes una reserva a esa hora", Toast.LENGTH_SHORT).show()
+                            return@addOnSuccessListener
+                        }
 
-                    if (precio == null) {
-                        Toast.makeText(requireContext(), "No se pudo obtener un precio válido", Toast.LENGTH_SHORT).show()
-                        return@addOnSuccessListener
+                        // Obtener precio y hacer reserva
+                        db.collection("BolosPrecio").document("actual").get()
+                            .addOnSuccessListener { docPrecio ->
+                                val precioString = if (esSocio) docPrecio.getString("socio") else docPrecio.getString("invitado")
+                                val precio = precioString?.toDoubleOrNull()
+
+                                if (precio == null) {
+                                    Toast.makeText(requireContext(), "No se pudo obtener un precio válido", Toast.LENGTH_SHORT).show()
+                                    return@addOnSuccessListener
+                                }
+
+                                val reserva = hashMapOf(
+                                    "usuarioId" to userId,
+                                    "nombre" to userName,
+                                    "numeroPista" to numeroPistaBolos,
+                                    "fecha" to fecha,
+                                    "hora" to hora,
+                                    "precio" to precio,
+                                    "tipo" to tipo,
+                                    "bloqueada" to true,  // <-- aquí indicas que está bloqueada/reservada
+                                )
+
+                                // Guardar reserva (y bloqueo implícito)
+                                db.collection("reservas").document(idReserva).set(reserva)
+                                    .addOnSuccessListener {
+                                        Toast.makeText(requireContext(), "Reserva realizada correctamente", Toast.LENGTH_SHORT).show()
+                                        // Aquí no hace falta guardar bloqueo por separado, porque la reserva implica bloqueo
+                                    }
+                                    .addOnFailureListener {
+                                        Toast.makeText(requireContext(), "Error al guardar la reserva", Toast.LENGTH_SHORT).show()
+                                    }
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(requireContext(), "Error al obtener el precio", Toast.LENGTH_SHORT).show()
+                            }
                     }
-
-                    val reserva = hashMapOf(
-                        "usuarioId" to userId,
-                        "nombre" to userName,
-                        "numeroPistaBolos" to numeroPistaBolos,
-                        "fecha" to fecha,
-                        "hora" to hora,
-                        "precio" to precio,
-                        "tipo" to tipo
-                    )
-
-                    // Guardar la reserva en Firestore
-                    db.collection("reservas").document(idReserva).set(reserva)
-                        .addOnSuccessListener {
-                            Toast.makeText(requireContext(), "Reserva realizada correctamente", Toast.LENGTH_SHORT).show()
-                            // Bloquear la hora y pista para que no se pueda reservar otra vez
-                            bloquearHoraPista(numeroPistaBolos, fecha, hora)
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(requireContext(), "Error al guardar la reserva", Toast.LENGTH_SHORT).show()
-                        }
-
-                }.addOnFailureListener {
-                    Toast.makeText(requireContext(), "Error al obtener el precio", Toast.LENGTH_SHORT).show()
-                }
-
-            }.addOnFailureListener {
-                Toast.makeText(requireContext(), "Error al verificar reservas del usuario", Toast.LENGTH_SHORT).show()
+                    .addOnFailureListener {
+                        Toast.makeText(requireContext(), "Error al verificar reservas del usuario", Toast.LENGTH_SHORT).show()
+                    }
             }
-
-        }.addOnFailureListener {
-            Toast.makeText(requireContext(), "Error al verificar bloqueos", Toast.LENGTH_SHORT).show()
-        }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Error al verificar bloqueos", Toast.LENGTH_SHORT).show()
+            }
     }
 
-
-
-    private fun bloquearHoraPista(pista: Int, fecha: String, hora: String) {
-        val db = FirebaseFirestore.getInstance()
-        val fechaFirestore = fecha.replace("/", "-")
-        val horaFirestore = hora.replace(":", "-")
-
-        val bloqueoRef = db.collection("Bolos")
-            .document("PistaBolos")
-            .collection("bloqueos")
-            .document("pista$pista")
-            .collection(fechaFirestore)
-            .document(horaFirestore)
-
-        val data = hashMapOf("bloqueada" to true)
-
-        bloqueoRef.set(data)
-    }
 
 
     private fun actualizarBotonesPistas(horaSeleccionada: String) {

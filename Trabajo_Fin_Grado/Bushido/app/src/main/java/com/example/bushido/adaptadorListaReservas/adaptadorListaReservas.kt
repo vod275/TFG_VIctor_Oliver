@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bushido.R
 import com.example.bushido.models.ReservaBolos
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class ListaReservasAdapter(
     private val reservas: MutableList<ReservaBolos>,
@@ -26,56 +28,38 @@ class ListaReservasAdapter(
     override fun onBindViewHolder(holder: ReservaViewHolder, position: Int) {
         val reserva = reservas[position]
         holder.bind(reserva)
-
-        holder.itemView.setOnLongClickListener {
-            AlertDialog.Builder(context)
-                .setTitle("Eliminar reserva")
-                .setMessage("¿Deseas eliminar esta reserva?")
-                .setPositiveButton("Sí") { _, _ ->
-                    eliminarReserva(reserva, position)
-                }
-                .setNegativeButton("No", null)
-                .show()
-            true
+        holder.setLongClickListener {
+            mostrarDialogoEliminar(reserva, position)
         }
     }
 
     override fun getItemCount(): Int = reservas.size
 
+    private fun mostrarDialogoEliminar(reserva: ReservaBolos, position: Int) {
+        AlertDialog.Builder(context)
+            .setTitle("Eliminar reserva")
+            .setMessage("¿Deseas eliminar esta reserva?")
+            .setPositiveButton("Sí") { _, _ ->
+                eliminarReserva(reserva, position)
+            }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
     private fun eliminarReserva(reserva: ReservaBolos, position: Int) {
         val db = FirebaseFirestore.getInstance()
         val docId = reserva.idReserva ?: return
-        val pistaDoc = "pista${reserva.numeroPistaBolos}"
-        val fecha = reserva.fecha ?: return
-        val horaDoc = reserva.hora?.replace(":", "-") ?: return
 
-        // Primero borrar la reserva
         db.collection("reservas").document(docId)
             .delete()
             .addOnSuccessListener {
-                // Luego actualizar el bloqueo a false
-                db.collection("Bolos")
-                    .document("PistaBolos")
-                    .collection("bloqueos")
-                    .document(pistaDoc)
-                    .collection(fecha)
-                    .document(horaDoc)
-                    .update("bloqueada", false)
-                    .addOnSuccessListener {
-                        println("Bloqueo actualizado a false: $pistaDoc / $fecha / $horaDoc")
-                    }
-                    .addOnFailureListener { e ->
-                        println("Error actualizando el bloqueo:")
-                        e.printStackTrace()
-                    }
-
-                // Actualizar UI
+                // No hace falta actualizar bloqueo, ya está dentro de la reserva
                 reservas.removeAt(position)
                 notifyItemRemoved(position)
+                notifyItemRangeChanged(position, reservas.size)
                 onReservaEliminada(reserva)
             }
             .addOnFailureListener { e ->
-                println("Error eliminando la reserva:")
                 e.printStackTrace()
             }
     }
@@ -95,19 +79,32 @@ class ListaReservasAdapter(
         private val hora: TextView = view.findViewById(R.id.hora)
         private val icono: ImageView = view.findViewById(R.id.iconoTipo)
 
-        fun bind(reserva: ReservaBolos) {
-            nombre.text = reserva.nombre
-            pista.text = "Pista: ${reserva.numeroPistaBolos}"
-            fecha.text = "Fecha: ${reserva.fecha}"
-            hora.text = "Hora: ${reserva.hora}"
-            precio.text = "Precio: ${reserva.precio}" // si tienes este campo
+        private var longClickListener: (() -> Unit)? = null
 
-            when (reserva.tipo.lowercase()) {
+        init {
+            view.setOnLongClickListener {
+                longClickListener?.invoke()
+                true
+            }
+        }
+
+        fun bind(reserva: ReservaBolos) {
+            nombre.text = reserva.nombre ?: ""
+            pista.text = "Pista: ${reserva.numeroPistaBolos}"
+            fecha.text = "Fecha: ${reserva.fecha ?: ""}"
+            hora.text = "Hora: ${reserva.hora ?: ""}"
+            precio.text = "Precio: ${reserva.precio ?: ""}"
+
+            when (reserva.tipo?.lowercase(Locale.getDefault()) ?: "") {
                 "bolos" -> icono.setImageResource(R.drawable.bolos)
                 "padel" -> icono.setImageResource(R.drawable.raqueta_padel)
                 "tenis" -> icono.setImageResource(R.drawable.padel_tenis)
                 else -> icono.setImageResource(R.drawable.padel_tenis)
             }
+        }
+
+        fun setLongClickListener(listener: () -> Unit) {
+            longClickListener = listener
         }
     }
 }
