@@ -212,7 +212,7 @@ class BolosReservasFragment : Fragment() {
 
         // Buscar si ya existe una reserva para esa pista, fecha y hora (bloqueo)
         db.collection("reservas")
-            .whereEqualTo("numeroPistaBolos", numeroPistaBolos)
+            .whereEqualTo("numeroPista", numeroPistaBolos)
             .whereEqualTo("fecha", fecha)
             .whereEqualTo("hora", hora)
             .get()
@@ -274,6 +274,7 @@ class BolosReservasFragment : Fragment() {
                 Toast.makeText(requireContext(), "Error al verificar bloqueos", Toast.LENGTH_SHORT).show()
             }
     }
+
 
 
 
