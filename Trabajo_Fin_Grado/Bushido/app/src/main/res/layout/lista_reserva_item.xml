@@ -3,42 +3,81 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/VerdeFont"
+    android:background="@color/AzulOscuro"
     android:padding="16dp">
 
+    <ImageView
+        android:id="@+id/iconoTipo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Tipo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
-        android:id="@+id/comidaNombre"
+        android:id="@+id/nombre"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Comida Nombre"
+        android:text="Nombre"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iconoTipo"
+        app:layout_constraintTop_toTopOf="@id/iconoTipo"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/comidaIngredientes"
+        android:id="@+id/numeroPistaBolos"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Ingredientes"
+        android:text="Pista"
         android:textColor="@color/white"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/comidaNombre"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/divider"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp" />
+        app:layout_constraintTop_toBottomOf="@id/nombre"
+        app:layout_constraintStart_toStartOf="@id/nombre"
+        app:layout_constraintEnd_toEndOf="@id/nombre" />
+
+    <TextView
+        android:id="@+id/precio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Precio"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/numeroPistaBolos"
+        app:layout_constraintStart_toStartOf="@id/nombre"
+        app:layout_constraintEnd_toEndOf="@id/nombre" />
+
+    <TextView
+        android:id="@+id/fecha"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Fecha"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/precio"
+        app:layout_constraintStart_toStartOf="@id/nombre"
+        app:layout_constraintEnd_toEndOf="@id/nombre" />
+
+    <TextView
+        android:id="@+id/hora"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Hora"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/fecha"
+        app:layout_constraintStart_toStartOf="@id/nombre"
+        app:layout_constraintEnd_toEndOf="@id/nombre" />
+
 
     <View
         android:id="@+id/divider"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

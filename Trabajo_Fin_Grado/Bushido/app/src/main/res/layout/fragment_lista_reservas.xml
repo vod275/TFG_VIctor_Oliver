@@ -31,6 +31,7 @@
         tools:ignore="MissingConstraints">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvListaReservas"
             android:layout_width="330dp"
             android:layout_height="611dp"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -202,7 +202,7 @@ class BolosReservasFragment : Fragment() {
         val fecha = binding.etFechaReserva.text.toString()
         val hora = binding.spinnerHoras.selectedItem?.toString()
 
-        if (userId == null || numeroPistaBolos == null || fecha.isEmpty() || hora == null) {
+        if (userId == null || numeroPistaBolos == null || fecha.isBlank() || hora.isNullOrBlank()) {
             Toast.makeText(requireContext(), "Completa todos los campos", Toast.LENGTH_SHORT).show()
             return
         }
@@ -211,7 +211,7 @@ class BolosReservasFragment : Fragment() {
         val fechaFirestore = fecha.replace("/", "-")
         val horaDocumento = hora.replace(":", "-")
 
-        // Verificación de bloqueo en tiempo real
+        // Referencia al bloqueo de la pista para esa fecha y hora
         val bloqueoRef = db.collection("Bolos")
             .document("PistaBolos")
             .collection("bloqueos")
@@ -225,15 +225,17 @@ class BolosReservasFragment : Fragment() {
                 return@addOnSuccessListener
             }
 
-            // Verificar si el usuario ya tiene una reserva a esa fecha y hora
+            // ID único de la reserva
             val idReserva = "${userId}_${fechaFirestore}_${horaDocumento}"
+
+            // Comprobar si el usuario ya tiene una reserva a esa fecha y hora
             db.collection("reservas").document(idReserva).get().addOnSuccessListener { doc ->
                 if (doc.exists()) {
                     Toast.makeText(requireContext(), "Ya tienes una reserva a esa hora", Toast.LENGTH_SHORT).show()
                     return@addOnSuccessListener
                 }
 
-                // Obtener precio y proceder a reservar
+                // Obtener el precio según tipo de usuario
                 db.collection("BolosPrecio").document("actual").get().addOnSuccessListener { docPrecio ->
                     val precioString = if (esSocio) docPrecio.getString("socio") else docPrecio.getString("invitado")
                     val precio = precioString?.toDoubleOrNull()
@@ -253,9 +255,11 @@ class BolosReservasFragment : Fragment() {
                         "tipo" to tipo
                     )
 
+                    // Guardar la reserva en Firestore
                     db.collection("reservas").document(idReserva).set(reserva)
                         .addOnSuccessListener {
                             Toast.makeText(requireContext(), "Reserva realizada correctamente", Toast.LENGTH_SHORT).show()
+                            // Bloquear la hora y pista para que no se pueda reservar otra vez
                             bloquearHoraPista(numeroPistaBolos, fecha, hora)
                         }
                         .addOnFailureListener {
@@ -274,6 +278,7 @@ class BolosReservasFragment : Fragment() {
             Toast.makeText(requireContext(), "Error al verificar bloqueos", Toast.LENGTH_SHORT).show()
         }
     }
+
 
 
     private fun bloquearHoraPista(pista: Int, fecha: String, hora: String) {
