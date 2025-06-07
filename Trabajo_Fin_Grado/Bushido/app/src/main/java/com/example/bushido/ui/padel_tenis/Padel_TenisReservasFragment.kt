@@ -79,7 +79,6 @@ class Padel_TenisReservasFragment : Fragment() {
         val horas = mutableListOf<String>()
         for (h in horaInicio until horaFin) {
             horas.add(String.format("%02d:00", h))
-            horas.add(String.format("%02d:30", h))
         }
 
         val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item_azul, horas)

@@ -12,8 +12,8 @@
         android:layout_height="40dp"
         android:layout_marginEnd="16dp"
         android:contentDescription="Tipo"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/nombre"
@@ -23,9 +23,9 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iconoTipo"
-        app:layout_constraintTop_toTopOf="@id/iconoTipo"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/iconoTipo" />
 
     <TextView
         android:id="@+id/numeroPistaBolos"
@@ -34,9 +34,9 @@
         android:text="@string/pista"
         android:textColor="@color/white"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/nombre"
+        app:layout_constraintEnd_toEndOf="@id/nombre"
         app:layout_constraintStart_toStartOf="@id/nombre"
-        app:layout_constraintEnd_toEndOf="@id/nombre" />
+        app:layout_constraintTop_toBottomOf="@id/nombre" />
 
     <TextView
         android:id="@+id/precio"
@@ -44,9 +44,9 @@
         android:layout_height="wrap_content"
         android:text="@string/precio"
         android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/numeroPistaBolos"
+        app:layout_constraintEnd_toEndOf="@id/nombre"
         app:layout_constraintStart_toStartOf="@id/nombre"
-        app:layout_constraintEnd_toEndOf="@id/nombre" />
+        app:layout_constraintTop_toBottomOf="@id/numeroPistaBolos" />
 
     <TextView
         android:id="@+id/fecha"
@@ -54,9 +54,9 @@
         android:layout_height="wrap_content"
         android:text="@string/fecha"
         android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/precio"
+        app:layout_constraintEnd_toEndOf="@id/nombre"
         app:layout_constraintStart_toStartOf="@id/nombre"
-        app:layout_constraintEnd_toEndOf="@id/nombre" />
+        app:layout_constraintTop_toBottomOf="@id/precio" />
 
     <TextView
         android:id="@+id/hora"
@@ -64,9 +64,9 @@
         android:layout_height="wrap_content"
         android:text="@string/hora"
         android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/fecha"
+        app:layout_constraintEnd_toEndOf="@id/nombre"
         app:layout_constraintStart_toStartOf="@id/nombre"
-        app:layout_constraintEnd_toEndOf="@id/nombre" />
+        app:layout_constraintTop_toBottomOf="@id/fecha" />
 
 
     <View

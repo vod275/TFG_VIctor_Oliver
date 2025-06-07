@@ -14,6 +14,10 @@ import com.example.bushido.databinding.FragmentListaReservasBinding
 import com.example.bushido.models.Reservas
 import com.google.firebase.firestore.FirebaseFirestore
 import objetos.UserSession
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+import java.util.TimeZone
 
 class ListaReservasFragment : Fragment() {
 
@@ -49,15 +53,29 @@ class ListaReservasFragment : Fragment() {
         binding.rvListaReservas.layoutManager = LinearLayoutManager(requireContext())
         binding.rvListaReservas.adapter = adapter
 
+        val sdfFecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).apply {
+            timeZone = TimeZone.getDefault()
+        }
+
+        // Fecha actual en formato dd/MM/yyyy
+        val fechaActualStr = sdfFecha.format(Calendar.getInstance().time)
+
         db.collection("reservas")
             .whereEqualTo("usuarioId", UserSession.id)
             .get()
             .addOnSuccessListener { result ->
                 listaReservas.clear()
+
                 for (document in result) {
                     val reserva = document.toObject(Reservas::class.java)
                     reserva.idReserva = document.id
-                    listaReservas.add(reserva)
+
+                    val fechaReservaStr = reserva.fecha?.trim()
+
+                    // Solo añadimos si la fecha de la reserva es igual a la fecha actual
+                    if (fechaReservaStr == fechaActualStr) {
+                        listaReservas.add(reserva)
+                    }
                 }
                 adapter.notifyDataSetChanged()
             }
@@ -65,6 +83,7 @@ class ListaReservasFragment : Fragment() {
                 Toast.makeText(requireContext(), "Error cargando reservas", Toast.LENGTH_SHORT).show()
             }
     }
+
 
 
     private fun borrarReserva(reserva: Reservas) {
