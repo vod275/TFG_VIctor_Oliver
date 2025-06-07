@@ -92,39 +92,39 @@
             android:layout_width="70dp"
             android:layout_height="57dp"
             android:src="@drawable/padel_tenis"
-            android:tint="@color/AzulSecundario"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.09"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.392" />
+            app:layout_constraintVertical_bias="0.392"
+            app:tint="@color/AzulSecundario" />
 
         <ImageView
             android:id="@+id/imageView1"
             android:layout_width="70dp"
             android:layout_height="57dp"
             android:src="@drawable/raqueta_padel"
-            android:tint="@color/AzulSecundario"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.09"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.587" />
+            app:layout_constraintVertical_bias="0.587"
+            app:tint="@color/AzulSecundario" />
 
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="69dp"
             android:layout_height="59dp"
             android:src="@drawable/bolos"
-            android:tint="@color/AzulSecundario"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.119"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.768" />
+            app:layout_constraintVertical_bias="0.768"
+            app:tint="@color/AzulSecundario" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

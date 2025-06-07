@@ -106,5 +106,6 @@
     <string name="precios_pistas">Precios Pistas</string>
     <string name="reservas_pista_de_bolos">Reservas Pista de Bolos</string>
     <string name="reserva_pista_de_tenis_y_padel">Reserva Pista de Tenis y Padel</string>
+    <string name="tipo">Tipo</string>
 
 </resources>
