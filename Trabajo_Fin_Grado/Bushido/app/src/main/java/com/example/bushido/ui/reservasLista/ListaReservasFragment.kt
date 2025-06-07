@@ -56,9 +56,11 @@ class ListaReservasFragment : Fragment() {
         val sdfFecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).apply {
             timeZone = TimeZone.getDefault()
         }
+        val sdfHora = SimpleDateFormat("HH:mm", Locale.getDefault()).apply {
+            timeZone = TimeZone.getDefault()
+        }
 
-        // Fecha actual en formato dd/MM/yyyy
-        val fechaActualStr = sdfFecha.format(Calendar.getInstance().time)
+        val ahora = Calendar.getInstance()  // Fecha y hora actual
 
         db.collection("reservas")
             .whereEqualTo("usuarioId", UserSession.id)
@@ -70,11 +72,32 @@ class ListaReservasFragment : Fragment() {
                     val reserva = document.toObject(Reservas::class.java)
                     reserva.idReserva = document.id
 
-                    val fechaReservaStr = reserva.fecha?.trim()
+                    val fechaStr = reserva.fecha?.trim()
+                    val horaStr = reserva.hora?.trim()
 
-                    // Solo añadimos si la fecha de la reserva es igual a la fecha actual
-                    if (fechaReservaStr == fechaActualStr) {
-                        listaReservas.add(reserva)
+                    if (!fechaStr.isNullOrEmpty() && !horaStr.isNullOrEmpty()) {
+                        try {
+                            val fechaReserva = sdfFecha.parse(fechaStr)
+                            val horaReserva = sdfHora.parse(horaStr)
+
+                            if (fechaReserva != null && horaReserva != null) {
+                                // Creamos un Calendar con la fecha y hora de la reserva combinadas
+                                val calReserva = Calendar.getInstance().apply {
+                                    time = fechaReserva
+                                    set(Calendar.HOUR_OF_DAY, Calendar.getInstance().apply { time = horaReserva }.get(Calendar.HOUR_OF_DAY))
+                                    set(Calendar.MINUTE, Calendar.getInstance().apply { time = horaReserva }.get(Calendar.MINUTE))
+                                    set(Calendar.SECOND, 0)
+                                    set(Calendar.MILLISECOND, 0)
+                                }
+
+                                // Solo añadimos si la reserva es hoy o en el futuro respecto a ahora
+                                if (calReserva >= ahora) {
+                                    listaReservas.add(reserva)
+                                }
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                     }
                 }
                 adapter.notifyDataSetChanged()
@@ -83,6 +106,7 @@ class ListaReservasFragment : Fragment() {
                 Toast.makeText(requireContext(), "Error cargando reservas", Toast.LENGTH_SHORT).show()
             }
     }
+
 
 
 
