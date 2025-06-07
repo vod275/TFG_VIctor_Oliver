@@ -100,6 +100,7 @@ class BolosReservasFragment : Fragment() {
 
         db.collection("reservas")
             .whereEqualTo("fecha", fecha)
+            .whereEqualTo("tipo", getString(R.string.bolos))
             .get()
             .addOnSuccessListener { snapshot ->
                 for (doc in snapshot.documents) {
@@ -215,6 +216,7 @@ class BolosReservasFragment : Fragment() {
             .whereEqualTo("numeroPista", numeroPistaBolos)
             .whereEqualTo("fecha", fecha)
             .whereEqualTo("hora", hora)
+            .whereEqualTo("tipo", tipo)
             .get()
             .addOnSuccessListener { querySnapshot ->
                 if (!querySnapshot.isEmpty) {

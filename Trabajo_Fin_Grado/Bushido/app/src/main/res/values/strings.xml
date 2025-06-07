@@ -24,6 +24,7 @@
     <string name="error_al_autenticar_con_google">Error al autenticar con Google</string>
     <string name="inicio">Inicio</string>
     <string name="padel_tenis">Padel/Tenis</string>
+    <string name="tenis_tierra">tenis_tierra</string>
     <string name="bolos">Bolos</string>
     <string name="precios">precios</string>
     <string name="quieres_saber_m_s_de_nosotros">¿QUIERES SABER MÁS DE NOSOTROS?</string>
@@ -67,8 +68,8 @@
     <string name="precios_bolos">PRECIOS BOLOS</string>
     <string name="precios_padel_tenis">PRECIOS PADEL/TENIS</string>
     <string name="precios_socios">PRECIOS SOCIOS</string>
-    <string name="padel">PADEL</string>
-    <string name="tenis">TENIS</string>
+    <string name="padel">Padel</string>
+    <string name="tenis">Tenis</string>
     <string name="subir_fotos_tenis">SUBIR FOTOS TENIS</string>
     <string name="subir_fotos_padel">SUBIR FOTOS PADEL</string>
     <string name="subir_precios_tenis_padel">SUBIR PRECIOS TENIS/PADEL</string>
@@ -85,5 +86,25 @@
     <string name="a_adir_admin">AÑADIR ADMIN</string>
     <string name="a_adir_usuario">AÑADIR USUARIO</string>
     <string name="lista_de_reservas">Lista de Reservas</string>
+    <string name="pista">Pista</string>
+    <string name="precio">Precio</string>
+    <string name="fecha">Fecha</string>
+    <string name="hora">Hora</string>
+    <string name="pistas_de_padel">PISTAS DE PADEL</string>
+    <string name="pistas_de_tenis">PISTAS DE TENIS</string>
+    <string name="pista_de_tierra_batida">Pista de tierra batida:</string>
+    <string name="pista_4">PISTA 4</string>
+    <string name="pista_3">PISTA 3</string>
+    <string name="pista_1">PISTA 1</string>
+    <string name="pista_2">PISTA 2</string>
+    <string name="pista_5">PISTA 5</string>
+    <string name="pista_6">PISTA 6</string>
+    <string name="pista_7">PISTA 7</string>
+    <string name="pista_8">PISTA 8</string>
+    <string name="pista_9">PISTA 9</string>
+    <string name="introduce_correo_y_contrase_a_para_a_adir_un_usuario_o_administrador">Introduce Correo y contraseña para añadir un usuario o un administrador</string>
+    <string name="precios_pistas">Precios Pistas</string>
+    <string name="reservas_pista_de_bolos">Reservas Pista de Bolos</string>
+    <string name="reserva_pista_de_tenis_y_padel">Reserva Pista de Tenis y Padel</string>
 
 </resources>

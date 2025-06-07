@@ -71,6 +71,7 @@ class Padel_tenisFragment : Fragment() {
         // Botón para reservar pista (solo animación aquí)
         binding.btnReservarPista.setOnClickListener {
             binding.btnReservarPista.startAnimation(animClick)
+            findNavController().navigate(R.id.nav_reservas_padel_tenis)
         }
 
         // Volver a cargar e iniciar animaciones

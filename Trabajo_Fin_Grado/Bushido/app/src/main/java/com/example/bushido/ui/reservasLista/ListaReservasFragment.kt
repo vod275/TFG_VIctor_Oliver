@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bushido.adaptadorListaReservas.ListaReservasAdapter
 import com.example.bushido.databinding.FragmentListaReservasBinding
-import com.example.bushido.models.ReservaBolos
+import com.example.bushido.models.Reservas
 import com.google.firebase.firestore.FirebaseFirestore
 import objetos.UserSession
 
@@ -22,7 +22,7 @@ class ListaReservasFragment : Fragment() {
 
     private val db = FirebaseFirestore.getInstance()
     private lateinit var adapter: ListaReservasAdapter
-    private val listaReservas = mutableListOf<ReservaBolos>()
+    private val listaReservas = mutableListOf<Reservas>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,7 +55,7 @@ class ListaReservasFragment : Fragment() {
             .addOnSuccessListener { result ->
                 listaReservas.clear()
                 for (document in result) {
-                    val reserva = document.toObject(ReservaBolos::class.java)
+                    val reserva = document.toObject(Reservas::class.java)
                     reserva.idReserva = document.id
                     listaReservas.add(reserva)
                 }
@@ -67,12 +67,12 @@ class ListaReservasFragment : Fragment() {
     }
 
 
-    private fun borrarReserva(reserva: ReservaBolos) {
+    private fun borrarReserva(reserva: Reservas) {
         db.collection("reservas").document(reserva.idReserva!!)
             .delete()
             .addOnSuccessListener {
                 val bloqueosRef = db.collection("bloqueos")
-                    .document("pista${reserva.numeroPistaBolos}")
+                    .document("pista${reserva.numeroPista}")
                     .collection(reserva.fecha ?: "")
                     .document(reserva.hora ?: "")
 

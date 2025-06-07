@@ -8,15 +8,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bushido.R
-import com.example.bushido.models.ReservaBolos
+import com.example.bushido.models.Reservas
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class ListaReservasAdapter(
-    private val reservas: MutableList<ReservaBolos>,
+    private val reservas: MutableList<Reservas>,
     private val context: android.content.Context,
-    private val onReservaEliminada: (reserva: ReservaBolos) -> Unit
+    private val onReservaEliminada: (reserva: Reservas) -> Unit
 ) : RecyclerView.Adapter<ListaReservasAdapter.ReservaViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReservaViewHolder {
@@ -35,7 +35,7 @@ class ListaReservasAdapter(
 
     override fun getItemCount(): Int = reservas.size
 
-    private fun mostrarDialogoEliminar(reserva: ReservaBolos, position: Int) {
+    private fun mostrarDialogoEliminar(reserva: Reservas, position: Int) {
         AlertDialog.Builder(context)
             .setTitle("Eliminar reserva")
             .setMessage("¿Deseas eliminar esta reserva?")
@@ -46,7 +46,7 @@ class ListaReservasAdapter(
             .show()
     }
 
-    private fun eliminarReserva(reserva: ReservaBolos, position: Int) {
+    private fun eliminarReserva(reserva: Reservas, position: Int) {
         val db = FirebaseFirestore.getInstance()
         val docId = reserva.idReserva ?: return
 
@@ -65,7 +65,7 @@ class ListaReservasAdapter(
     }
 
 
-    fun actualizarLista(nuevaLista: List<ReservaBolos>) {
+    fun actualizarLista(nuevaLista: List<Reservas>) {
         reservas.clear()
         reservas.addAll(nuevaLista)
         notifyDataSetChanged()
@@ -88,9 +88,9 @@ class ListaReservasAdapter(
             }
         }
 
-        fun bind(reserva: ReservaBolos) {
+        fun bind(reserva: Reservas) {
             nombre.text = reserva.nombre ?: ""
-            pista.text = "Pista: ${reserva.numeroPistaBolos}"
+            pista.text = "Pista: ${reserva.numeroPista}"
             fecha.text = "Fecha: ${reserva.fecha ?: ""}"
             hora.text = "Hora: ${reserva.hora ?: ""}"
             precio.text = "Precio: ${reserva.precio ?: ""}"
