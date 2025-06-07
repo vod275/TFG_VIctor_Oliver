@@ -225,9 +225,13 @@ class BolosReservasFragment : Fragment() {
                 }
 
                 // Verificar si el usuario ya tiene reserva a esa hora
-                db.collection("reservas").document(idReserva).get()
-                    .addOnSuccessListener { doc ->
-                        if (doc.exists()) {
+                db.collection("reservas")
+                    .whereEqualTo("usuarioId", userId)
+                    .whereEqualTo("fecha", fecha)
+                    .whereEqualTo("hora", hora)
+                    .get()
+                    .addOnSuccessListener { querySnapshot  ->
+                        if (!querySnapshot.isEmpty) {
                             Toast.makeText(requireContext(), "Ya tienes una reserva a esa hora", Toast.LENGTH_SHORT).show()
                             return@addOnSuccessListener
                         }
