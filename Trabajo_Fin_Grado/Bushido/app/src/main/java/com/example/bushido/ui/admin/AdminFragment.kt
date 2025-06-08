@@ -50,6 +50,13 @@ class AdminFragment : Fragment() {
             findNavController().navigate(R.id.nav_admin_Socios)
         }
 
+        binding.btnVerUsuarios.setOnClickListener {
+            findNavController().navigate(R.id.nav_admin_lista_usuarios)
+        }
+
+
+
+
         // Añadir nuevo admin
         binding.btnAnadirAdmin.setOnClickListener {
             val email = binding.tvCorreoNuevoAdmin.editText?.text.toString().trim()

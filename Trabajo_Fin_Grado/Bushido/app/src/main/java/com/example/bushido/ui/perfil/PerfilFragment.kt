@@ -167,12 +167,14 @@ class PerfilFragment : Fragment() {
         val apellidos = binding.tvApellidos.editText?.text.toString()
         val fechaNacimiento = binding.etFechaNacimiento.editText?.text.toString()
         val telefono = binding.tvTelefono.editText?.text.toString()
+        val email = FirebaseAuth.getInstance().currentUser?.email ?: ""
 
         val usuarioMap = hashMapOf(
             "nombre" to nombre,
             "apellidos" to apellidos,
             "fechaNacimiento" to fechaNacimiento,
-            "telefono" to telefono
+            "telefono" to telefono,
+            "email" to email
         )
 
         db.collection("usuarios").document(uid)

@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bushido.R
 import com.example.bushido.models.Reservas
 import com.google.firebase.firestore.FirebaseFirestore
-import java.text.SimpleDateFormat
 import java.util.Locale
 
 class ListaReservasAdapter(

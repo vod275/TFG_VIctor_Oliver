@@ -107,5 +107,8 @@
     <string name="reservas_pista_de_bolos">Reservas Pista de Bolos</string>
     <string name="reserva_pista_de_tenis_y_padel">Reserva Pista de Tenis y Padel</string>
     <string name="tipo">Tipo</string>
+    <string name="ver_usuarios">VER USUARIOS</string>
+    <string name="ver_reservas">VER RESERVAS</string>
+    <string name="introduce_el_nombre_o_correo_del_usuario">Introduce el nombre/correo</string>
 
 </resources>
