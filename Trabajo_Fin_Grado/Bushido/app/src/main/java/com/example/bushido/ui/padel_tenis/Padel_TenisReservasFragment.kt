@@ -1,6 +1,7 @@
 package com.example.bushido.ui.padel_tenis
 
 import android.app.DatePickerDialog
+import android.app.NotificationChannel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,11 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.FirebaseFirestore
 import objetos.UserSession
 import java.util.Calendar
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 
 class Padel_TenisReservasFragment : Fragment() {
 
@@ -252,6 +258,7 @@ class Padel_TenisReservasFragment : Fragment() {
             db.collection("reservas").document(idReserva).set(reserva)
                 .addOnSuccessListener {
                     Toast.makeText(requireContext(), "Reserva realizada correctamente", Toast.LENGTH_SHORT).show()
+                    mostrarNotificacionReservaExitosa()
                 }
                 .addOnFailureListener {
                     Toast.makeText(requireContext(), "Error al guardar la reserva", Toast.LENGTH_SHORT).show()
@@ -354,6 +361,36 @@ class Padel_TenisReservasFragment : Fragment() {
 
         if (pistaSeleccionada != null && !pistaSeleccionada!!.isEnabled) {
             pistaSeleccionada = null
+        }
+    }
+
+    private fun mostrarNotificacionReservaExitosa() {
+        val channelId = "reserva_exitosa_channel"
+        val notificationId = 1
+
+        // Crear canal (solo Android 8.0+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Reservas"
+            val descriptionText = "Notificaciones de reservas realizadas"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(channelId, name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager =
+                requireContext().getSystemService(NotificationManager::class.java)
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        // Crear notificación
+        val builder = NotificationCompat.Builder(requireContext(), channelId)
+            .setSmallIcon(R.drawable.logo) // Usa un ícono existente en drawable
+            .setContentTitle("Reserva realizada")
+            .setContentText("Tu reserva de Padel/Tenis se ha registrado correctamente.")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        // Mostrar notificación
+        with(NotificationManagerCompat.from(requireContext())) {
+            notify(notificationId, builder.build())
         }
     }
 
