@@ -54,6 +54,10 @@ class AdminFragment : Fragment() {
             findNavController().navigate(R.id.nav_admin_lista_usuarios)
         }
 
+        binding.btnVerReservas.setOnClickListener {
+            findNavController().navigate(R.id.nav_admin_lista_reservas)
+        }
+
 
 
 

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.admin.AdminListaReservasFragment">
+
+
+    <ImageView
+        android:id="@+id/backgroundImage"
+        android:layout_width="412dp"
+        android:layout_height="734dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/precios"
+        android:scaleType="centerCrop"
+        android:src="@drawable/fondo2"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-2dp" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/transparentContainer"
+        android:layout_width="411dp"
+        android:layout_height="734dp"
+        android:background="#C4FFFFFF"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-2dp">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvListareservasAdmin"
+            android:layout_width="330dp"
+            android:layout_height="611dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.78" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilFechaReserva"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="311dp"
+            android:layout_height="80dp"
+            android:hint="@string/fecha"
+            android:textColorHint="@color/AzulTexto"
+            app:boxStrokeColor="@color/AzulTexto"
+            app:hintTextColor="@color/AzulTexto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.024"
+            app:startIconDrawable="@drawable/calendar"
+            app:startIconTint="@color/AzulTexto">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFechaReserva"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="false"
+                android:fontFamily="@font/russoone_regular"
+                android:textColor="@color/AzulTexto"
+                android:textColorHighlight="@color/AzulTexto"
+                android:textColorHint="@color/AzulTexto" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

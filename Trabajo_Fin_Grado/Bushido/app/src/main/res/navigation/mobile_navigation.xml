@@ -102,6 +102,12 @@
         android:label="¡VER USUARIOS!"
         tools:layout="@layout/fragment_admin_lista_usuarios" />
 
+    <fragment
+        android:id="@+id/nav_admin_lista_reservas"
+        android:name="com.example.bushido.ui.admin.AdminListaReservasFragment"
+        android:label="¡VER RESERVAS!"
+        tools:layout="@layout/fragment_admin_lista_reservas" />
+
 
 
 </navigation>
