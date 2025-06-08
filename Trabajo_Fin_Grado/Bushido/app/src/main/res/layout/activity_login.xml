@@ -25,7 +25,7 @@
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="143dp"
             android:layout_height="60dp"
-            android:text="Entar"
+            android:text="@string/entar"
             android:textColor="@color/AzulOscuro"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -33,7 +33,7 @@
     <string name="fecha_de_nacimiento">fecha de nacimiento</string>
     <string name="introduce_tu_fecha_de_nacimiento">Introduce tu fecha de nacimiento</string>
     <string name="guardar">Guardar</string>
-    <string name="consulta_precios">CONSULTA PRECIOS</string>
+    <string name="consulta_precios">¡CONSULTA PRECIOS!</string>
     <string name="reservar_pista">RESERVAR PISTA</string>
     <string name="quienes_somos">¿Quienes Somos?</string>
     <string name="hazte_socio">¡HAZTE SOCIO!</string>
@@ -113,5 +113,7 @@
     <string name="ajustes">Ajustes</string>
     <string name="espa_ol">Español</string>
     <string name="ingles">Ingles</string>
+    <string name="entar">Entar</string>
+    <string name="demuestra_que_eres_el_mejor_y_haz_un_pleno">¡¡DEMUESTRA QUE ERES EL MEJOR Y HAZ UN PLENO!!</string>
 
 </resources>
