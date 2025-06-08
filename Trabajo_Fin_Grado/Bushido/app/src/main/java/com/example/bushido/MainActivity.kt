@@ -145,6 +145,7 @@ class MainActivity : AppCompatActivity() {
 
         // Cargar la foto de perfil del usuario desde Firebase Storage
         cargarFotoPerfil(ibFotoPerfil)
+
     }
 
 
@@ -174,12 +175,17 @@ class MainActivity : AppCompatActivity() {
      * Maneja las opciones seleccionadas en el menú superior.
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        return when (item.itemId) {
             R.id.action_salir -> {
                 showLogoutDialog()
-                return true
+                true
             }
-            else -> return super.onOptionsItemSelected(item)
+            R.id.action_settings -> {
+                navController.navigate(R.id.nav_ajustes)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -216,4 +222,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+
+
 }
