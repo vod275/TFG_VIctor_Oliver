@@ -110,5 +110,8 @@
     <string name="ver_usuarios">VER USUARIOS</string>
     <string name="ver_reservas">VER RESERVAS</string>
     <string name="introduce_el_nombre_o_correo_del_usuario">Introduce el nombre/correo</string>
+    <string name="ajustes">Ajustes</string>
+    <string name="espa_ol">Español</string>
+    <string name="ingles">Ingles</string>
 
 </resources>
