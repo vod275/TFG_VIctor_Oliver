@@ -199,5 +199,14 @@ Un centro de ocio pensado para disfrutar en familia o con amigos. Ofrecemos dive
     <string name="error_al_borrar_reserva">Error al borrar reserva</string>
     <string name="estas_seguro_de_que_quieres_cerrar_sesion">¿Estás seguro de que quieres cerrar sesión?</string>
     <string name="frances">Francés</string>
+    <string name="cambiar_precios_bolos">CAMBIAR PRECIOS BOLOS</string>
+    <string name="cambiar_tenis_padel">CAMBIAR TENIS Y PADEL</string>
+    <string name="cambiar_precios_socios">CAMBIAR PRECIOS SOCIOS</string>
+    <string name="ver_usuarioss">VER USUARIOS</string>
+    <string name="ver_reservass">VER RESERVAS</string>
+
+
+
+
 
 </resources>

@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
         // Configuración de las secciones principales del Drawer
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_perfil, R.id.nav_padel_tenis, R.id.nav_bolos, R.id.nav_admin
+                R.id.nav_home, R.id.nav_perfil, R.id.nav_padel_tenis, R.id.nav_bolos, R.id.nav_admin, R.id.nav_listaReservas
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

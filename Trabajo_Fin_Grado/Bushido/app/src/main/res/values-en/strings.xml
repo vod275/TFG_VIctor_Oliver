@@ -203,5 +203,11 @@ A leisure center designed to be enjoyed with family or friends. We offer fun, sp
     <string name="error_al_borrar_reserva">Error deleting reservation</string>
     <string name="estas_seguro_de_que_quieres_cerrar_sesion">Are you sure you want to log out?</string>
     <string name="frances">French</string>
+    <string name="cambiar_precios_bolos">CHANGE BOWLING PRICES</string>
+    <string name="cambiar_tenis_padel">CHANGE TENNIS AND PADEL PRICES</string> <!-- Añadí "PRICES" para mantener coherencia -->
+    <string name="cambiar_precios_socios">CHANGE MEMBER PRICES</string> <!-- "Socios" puede ser "members" o "subscribers" -->
+    <string name="ver_usuarioss">VIEW USERS</string>
+    <string name="ver_reservass">VIEW RESERVATIONS</string>
+
 
 </resources>

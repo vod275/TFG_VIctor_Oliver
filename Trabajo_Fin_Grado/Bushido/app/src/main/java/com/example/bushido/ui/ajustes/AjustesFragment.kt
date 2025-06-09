@@ -15,6 +15,8 @@ class AjustesFragment : Fragment() {
     private var _binding: FragmentAjustesBinding? = null
     private val binding get() = _binding!!
 
+    private var listenerActivado = true  // Control para evitar disparo al setChecked programático
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -23,18 +25,30 @@ class AjustesFragment : Fragment() {
         _binding = FragmentAjustesBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        // Ajuste de padding para barras del sistema
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        // Cambiar idioma al seleccionar opción
+        // Detectar idioma actual del dispositivo y marcar radio correspondiente
+        val idiomaActual = Locale.getDefault().language
+
+        listenerActivado = false
+        when (idiomaActual) {
+            "es" -> binding.RbSpanish.isChecked = true
+            "en" -> binding.RBIngles.isChecked = true
+            else -> binding.RbSpanish.isChecked = true 
+        }
+        listenerActivado = true
+
+        // Listener para cambiar idioma al seleccionar un RadioButton
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            if (!listenerActivado) return@setOnCheckedChangeListener
+
             when (checkedId) {
-                binding.RbSpanish.id -> cambiarIdioma("es") // Español
-                binding.RBIngles.id -> cambiarIdioma("en")  // Inglés
+                binding.RbSpanish.id -> cambiarIdioma("es")
+                binding.RBIngles.id -> cambiarIdioma("en")
             }
         }
 
@@ -48,7 +62,6 @@ class AjustesFragment : Fragment() {
         config.setLocale(locale)
         config.setLayoutDirection(locale)
 
-        // Reinicia la actividad para aplicar el cambio de idioma
         requireActivity().apply {
             resources.updateConfiguration(config, resources.displayMetrics)
             recreate()
