@@ -84,7 +84,7 @@
             android:id="@+id/tvContrasenaNuevoAdmin"
             android:layout_width="173dp"
             android:layout_height="99dp"
-            android:hint="@string/contrase_a"
+            android:hint="@string/contraseña"
             android:textColorHint="@color/AzulTexto"
             app:boxStrokeColor="@color/AzulTexto"
             app:cursorColor="@color/AzulTexto"

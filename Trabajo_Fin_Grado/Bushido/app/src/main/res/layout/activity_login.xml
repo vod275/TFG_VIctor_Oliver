@@ -56,7 +56,7 @@
             android:id="@+id/passwordInput"
             android:layout_width="285dp"
             android:layout_height="86dp"
-            android:hint="@string/contrase_a"
+            android:hint="@string/contraseña"
             android:textColorHint="@color/AzulOscuro"
             android:textStyle="bold"
             app:boxStrokeColor="@color/AzulOscuro"

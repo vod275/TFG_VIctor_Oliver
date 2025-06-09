@@ -124,7 +124,7 @@ class MainActivity : AppCompatActivity() {
 
         // Mostrar el nombre del usuario en tiempo real
         if (userId != null) {
-            db.collection(getString(R.string.usuarios)).document(userId)
+            db.collection("usuarios").document(userId)
                 .addSnapshotListener { document, error ->
                     if (error != null) {
                         tvEmail.text = getString(R.string.error_al_obtener_usuario)
