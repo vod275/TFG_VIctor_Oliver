@@ -17,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.example.bushido.R
 import com.example.bushido.databinding.FragmentPerfilBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.SetOptions
@@ -40,7 +41,8 @@ class PerfilFragment : Fragment() {
             if (isGranted) {
                 tomarFotoConCamara()
             } else {
-                Toast.makeText(requireContext(), "Permiso de cámara denegado", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.permiso_de_camara_denegado), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -80,14 +82,15 @@ class PerfilFragment : Fragment() {
                 }
             }
             .addOnFailureListener {
-                Toast.makeText(requireContext(), "Error al cargar los datos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.error_al_cargar_los_datos), Toast.LENGTH_SHORT).show()
             }
     }
 
     private fun mostrarOpcionesFoto() {
-        val opciones = arrayOf("Galería", "Cámara")
+        val opciones = arrayOf(getString(R.string.galeria), getString(R.string.camara))
         AlertDialog.Builder(requireContext())
-            .setTitle("Selecciona una opción")
+            .setTitle(getString(R.string.selecciona_una_opcion))
             .setItems(opciones) { _, which ->
                 when (which) {
                     0 -> seleccionarDesdeGaleria()
@@ -143,11 +146,13 @@ class PerfilFragment : Fragment() {
 
         ref.putFile(uri)
             .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Imagen subida correctamente", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.imagen_subida_correctamente), Toast.LENGTH_SHORT).show()
                 cargarFotoPerfil()
             }
             .addOnFailureListener {
-                Toast.makeText(requireContext(), "Error al subir la imagen", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.error_al_subir_la_imagen), Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -180,10 +185,12 @@ class PerfilFragment : Fragment() {
         db.collection("usuarios").document(uid)
             .set(usuarioMap, SetOptions.merge())
             .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Datos guardados correctamente", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.datos_guardados_correctamente), Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
-                Toast.makeText(requireContext(), "Error al guardar los datos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.error_al_guardar_los_datos), Toast.LENGTH_SHORT).show()
             }
     }
 }

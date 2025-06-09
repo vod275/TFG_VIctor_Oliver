@@ -123,7 +123,7 @@ class BolosReservasFragment : Fragment() {
                 }
             }
             .addOnFailureListener {
-                Toast.makeText(requireContext(), "Error al cargar reservas", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.error_al_cargar_reservas), Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -140,9 +140,10 @@ class BolosReservasFragment : Fragment() {
 
                 pistaSeleccionada?.let { boton ->
                     val pistaTexto = boton.text.toString()
-                    val numero = pistaTexto.substringAfter("PISTA ").toIntOrNull()
+                    val numero = pistaTexto.substringAfter(getString(R.string.pista)).toIntOrNull()
                     if (numero != null && pistasBloqueadas[numero]?.contains(horaSeleccionada) == true) {
-                        Toast.makeText(requireContext(), "La pista seleccionada está ocupada a esa hora", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(),
+                            getString(R.string.la_pista_seleccionada_est_ocupada_a_esa_hora), Toast.LENGTH_SHORT).show()
                         pistaSeleccionada = null
                         boton.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), android.R.color.transparent))
                         boton.setTextColor(ContextCompat.getColor(requireContext(), R.color.AzulTexto))
@@ -198,14 +199,14 @@ class BolosReservasFragment : Fragment() {
         val esSocio = !userEmail.endsWith("@gmail.com") && !userEmail.contains("google")
 
         val pistaTexto = pistaSeleccionada?.text?.toString()
-        val numeroPistaBolos = pistaTexto?.substringAfter("PISTA ")?.toIntOrNull()
+        val numeroPistaBolos = pistaTexto?.substringAfter(getString(R.string.pista))?.toIntOrNull()
         val tipo = getString(R.string.bolos)
 
         val fecha = binding.etFechaReserva.text.toString()
         val hora = binding.spinnerHoras.selectedItem?.toString()
 
         if (userId == null || numeroPistaBolos == null || fecha.isBlank() || hora.isNullOrBlank()) {
-            Toast.makeText(requireContext(), "Completa todos los campos", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.completa_todos_los_campos), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -225,7 +226,8 @@ class BolosReservasFragment : Fragment() {
             .get()
             .addOnSuccessListener { querySnapshot ->
                 if (!querySnapshot.isEmpty) {
-                    Toast.makeText(requireContext(), "Esa pista ya está ocupada a esa hora", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(),
+                        getString(R.string.esa_pista_ya_est_ocupada_a_esa_hora), Toast.LENGTH_LONG).show()
                     return@addOnSuccessListener
                 }
 
@@ -237,7 +239,8 @@ class BolosReservasFragment : Fragment() {
                     .get()
                     .addOnSuccessListener { querySnapshot  ->
                         if (!querySnapshot.isEmpty) {
-                            Toast.makeText(requireContext(), "Ya tienes una reserva a esa hora", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(),
+                                getString(R.string.ya_tienes_una_reserva_a_esa_hora), Toast.LENGTH_SHORT).show()
                             return@addOnSuccessListener
                         }
 
@@ -248,7 +251,8 @@ class BolosReservasFragment : Fragment() {
                                 val precio = precioString?.toDoubleOrNull()
 
                                 if (precio == null) {
-                                    Toast.makeText(requireContext(), "No se pudo obtener un precio válido", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(requireContext(),
+                                        getString(R.string.no_se_pudo_obtener_un_precio_v_lido), Toast.LENGTH_SHORT).show()
                                     return@addOnSuccessListener
                                 }
 
@@ -266,24 +270,29 @@ class BolosReservasFragment : Fragment() {
                                 // Guardar reserva (y bloqueo implícito)
                                 db.collection("reservas").document(idReserva).set(reserva)
                                     .addOnSuccessListener {
-                                        Toast.makeText(requireContext(), "Reserva realizada correctamente", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(requireContext(),
+                                            getString(R.string.reserva_realizada_correctamente), Toast.LENGTH_SHORT).show()
                                         mostrarNotificacionReservaExitosa()
                                         // Aquí no hace falta guardar bloqueo por separado, porque la reserva implica bloqueo
                                     }
                                     .addOnFailureListener {
-                                        Toast.makeText(requireContext(), "Error al guardar la reserva", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(requireContext(),
+                                            getString(R.string.error_al_guardar_la_reserva), Toast.LENGTH_SHORT).show()
                                     }
                             }
                             .addOnFailureListener {
-                                Toast.makeText(requireContext(), "Error al obtener el precio", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(requireContext(),
+                                    getString(R.string.error_al_obtener_el_precio), Toast.LENGTH_SHORT).show()
                             }
                     }
                     .addOnFailureListener {
-                        Toast.makeText(requireContext(), "Error al verificar reservas del usuario", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(),
+                            getString(R.string.error_al_verificar_reservas_del_usuario), Toast.LENGTH_SHORT).show()
                     }
             }
             .addOnFailureListener {
-                Toast.makeText(requireContext(), "Error al verificar bloqueos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.error_al_verificar_bloqueos), Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -322,8 +331,8 @@ class BolosReservasFragment : Fragment() {
 
         // Crear canal (solo Android 8.0+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Reservas"
-            val descriptionText = "Notificaciones de reservas realizadas"
+            val name = getString(R.string.reservas)
+            val descriptionText = getString(R.string.notificaciones_de_reservas_realizadas)
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(channelId, name, importance).apply {
                 description = descriptionText
@@ -336,8 +345,8 @@ class BolosReservasFragment : Fragment() {
         // Crear notificación
         val builder = NotificationCompat.Builder(requireContext(), channelId)
             .setSmallIcon(R.drawable.logo) // Usa un ícono existente en drawable
-            .setContentTitle("Reserva realizada")
-            .setContentText("Tu reserva de bolos se ha registrado correctamente.")
+            .setContentTitle(getString(R.string.reserva_realizada))
+            .setContentText(getString(R.string.tu_reserva_de_bolos_se_ha_registrado_correctamente))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         // Mostrar notificación

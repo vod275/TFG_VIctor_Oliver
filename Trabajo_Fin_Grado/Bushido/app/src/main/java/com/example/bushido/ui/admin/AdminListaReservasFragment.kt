@@ -10,6 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bushido.R
 import com.example.bushido.adaptadorListaReservas.ListaReservasAdapter
 import com.example.bushido.databinding.FragmentAdminListaReservasBinding
 import com.example.bushido.models.Reservas
@@ -49,7 +50,8 @@ class AdminListaReservasFragment : Fragment() {
 
     private fun configurarRecyclerView() {
         adapter = ListaReservasAdapter(listaReservas, requireContext()) {
-            Toast.makeText(requireContext(), "Reserva eliminada", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),
+                getString(R.string.reserva_eliminada), Toast.LENGTH_SHORT).show()
         }
         binding.rvListareservasAdmin.layoutManager = LinearLayoutManager(requireContext())
         binding.rvListareservasAdmin.adapter = adapter
@@ -85,7 +87,7 @@ class AdminListaReservasFragment : Fragment() {
                 adapter.actualizarLista(listaFiltrada)
             }
             .addOnFailureListener {
-                Toast.makeText(requireContext(), "Error al cargar reservas", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.error_al_cargar_reservas), Toast.LENGTH_SHORT).show()
             }
     }
 

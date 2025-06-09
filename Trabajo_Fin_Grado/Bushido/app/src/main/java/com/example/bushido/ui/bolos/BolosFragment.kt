@@ -77,7 +77,8 @@ class BolosFragment : Fragment() {
 
         storageRef.listAll().addOnSuccessListener { result ->
             if (result.items.isEmpty()) {
-                if (isAdded) Toast.makeText(requireContext(), "No hay imágenes en FotosBolos", Toast.LENGTH_SHORT).show()
+                if (isAdded) Toast.makeText(requireContext(),
+                    getString(R.string.no_hay_im_genes_en_fotosbolos), Toast.LENGTH_SHORT).show()
                 return@addOnSuccessListener
             }
 
@@ -91,11 +92,13 @@ class BolosFragment : Fragment() {
                         iniciarRotacion()
                     }
                 }.addOnFailureListener {
-                    if (isAdded) Toast.makeText(requireContext(), "Error al obtener URL", Toast.LENGTH_SHORT).show()
+                    if (isAdded) Toast.makeText(requireContext(),
+                        getString(R.string.error_al_obtener_url), Toast.LENGTH_SHORT).show()
                 }
             }
         }.addOnFailureListener {
-            if (isAdded) Toast.makeText(requireContext(), "Error accediendo a Firebase", Toast.LENGTH_SHORT).show()
+            if (isAdded) Toast.makeText(requireContext(),
+                getString(R.string.error_accediendo_a_firebase), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -105,7 +108,8 @@ class BolosFragment : Fragment() {
         storageRef.listAll().addOnSuccessListener { result ->
             val items = result.items
             if (items.isEmpty()) {
-                if (isAdded) Toast.makeText(requireContext(), "No hay imágenes para descargar", Toast.LENGTH_SHORT).show()
+                if (isAdded) Toast.makeText(requireContext(),
+                    getString(R.string.no_hay_im_genes_para_descargar), Toast.LENGTH_SHORT).show()
                 return@addOnSuccessListener
             }
 
@@ -117,15 +121,19 @@ class BolosFragment : Fragment() {
                     descargarYGuardarImagen(uri.toString()) {
                         descargadas++
                         if (descargadas == total && isAdded) {
-                            Toast.makeText(requireContext(), "Se han guardado $descargadas imágenes", Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                requireContext(),
+                                getString(R.string.imagenes_guardadas, descargadas),
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                     }
                 }.addOnFailureListener {
-                    if (isAdded) Toast.makeText(requireContext(), "Error obteniendo URL", Toast.LENGTH_SHORT).show()
+                    if (isAdded) Toast.makeText(requireContext(),  getString(R.string.error_al_obtener_url), Toast.LENGTH_SHORT).show()
                 }
             }
         }.addOnFailureListener {
-            if (isAdded) Toast.makeText(requireContext(), "Error accediendo a Firebase", Toast.LENGTH_SHORT).show()
+            if (isAdded) Toast.makeText(requireContext(), getString(R.string.error_accediendo_a_firebase), Toast.LENGTH_SHORT).show()
         }
     }
 

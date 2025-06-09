@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import com.example.bushido.R
 import com.example.bushido.databinding.FragmentAdminHomeBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -63,7 +64,8 @@ class AdminHomeFragment : Fragment() {
                 }
             }
             .addOnFailureListener {
-                Toast.makeText(requireContext(), "Error al cargar precios", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.error_al_cargar_precios), Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -84,21 +86,24 @@ class AdminHomeFragment : Fragment() {
             db.collection("SocioPrecio").document("actual")
                 .set(datos)
                 .addOnSuccessListener {
-                    Toast.makeText(requireContext(), "Precios guardados", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),
+                        getString(R.string.precios_guardados), Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener {
-                    Toast.makeText(requireContext(), "Error al guardar", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),
+                        getString(R.string.error_al_guardar), Toast.LENGTH_SHORT).show()
                 }
         } else {
-            Toast.makeText(requireContext(), "Completa todos los campos", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),
+                getString(R.string.completa_todos_los_campos), Toast.LENGTH_SHORT).show()
         }
     }
 
 
     private fun mostrarDialogoImagen() {
-        val opciones = arrayOf("Tomar foto", "Elegir de galería")
+        val opciones = arrayOf(getString(R.string.tomar_foto), getString(R.string.elegir_de_galer_a))
         AlertDialog.Builder(requireContext())
-            .setTitle("Subir imagen")
+            .setTitle(getString(R.string.subir_imagen))
             .setItems(opciones) { _, which ->
                 when (which) {
                     0 -> abrirCamara()
@@ -124,10 +129,10 @@ class AdminHomeFragment : Fragment() {
 
         referencia.putFile(uri)
             .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Imagen subida con éxito", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.imagen_subida_con_xito), Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
-                Toast.makeText(requireContext(), "Error al subir imagen", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.error_al_subir_imagen), Toast.LENGTH_SHORT).show()
             }
     }
 

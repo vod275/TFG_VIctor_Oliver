@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import com.example.bushido.R
 import com.example.bushido.databinding.FragmentAdminBolosBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -35,7 +36,7 @@ class AdminBolosFragment : Fragment() {
         if (success) {
             tempImageUri?.let { subirImagen(it) }
         } else {
-            Toast.makeText(requireContext(), "Foto cancelada", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.foto_cancelada), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -64,13 +65,16 @@ class AdminBolosFragment : Fragment() {
                 firestore.collection("BolosPrecio").document("actual")
                     .set(datos)
                     .addOnSuccessListener {
-                        Toast.makeText(requireContext(), "Precios actualizados", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(),
+                            getString(R.string.precios_actualizados), Toast.LENGTH_SHORT).show()
                     }
                     .addOnFailureListener {
-                        Toast.makeText(requireContext(), "Error al actualizar precios", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(),
+                            getString(R.string.error_al_actualizar_precios), Toast.LENGTH_SHORT).show()
                     }
             } else {
-                Toast.makeText(requireContext(), "Completa ambos campos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.completa_ambos_campos), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -89,9 +93,9 @@ class AdminBolosFragment : Fragment() {
     }
 
     private fun mostrarDialogoImagen() {
-        val opciones = arrayOf("Hacer foto", "Elegir de galería")
+        val opciones = arrayOf(getString(R.string.hacer_foto), getString(R.string.elegir_de_galer_a))
         AlertDialog.Builder(requireContext())
-            .setTitle("Seleccionar imagen")
+            .setTitle(getString(R.string.seleccionar_imagen))
             .setItems(opciones) { _, which ->
                 when (which) {
                     0 -> abrirCamara()
@@ -113,10 +117,12 @@ class AdminBolosFragment : Fragment() {
 
         referencia.putFile(uri)
             .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Imagen subida con éxito", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.imagen_subida_con_xito), Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
-                Toast.makeText(requireContext(), "Error al subir imagen", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.error_al_subir_imagen), Toast.LENGTH_SHORT).show()
             }
     }
 

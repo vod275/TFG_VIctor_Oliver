@@ -92,7 +92,7 @@ class LoginActivity : AppCompatActivity() {
             if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 signIn(email, password)
             } else {
-                showToast(getString(R.string.por_favor_ingresa_un_correo_v_lido))
+                showToast(getString(R.string.por_favor_ingresa_un_correo_valido))
             }
         } else {
             showToast(getString(R.string.por_favor_completa_todos_los_campos))
@@ -184,7 +184,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         } else {
-            showToast(getString(R.string.por_favor_inicia_sesi_n_o_reg_strate))
+            showToast(getString(R.string.por_favor_inicia_sesion_o_registrate))
         }
     }
 

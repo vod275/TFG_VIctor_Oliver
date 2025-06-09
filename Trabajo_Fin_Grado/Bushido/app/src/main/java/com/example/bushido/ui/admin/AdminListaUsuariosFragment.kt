@@ -53,8 +53,8 @@ class AdminListaUsuariosFragment : Fragment() {
                 usuariosList.clear()
                 for (doc in documentos) {
                     val usuario = doc.toObject(Usuarios::class.java)
-                    usuario.uid = doc.id // ← Aquí asignas el ID del documento como UID
-                    usuario.apellidos = doc.getString("apellidos") ?: "" // Si quieres proteger este campo también
+                    usuario.uid = doc.id
+                    usuario.apellidos = doc.getString("apellidos") ?: ""
                     usuariosList.add(usuario)
                 }
                 adapter.actualizarLista(usuariosList)

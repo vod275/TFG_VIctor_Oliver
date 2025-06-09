@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import com.example.bushido.R
 import com.example.bushido.databinding.FragmentPrecioBolosBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -48,7 +49,7 @@ class BolosPreciosFragment : Fragment() {
         // Escuchar cambios en tiempo real en el documento "BolosPrecio"
         docRef.addSnapshotListener { snapshot, error ->
             if (error != null) {
-                Log.e("Firestore", "Error al obtener documento", error)
+                Log.e("Firestore", getString(R.string.error_al_obtener_documento), error)
                 return@addSnapshotListener
             }
 
@@ -56,13 +57,14 @@ class BolosPreciosFragment : Fragment() {
                 val socio = snapshot.getString("socio") ?: ""
                 val invitado = snapshot.getString("invitado") ?: ""
 
-                Log.d("Firestore", "Datos cargados: socio=$socio, invitado=$invitado")
+                Log.d("Firestore",
+                    getString(R.string.datos_cargados_socio_invitado, socio, invitado))
 
                 // Poner los valores cargados en los campos de texto
                 binding.tvPreciosBoloslPista.editText?.setText(socio)
                 binding.tvPreciosBolosPistaInvitado.editText?.setText(invitado)
             } else {
-                Log.d("Firestore", "Documento no existe o es null")
+                Log.d("Firestore", getString(R.string.documento_no_existe_o_es_null))
             }
         }
     }

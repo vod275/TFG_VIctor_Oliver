@@ -194,10 +194,10 @@ class MainActivity : AppCompatActivity() {
      */
     private fun showLogoutDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Cerrar sesión")
-        builder.setMessage("¿Estás seguro de que quieres cerrar sesión?")
-        builder.setPositiveButton("Sí") { _, _ -> logout() }
-        builder.setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
+        builder.setTitle(getString(R.string.cerrar_sesion))
+        builder.setMessage(getString(R.string.estas_seguro_de_que_quieres_cerrar_sesion))
+        builder.setPositiveButton(getString(R.string.si)) { _, _ -> logout() }
+        builder.setNegativeButton(getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
         builder.show()
     }
 

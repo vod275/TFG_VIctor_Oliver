@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import com.example.bushido.R
 import com.example.bushido.databinding.FragmentAdminTenisPadelBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -60,10 +61,10 @@ class AdminTenisPadelFragment : Fragment() {
 
             docRef.set(precios)
                 .addOnSuccessListener {
-                    Toast.makeText(requireContext(), "Precios actualizados", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.precios_actualizados), Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener {
-                    Toast.makeText(requireContext(), "Error al guardar", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.error_al_subir_imagen), Toast.LENGTH_SHORT).show()
                 }
         }
 
@@ -84,14 +85,14 @@ class AdminTenisPadelFragment : Fragment() {
                 binding.tvPreciosTenisPistaInvitadoTierra.editText?.setText(it.getString("tenisInvitadoTierra") ?: "")
             }
         }.addOnFailureListener {
-            Toast.makeText(requireContext(), "Error al cargar precios", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.error_al_cargar_precios), Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun mostrarOpcionesImagen() {
-        val opciones = arrayOf("Hacer foto", "Elegir de galería")
+        val opciones = arrayOf(getString(R.string.hacer_foto), getString(R.string.elegir_de_galer_a))
         AlertDialog.Builder(requireContext())
-            .setTitle("Seleccionar imagen")
+            .setTitle(getString(R.string.seleccionar_imagen))
             .setItems(opciones) { _, which ->
                 when (which) {
                     0 -> abrirCamara()
@@ -113,10 +114,10 @@ class AdminTenisPadelFragment : Fragment() {
 
         imageRef.putFile(uri)
             .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Imagen subida con éxito", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.imagen_subida_con_xito), Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
-                Toast.makeText(requireContext(), "Error al subir imagen", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.error_al_subir_imagen), Toast.LENGTH_SHORT).show()
             }
     }
 

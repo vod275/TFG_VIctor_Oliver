@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import com.example.bushido.R
 import com.example.bushido.databinding.FragmentPrecioshomeBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -46,7 +47,7 @@ class HomePreciosFragment : Fragment() {
                 }
             }
             .addOnFailureListener {
-                Toast.makeText(requireContext(), "Error al cargar precios", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.error_al_cargar_precios), Toast.LENGTH_SHORT).show()
             }
     }
 

@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bushido.R
 import com.example.bushido.adaptadorListaReservas.ListaReservasAdapter
 import com.example.bushido.databinding.FragmentListaReservasBinding
 import com.example.bushido.models.Reservas
@@ -103,7 +104,8 @@ class ListaReservasFragment : Fragment() {
                 adapter.notifyDataSetChanged()
             }
             .addOnFailureListener {
-                Toast.makeText(requireContext(), "Error cargando reservas", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.error_cargando_reservas), Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -123,10 +125,12 @@ class ListaReservasFragment : Fragment() {
 
                 listaReservas.remove(reserva)
                 adapter.notifyDataSetChanged()
-                Toast.makeText(requireContext(), "Reserva borrada", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.reserva_borrada), Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
-                Toast.makeText(requireContext(), "Error al borrar reserva", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.error_al_borrar_reserva), Toast.LENGTH_SHORT).show()
             }
     }
 

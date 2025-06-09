@@ -40,9 +40,12 @@ class UsuariosAdapter(
         }
 
         private fun mostrarOpciones(usuario: Usuarios) {
-            val opciones = arrayOf("Ver reservas futuras", "Eliminar usuario")
+            val opciones = arrayOf(context.getString(R.string.ver_reservas_futuras),
+                context.getString(
+                    R.string.eliminar_usuario
+                ))
             AlertDialog.Builder(context).apply {
-                setTitle("Opciones para ${usuario.nombre}")
+                setTitle(context.getString(R.string.titulo_opciones_usuario, usuario.nombre))
                 setItems(opciones) { _, which ->
                     when (which) {
                         0 -> mostrarReservasFuturas(usuario)
@@ -85,20 +88,22 @@ class UsuariosAdapter(
                     }
 
                     if (lista.isEmpty()) {
-                        Toast.makeText(ctx, "No hay reservas futuras", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(ctx,
+                            context.getString(R.string.no_hay_reservas_futuras), Toast.LENGTH_SHORT).show()
                     } else {
                         adapterReservas.actualizarLista(lista)
 
                         AlertDialog.Builder(ctx).apply {
-                            setTitle("Reservas de ${usuario.nombre}")
+                            setTitle(context.getString(R.string.reservas_usuario, usuario.nombre))
                             setView(bindingDialog.root)
-                            setPositiveButton("Cerrar", null)
+                            setPositiveButton(context.getString(R.string.cerrar), null)
                             show()
                         }
                     }
                 }
                 .addOnFailureListener {
-                    Toast.makeText(ctx, "Error al cargar reservas", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(ctx,
+                        context.getString(R.string.error_al_cargar_reservas), Toast.LENGTH_SHORT).show()
                 }
         }
 
@@ -107,10 +112,14 @@ class UsuariosAdapter(
 
         private fun mostrarDialogoEliminar(usuario: Usuarios) {
             AlertDialog.Builder(context).apply {
-                setTitle("Eliminar usuario")
-                setMessage("¿Estás seguro de que quieres eliminar al usuario ${usuario.nombre}?")
-                setPositiveButton("Eliminar") { _, _ -> eliminarUsuarioFirestore(usuario) }
-                setNegativeButton("Cancelar", null)
+                setTitle( context.getString(R.string.eliminar_usuario))
+                setMessage(
+                    context.getString(
+                        R.string.est_s_seguro_de_que_quieres_eliminar_al_usuario,
+                        usuario.nombre
+                    ))
+                setPositiveButton(context.getString(R.string.eliminar)) { _, _ -> eliminarUsuarioFirestore(usuario) }
+                setNegativeButton(context.getString(R.string.cancelar), null)
                 show()
             }
         }
@@ -123,10 +132,12 @@ class UsuariosAdapter(
                     for (doc in documentos) {
                         doc.reference.delete()
                     }
-                    Toast.makeText(context, "Usuario eliminado", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,
+                        context.getString(R.string.usuario_eliminado), Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener {
-                    Toast.makeText(context, "Error al eliminar", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,
+                        context.getString(R.string.error_al_eliminar), Toast.LENGTH_SHORT).show()
                 }
         }
     }

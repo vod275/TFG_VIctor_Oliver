@@ -36,12 +36,12 @@ class ListaReservasAdapter(
 
     private fun mostrarDialogoEliminar(reserva: Reservas, position: Int) {
         AlertDialog.Builder(context)
-            .setTitle("Eliminar reserva")
-            .setMessage("¿Deseas eliminar esta reserva?")
-            .setPositiveButton("Sí") { _, _ ->
+            .setTitle(context.getString(R.string.eliminar_reserva))
+            .setMessage(context.getString(R.string.deseas_eliminar_esta_reserva))
+            .setPositiveButton(context.getString(R.string.si)) { _, _ ->
                 eliminarReserva(reserva, position)
             }
-            .setNegativeButton("No", null)
+            .setNegativeButton(context.getString(R.string.no), null)
             .show()
     }
 
@@ -89,10 +89,12 @@ class ListaReservasAdapter(
 
         fun bind(reserva: Reservas) {
             nombre.text = reserva.nombre ?: ""
-            pista.text = "Pista: ${reserva.numeroPista}"
-            fecha.text = "Fecha: ${reserva.fecha ?: ""}"
-            hora.text = "Hora: ${reserva.hora ?: ""}"
-            precio.text = "Precio: ${reserva.precio ?: ""}"
+            pista.text = context.getString(R.string.pista_numero, reserva.numeroPista.toString())
+            fecha.text = context.getString(R.string.fecha_reserva, reserva.fecha ?: "")
+            hora.text = context.getString(R.string.hora_reserva, reserva.hora ?: "")
+            precio.text = context.getString(R.string.precio_reserva, reserva.precio ?: "")
+
+
 
             when (reserva.tipo?.lowercase(Locale.getDefault()) ?: "") {
                 "bolos" -> icono.setImageResource(R.drawable.bolos)

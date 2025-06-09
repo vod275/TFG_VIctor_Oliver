@@ -76,20 +76,27 @@ class AdminFragment : Fragment() {
                                 firestore.collection("usuarios").document(uid)
                                     .set(adminData)  //
                                     .addOnSuccessListener {
-                                        Toast.makeText(requireContext(), "Admin añadido correctamente", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(requireContext(),
+                                            getString(R.string.admin_a_adido_correctamente), Toast.LENGTH_SHORT).show()
                                         binding.tvCorreoNuevoAdmin.editText?.setText("")
                                         binding.tvContrasenaNuevoAdmin.editText?.setText("")
                                     }
                                     .addOnFailureListener { e ->
-                                        Toast.makeText(requireContext(), "Error al guardar en Firestore: ${e.message}", Toast.LENGTH_LONG).show()
+                                        Toast.makeText(requireContext(),
+                                            getString(
+                                                R.string.error_al_guardar_en_firestore,
+                                                e.message
+                                            ), Toast.LENGTH_LONG).show()
                                     }
                             }
                         } else {
-                            Toast.makeText(requireContext(), "Error al crear usuario: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                            Toast.makeText(requireContext(),
+                                getString(R.string.error_al_crear_usuario, task.exception?.message), Toast.LENGTH_LONG).show()
                         }
                     }
             } else {
-                Toast.makeText(requireContext(), "Introduce un correo y una contraseña", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.introduce_un_correo_y_una_contrase_a), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -112,24 +119,26 @@ class AdminFragment : Fragment() {
                                 firestore.collection("usuarios").document(uid)
                                     .set(userData)
                                     .addOnSuccessListener {
-                                        Toast.makeText(requireContext(), "Usuario normal añadido correctamente", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(requireContext(),
+                                            getString(R.string.usuario_normal_a_adido_correctamente), Toast.LENGTH_SHORT).show()
                                         binding.tvCorreoNuevoAdmin.editText?.setText("")
                                         binding.tvContrasenaNuevoAdmin.editText?.setText("")
                                     }
                                     .addOnFailureListener { e ->
-                                        Toast.makeText(requireContext(), "Error al guardar en Firestore: ${e.message}", Toast.LENGTH_LONG).show()
+                                        Toast.makeText(requireContext(),  getString(
+                                            R.string.error_al_guardar_en_firestore,
+                                            e.message
+                                        ), Toast.LENGTH_LONG).show()
                                     }
                             }
                         } else {
-                            Toast.makeText(requireContext(), "Error al crear usuario: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                            Toast.makeText(requireContext(),  getString(R.string.error_al_crear_usuario, task.exception?.message), Toast.LENGTH_LONG).show()
                         }
                     }
             } else {
-                Toast.makeText(requireContext(), "Introduce un correo y una contraseña", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),  getString(R.string.introduce_un_correo_y_una_contrase_a), Toast.LENGTH_SHORT).show()
             }
         }
-
-
 
         return binding.root
     }

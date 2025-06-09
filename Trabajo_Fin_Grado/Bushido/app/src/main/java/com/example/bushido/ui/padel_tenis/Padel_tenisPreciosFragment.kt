@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import com.example.bushido.R
 import com.example.bushido.databinding.FragmentPrecioPadelTenisBinding
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -46,7 +47,7 @@ class Padel_tenisPreciosFragment : Fragment() {
 
         docRef.addSnapshotListener { snapshot, error ->
             if (error != null) {
-                Log.e("Firestore", "Error al obtener documento", error)
+                Log.e("Firestore", getString(R.string.error_al_obtener_documento), error)
                 return@addSnapshotListener
             }
 

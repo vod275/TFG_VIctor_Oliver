@@ -121,7 +121,7 @@ class Padel_TenisReservasFragment : Fragment() {
                 binding.spinnerHoras.selectedItem?.toString()?.let { actualizarBotonesPistas(it) }
             }
             .addOnFailureListener {
-                Toast.makeText(requireContext(), "Error al cargar reservas", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.error_al_cargar_reservas), Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -135,9 +135,9 @@ class Padel_TenisReservasFragment : Fragment() {
                 actualizarBotonesPistas(horaSeleccionada)
 
                 pistaSeleccionada?.let { boton ->
-                    val numero = boton.text.toString().substringAfter("PISTA ").toIntOrNull()
+                    val numero = boton.text.toString().substringAfter( getString(R.string.pista)).toIntOrNull()
                     if (numero != null && pistasBloqueadas[numero]?.contains(horaSeleccionada) == true) {
-                        Toast.makeText(requireContext(), "La pista seleccionada está ocupada a esa hora", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(),  getString(R.string.la_pista_seleccionada_est_ocupada_a_esa_hora), Toast.LENGTH_SHORT).show()
                         // Deseleccionar visualmente la pista
                         boton.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), android.R.color.transparent))
                         boton.setTextColor(ContextCompat.getColor(requireContext(), R.color.AzulTexto))
@@ -196,15 +196,17 @@ class Padel_TenisReservasFragment : Fragment() {
         val esSocio = !userEmail.endsWith("@gmail.com") && !userEmail.contains("google")
 
         if (userId == null) {
-            Toast.makeText(requireContext(), "Usuario no identificado", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),
+                getString(R.string.usuario_no_identificado), Toast.LENGTH_SHORT).show()
             return
         }
 
         val pistaTexto = pistaSeleccionada?.text?.toString()
-        val numeroPista = pistaTexto?.substringAfter("PISTA ")?.toIntOrNull()
+        val numeroPista = pistaTexto?.substringAfter( getString(R.string.pista))?.toIntOrNull()
 
         if (numeroPista == null) {
-            Toast.makeText(requireContext(), "Número de pista no válido", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),
+                getString(R.string.n_mero_de_pista_no_v_lido), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -213,7 +215,8 @@ class Padel_TenisReservasFragment : Fragment() {
             7, 8 -> getString(R.string.tenis)
             9 -> getString(R.string.tenis_tierra)
             else -> {
-                Toast.makeText(requireContext(), "Pista no válida", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.pista_no_v_lida), Toast.LENGTH_SHORT).show()
                 return
             }
         }
@@ -226,7 +229,8 @@ class Padel_TenisReservasFragment : Fragment() {
         }
 
         if (clavePrecio == null) {
-            Toast.makeText(requireContext(), "No se pudo determinar la clave del precio", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),
+                getString(R.string.no_se_pudo_determinar_la_clave_del_precio), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -234,16 +238,16 @@ class Padel_TenisReservasFragment : Fragment() {
         val hora = binding.spinnerHoras.selectedItem?.toString()
 
         if (fecha.isBlank() || hora.isNullOrBlank()) {
-            Toast.makeText(requireContext(), "Completa todos los campos", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),  getString(R.string.completa_ambos_campos), Toast.LENGTH_SHORT).show()
             return
         }
 
         val db = FirebaseFirestore.getInstance()
         val fechaFirestore = fecha.replace("/", "-")
         val horaFirestore = hora.replace(":", "-")
-        val idReserva = "${userId}_${fechaFirestore}_${horaFirestore}_${numeroPista}" // Mejor incluir pista en id para evitar duplicados
+        val idReserva = "${userId}_${fechaFirestore}_${horaFirestore}_${numeroPista}"
 
-        // Función para guardar reserva después de verificar conflictos
+
         fun guardarReserva(precio: Double) {
             val reserva = hashMapOf(
                 "usuarioId" to userId,
@@ -257,11 +261,11 @@ class Padel_TenisReservasFragment : Fragment() {
             )
             db.collection("reservas").document(idReserva).set(reserva)
                 .addOnSuccessListener {
-                    Toast.makeText(requireContext(), "Reserva realizada correctamente", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),  getString(R.string.reserva_realizada_correctamente), Toast.LENGTH_SHORT).show()
                     mostrarNotificacionReservaExitosa()
                 }
                 .addOnFailureListener {
-                    Toast.makeText(requireContext(), "Error al guardar la reserva", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),  getString(R.string.error_al_guardar_la_reserva), Toast.LENGTH_SHORT).show()
                 }
         }
 
@@ -276,7 +280,7 @@ class Padel_TenisReservasFragment : Fragment() {
                 .get()
                 .addOnSuccessListener { querySnapshot ->
                     if (querySnapshot.documents.isNotEmpty()) {
-                        Toast.makeText(requireContext(), "Esa pista ya está ocupada a esa hora", Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(),  getString(R.string.esa_pista_ya_est_ocupada_a_esa_hora), Toast.LENGTH_LONG).show()
                         return@addOnSuccessListener
                     }
 
@@ -288,7 +292,7 @@ class Padel_TenisReservasFragment : Fragment() {
                         .get()
                         .addOnSuccessListener { userRes ->
                             if (userRes.documents.isNotEmpty()) {
-                                Toast.makeText(requireContext(), "Ya tienes una reserva a esa hora", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(requireContext(),  getString(R.string.ya_tienes_una_reserva_a_esa_hora), Toast.LENGTH_SHORT).show()
                                 return@addOnSuccessListener
                             }
 
@@ -299,22 +303,22 @@ class Padel_TenisReservasFragment : Fragment() {
                                     val precio = precioString?.toDoubleOrNull()
 
                                     if (precio == null) {
-                                        Toast.makeText(requireContext(), "No se pudo obtener un precio válido", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(requireContext(),  getString(R.string.no_se_pudo_obtener_un_precio_v_lido), Toast.LENGTH_SHORT).show()
                                         return@addOnSuccessListener
                                     }
 
                                     guardarReserva(precio)
                                 }
                                 .addOnFailureListener {
-                                    Toast.makeText(requireContext(), "Error al obtener el precio", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(requireContext(),  getString(R.string.error_al_obtener_el_precio), Toast.LENGTH_SHORT).show()
                                 }
                         }
                         .addOnFailureListener {
-                            Toast.makeText(requireContext(), "Error al verificar reservas del usuario", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(),  getString(R.string.error_al_verificar_reservas_del_usuario), Toast.LENGTH_SHORT).show()
                         }
                 }
                 .addOnFailureListener {
-                    Toast.makeText(requireContext(), "Error al verificar bloqueos", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),  getString(R.string.error_al_verificar_bloqueos), Toast.LENGTH_SHORT).show()
                 }
         } else {
             // Para bolos o tipos diferentes, no comprobamos conflictos y reservamos directamente
@@ -324,14 +328,14 @@ class Padel_TenisReservasFragment : Fragment() {
                     val precio = precioString?.toDoubleOrNull()
 
                     if (precio == null) {
-                        Toast.makeText(requireContext(), "No se pudo obtener un precio válido", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(),  getString(R.string.no_se_pudo_obtener_un_precio_v_lido), Toast.LENGTH_SHORT).show()
                         return@addOnSuccessListener
                     }
 
                     guardarReserva(precio)
                 }
                 .addOnFailureListener {
-                    Toast.makeText(requireContext(), "Error al obtener el precio", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),  getString(R.string.error_al_obtener_el_precio), Toast.LENGTH_SHORT).show()
                 }
         }
     }
@@ -370,8 +374,8 @@ class Padel_TenisReservasFragment : Fragment() {
 
         // Crear canal (solo Android 8.0+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Reservas"
-            val descriptionText = "Notificaciones de reservas realizadas"
+            val name = getString(R.string.reservas)
+            val descriptionText = getString(R.string.notificaciones_de_reservas_realizadas)
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(channelId, name, importance).apply {
                 description = descriptionText
@@ -384,8 +388,8 @@ class Padel_TenisReservasFragment : Fragment() {
         // Crear notificación
         val builder = NotificationCompat.Builder(requireContext(), channelId)
             .setSmallIcon(R.drawable.logo) // Usa un ícono existente en drawable
-            .setContentTitle("Reserva realizada")
-            .setContentText("Tu reserva de Padel/Tenis se ha registrado correctamente.")
+            .setContentTitle(getString(R.string.reserva_realizada))
+            .setContentText(getString(R.string.tu_reserva_de_bolos_se_ha_registrado_correctamente))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         // Mostrar notificación
