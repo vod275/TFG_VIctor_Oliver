@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".LoginActivity"
+    android:importantForAutofill="noExcludeDescendants">
 
     <ImageView
         android:id="@+id/backgroundImage"
@@ -24,12 +25,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#C4FFFFFF"
+        android:importantForAutofill="noExcludeDescendants"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-
-        <!-- Aquí van tus botones y TextInputLayouts, igual que antes -->
 
         <Button
             android:id="@+id/loginButton"
@@ -60,7 +60,7 @@
             app:layout_constraintHorizontal_bias="0.557"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.864" />
+            app:layout_constraintVertical_bias="0.793" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordInput"
@@ -84,9 +84,12 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:backgroundTint="@android:color/transparent"
-                android:inputType="textPassword"
-                android:textColor="@color/AzulOscuro" />
+                android:textColor="@color/AzulOscuro"
+                android:importantForAutofill="no"
+                android:autofillHints=""
+                android:inputType="textPassword|textNoSuggestions" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -109,15 +112,15 @@
             app:layout_constraintVertical_bias="0.206">
 
             <com.google.android.material.textfield.TextInputEditText
-                style="@style/EditTextCustomStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:backgroundTint="@android:color/transparent"
                 android:textColor="@color/AzulOscuro"
-                android:textCursorDrawable="@drawable/custom_cursor" />
-
+                android:importantForAutofill="no"
+                android:autofillHints=""
+                android:inputType="textEmailAddress|textNoSuggestions" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,9 +1,11 @@
 package com.example.bushido
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -58,6 +60,12 @@ class LoginActivity : AppCompatActivity() {
         // Inicializar FirebaseAuth
         auth = FirebaseAuth.getInstance()
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            window.decorView.importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS
+        }
+        binding.emailInput.editText?.highlightColor = android.graphics.Color.TRANSPARENT
+        binding.passwordInput.editText?.highlightColor = android.graphics.Color.TRANSPARENT
+
         // Configurar One Tap Sign-In de Google
         oneTapClient = Identity.getSignInClient(this)
         signInRequest = BeginSignInRequest.builder()
@@ -79,6 +87,7 @@ class LoginActivity : AppCompatActivity() {
         // Configurar botones
         binding.googleSignInButton.setOnClickListener { signInWithGoogle() }
         binding.loginButton.setOnClickListener { handleEmailSignIn() }
+        auth = FirebaseAuth.getInstance()
     }
 
     /**
