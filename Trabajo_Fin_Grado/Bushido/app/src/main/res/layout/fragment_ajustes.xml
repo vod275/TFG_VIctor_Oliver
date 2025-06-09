@@ -46,16 +46,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
                 android:text="@string/espa_ol"
-                android:textColor="@color/AzulOscuro"
-                app:buttonTint="@color/AzulOscuro" />
+                android:textColor="@color/VerdeFont"
+                app:buttonTint="@color/VerdeFont" />
 
             <RadioButton
                 android:id="@+id/RBIngles"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
                 android:text="@string/ingles"
-                android:textColor="@color/AzulOscuro"
-                app:buttonTint="@color/AzulOscuro" />
+                android:textColor="@color/VerdeFont"
+                app:buttonTint="@color/VerdeFont" />
 
 
 

@@ -1,7 +1,6 @@
 package com.example.bushido.ui.padel_tenis
 
 import android.app.DatePickerDialog
-import android.app.NotificationChannel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,11 +17,6 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.FirebaseFirestore
 import objetos.UserSession
 import java.util.Calendar
-import android.app.NotificationManager
-import android.content.Context
-import android.os.Build
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 
 class Padel_TenisReservasFragment : Fragment() {
 
@@ -261,8 +255,7 @@ class Padel_TenisReservasFragment : Fragment() {
             )
             db.collection("reservas").document(idReserva).set(reserva)
                 .addOnSuccessListener {
-                    Toast.makeText(requireContext(),  getString(R.string.reserva_realizada_correctamente), Toast.LENGTH_SHORT).show()
-                    mostrarNotificacionReservaExitosa()
+                    Toast.makeText(requireContext(), "Reserva realizada correctamente", Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener {
                     Toast.makeText(requireContext(),  getString(R.string.error_al_guardar_la_reserva), Toast.LENGTH_SHORT).show()

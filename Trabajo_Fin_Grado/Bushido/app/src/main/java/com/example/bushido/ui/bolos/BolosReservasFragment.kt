@@ -17,11 +17,6 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.FirebaseFirestore
 import objetos.UserSession
 import java.util.Calendar
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.os.Build
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 
 class BolosReservasFragment : Fragment() {
 
@@ -270,6 +265,7 @@ class BolosReservasFragment : Fragment() {
                                 // Guardar reserva (y bloqueo implícito)
                                 db.collection("reservas").document(idReserva).set(reserva)
                                     .addOnSuccessListener {
+                                        Toast.makeText(requireContext(), "Reserva realizada correctamente", Toast.LENGTH_SHORT).show()
                                         Toast.makeText(requireContext(),
                                             getString(R.string.reserva_realizada_correctamente), Toast.LENGTH_SHORT).show()
                                         mostrarNotificacionReservaExitosa()
