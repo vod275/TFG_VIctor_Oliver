@@ -17,6 +17,11 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.FirebaseFirestore
 import objetos.UserSession
 import java.util.Calendar
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 
 class BolosReservasFragment : Fragment() {
 
@@ -135,10 +140,11 @@ class BolosReservasFragment : Fragment() {
 
                 pistaSeleccionada?.let { boton ->
                     val pistaTexto = boton.text.toString()
-                    val numero = pistaTexto.substringAfter(getString(R.string.pista)).toIntOrNull()
+                    val numero =  pistaTexto?.let {
+                        Regex("\\d+").find(it)?.value?.toIntOrNull()
+                    }
                     if (numero != null && pistasBloqueadas[numero]?.contains(horaSeleccionada) == true) {
-                        Toast.makeText(requireContext(),
-                            getString(R.string.la_pista_seleccionada_est_ocupada_a_esa_hora), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(),getString(R.string.la_pista_seleccionada_est_ocupada_a_esa_hora), Toast.LENGTH_SHORT).show()
                         pistaSeleccionada = null
                         boton.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), android.R.color.transparent))
                         boton.setTextColor(ContextCompat.getColor(requireContext(), R.color.AzulTexto))
@@ -194,7 +200,9 @@ class BolosReservasFragment : Fragment() {
         val esSocio = !userEmail.endsWith("@gmail.com") && !userEmail.contains("google")
 
         val pistaTexto = pistaSeleccionada?.text?.toString()
-        val numeroPistaBolos = pistaTexto?.substringAfter(getString(R.string.pista))?.toIntOrNull()
+        val numeroPistaBolos = pistaTexto?.let {
+            Regex("\\d+").find(it)?.value?.toIntOrNull()
+        }
         val tipo = getString(R.string.bolos)
 
         val fecha = binding.etFechaReserva.text.toString()
@@ -265,7 +273,6 @@ class BolosReservasFragment : Fragment() {
                                 // Guardar reserva (y bloqueo implícito)
                                 db.collection("reservas").document(idReserva).set(reserva)
                                     .addOnSuccessListener {
-                                        Toast.makeText(requireContext(), "Reserva realizada correctamente", Toast.LENGTH_SHORT).show()
                                         Toast.makeText(requireContext(),
                                             getString(R.string.reserva_realizada_correctamente), Toast.LENGTH_SHORT).show()
                                         mostrarNotificacionReservaExitosa()

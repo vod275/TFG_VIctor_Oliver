@@ -235,7 +235,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="311dp"
             android:layout_height="80dp"
-            android:hint="Fecha"
+            android:hint="@string/fecha"
             android:textColorHint="@color/AzulTexto"
             app:boxStrokeColor="@color/AzulTexto"
             app:hintTextColor="@color/AzulTexto"

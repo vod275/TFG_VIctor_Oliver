@@ -70,11 +70,6 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.nav_homePrecios)
         }
 
-        // Animación al pulsar el botón de info (no tiene funcionalidad extra)
-        binding.ibInfo.setOnClickListener {
-            binding.ibInfo.startAnimation(animClick)
-        }
-
         binding.ibInfo.setOnClickListener {
             binding.ibInfo.startAnimation(animClick)
             findNavController().navigate(R.id.nav_homeInfo)

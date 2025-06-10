@@ -1,6 +1,7 @@
 package com.example.bushido.ui.padel_tenis
 
 import android.app.DatePickerDialog
+import android.app.NotificationChannel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,11 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.FirebaseFirestore
 import objetos.UserSession
 import java.util.Calendar
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 
 class Padel_TenisReservasFragment : Fragment() {
 
@@ -115,6 +121,7 @@ class Padel_TenisReservasFragment : Fragment() {
                 binding.spinnerHoras.selectedItem?.toString()?.let { actualizarBotonesPistas(it) }
             }
             .addOnFailureListener {
+
                 Toast.makeText(requireContext(), getString(R.string.error_al_cargar_reservas), Toast.LENGTH_SHORT).show()
             }
     }
@@ -129,7 +136,10 @@ class Padel_TenisReservasFragment : Fragment() {
                 actualizarBotonesPistas(horaSeleccionada)
 
                 pistaSeleccionada?.let { boton ->
-                    val numero = boton.text.toString().substringAfter( getString(R.string.pista)).toIntOrNull()
+                    val pistaTexto = boton.text.toString()
+                    val numero =  pistaTexto?.let {
+                        Regex("\\d+").find(it)?.value?.toIntOrNull()
+                    }
                     if (numero != null && pistasBloqueadas[numero]?.contains(horaSeleccionada) == true) {
                         Toast.makeText(requireContext(),  getString(R.string.la_pista_seleccionada_est_ocupada_a_esa_hora), Toast.LENGTH_SHORT).show()
                         // Deseleccionar visualmente la pista
@@ -196,7 +206,9 @@ class Padel_TenisReservasFragment : Fragment() {
         }
 
         val pistaTexto = pistaSeleccionada?.text?.toString()
-        val numeroPista = pistaTexto?.substringAfter( getString(R.string.pista))?.toIntOrNull()
+        val numeroPista = pistaTexto?.let {
+            Regex("\\d+").find(it)?.value?.toIntOrNull()
+        }
 
         if (numeroPista == null) {
             Toast.makeText(requireContext(),
@@ -239,9 +251,9 @@ class Padel_TenisReservasFragment : Fragment() {
         val db = FirebaseFirestore.getInstance()
         val fechaFirestore = fecha.replace("/", "-")
         val horaFirestore = hora.replace(":", "-")
-        val idReserva = "${userId}_${fechaFirestore}_${horaFirestore}_${numeroPista}"
+        val idReserva = "${userId}_${fechaFirestore}_${horaFirestore}_${numeroPista}" // Mejor incluir pista en id para evitar duplicados
 
-
+        // Función para guardar reserva después de verificar conflictos
         fun guardarReserva(precio: Double) {
             val reserva = hashMapOf(
                 "usuarioId" to userId,
@@ -255,7 +267,8 @@ class Padel_TenisReservasFragment : Fragment() {
             )
             db.collection("reservas").document(idReserva).set(reserva)
                 .addOnSuccessListener {
-                    Toast.makeText(requireContext(), "Reserva realizada correctamente", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),  getString(R.string.reserva_realizada_correctamente), Toast.LENGTH_SHORT).show()
+                    mostrarNotificacionReservaExitosa()
                 }
                 .addOnFailureListener {
                     Toast.makeText(requireContext(),  getString(R.string.error_al_guardar_la_reserva), Toast.LENGTH_SHORT).show()
