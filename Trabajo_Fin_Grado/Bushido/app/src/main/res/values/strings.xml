@@ -204,9 +204,5 @@ Un centro de ocio pensado para disfrutar en familia o con amigos. Ofrecemos dive
     <string name="cambiar_precios_socios">CAMBIAR PRECIOS SOCIOS</string>
     <string name="ver_usuarioss">VER USUARIOS</string>
     <string name="ver_reservass">VER RESERVAS</string>
-
-
-
-
-
+    <string name="tu_reserva_est_realizada_con_exito">Tu reserva de Tenis/Pádel se ha registrado correctamente.</string>
 </resources>

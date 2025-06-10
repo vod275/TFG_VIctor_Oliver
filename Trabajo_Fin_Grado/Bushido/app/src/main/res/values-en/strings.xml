@@ -208,6 +208,6 @@ A leisure center designed to be enjoyed with family or friends. We offer fun, sp
     <string name="cambiar_precios_socios">CHANGE MEMBER PRICES</string> <!-- "Socios" puede ser "members" o "subscribers" -->
     <string name="ver_usuarioss">VIEW USERS</string>
     <string name="ver_reservass">VIEW RESERVATIONS</string>
-
+    <string name="tu_reserva_est_realizada_con_exito">>Your Tennis/Padel reservation has been registered successfully.</string>
 
 </resources>

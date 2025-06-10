@@ -395,7 +395,7 @@ class Padel_TenisReservasFragment : Fragment() {
         val builder = NotificationCompat.Builder(requireContext(), channelId)
             .setSmallIcon(R.drawable.logo) // Usa un ícono existente en drawable
             .setContentTitle(getString(R.string.reserva_realizada))
-            .setContentText(getString(R.string.tu_reserva_de_bolos_se_ha_registrado_correctamente))
+            .setContentText(getString(R.string.tu_reserva_est_realizada_con_exito))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         // Mostrar notificación
