@@ -205,4 +205,11 @@ Un centro de ocio pensado para disfrutar en familia o con amigos. Ofrecemos dive
     <string name="ver_usuarioss">VER USUARIOS</string>
     <string name="ver_reservass">VER RESERVAS</string>
     <string name="tu_reserva_est_realizada_con_exito">Tu reserva de Tenis/Pádel se ha registrado correctamente.</string>
+
+    <string name="mostrar_usuario">Mostrar usuario</string>
+    <string name="opciones">Opciones</string>
+    <string name="info_usuario">Información del usuario</string>
+    <string name="error_cargando_usuario">Error cargando usuario</string>
+    <string name="error">Error</string>
+
 </resources>

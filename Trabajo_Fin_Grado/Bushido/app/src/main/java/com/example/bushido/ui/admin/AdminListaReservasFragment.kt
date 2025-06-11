@@ -1,5 +1,6 @@
 package com.example.bushido.ui.admin
 
+import AdaptadorListaReservasAdmin
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +12,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bushido.R
-import com.example.bushido.adaptadorListaReservas.ListaReservasAdapter
 import com.example.bushido.databinding.FragmentAdminListaReservasBinding
 import com.example.bushido.models.Reservas
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,7 +23,7 @@ class AdminListaReservasFragment : Fragment() {
     private var _binding: FragmentAdminListaReservasBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var adapter: ListaReservasAdapter
+    private lateinit var adapter: AdaptadorListaReservasAdmin
     private val listaReservas = mutableListOf<Reservas>()
     private val db = FirebaseFirestore.getInstance()
     private val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
@@ -49,7 +49,7 @@ class AdminListaReservasFragment : Fragment() {
     }
 
     private fun configurarRecyclerView() {
-        adapter = ListaReservasAdapter(listaReservas, requireContext()) {
+        adapter = AdaptadorListaReservasAdmin(listaReservas, requireContext()) {
             Toast.makeText(requireContext(),
                 getString(R.string.reserva_eliminada), Toast.LENGTH_SHORT).show()
         }

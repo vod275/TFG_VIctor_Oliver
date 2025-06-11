@@ -209,5 +209,10 @@ A leisure center designed to be enjoyed with family or friends. We offer fun, sp
     <string name="ver_usuarioss">VIEW USERS</string>
     <string name="ver_reservass">VIEW RESERVATIONS</string>
     <string name="tu_reserva_est_realizada_con_exito">>Your Tennis/Padel reservation has been registered successfully.</string>
+    <string name="mostrar_usuario">Show user</string>
+    <string name="opciones">Options</string>
+    <string name="info_usuario">User information</string>
+    <string name="error_cargando_usuario">Error loading user</string>
+    <string name="error">Error</string>
 
 </resources>

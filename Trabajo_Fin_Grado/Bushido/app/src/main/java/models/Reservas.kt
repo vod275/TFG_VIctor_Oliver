@@ -7,6 +7,7 @@ data class Reservas(
     val nombre: String = "",
     val fecha: String = "",
     val hora: String = "",
-    val tipo: String = ""
+    val tipo: String = "",
+    val usuarioId: String = ""
 )
 
