@@ -211,5 +211,7 @@ Un centro de ocio pensado para disfrutar en familia o con amigos. Ofrecemos dive
     <string name="info_usuario">Información del usuario</string>
     <string name="error_cargando_usuario">Error cargando usuario</string>
     <string name="error">Error</string>
+    <string name="no_se_puede_reservar_en_el_pasado">No se puede reservar en el pasado.</string>
+    <string name="formato_de_fecha_u_hora_inv_lido">Formato de fecha u hora inválido.</string>
 
 </resources>

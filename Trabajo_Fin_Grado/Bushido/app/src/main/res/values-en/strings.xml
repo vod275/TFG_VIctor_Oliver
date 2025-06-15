@@ -214,5 +214,7 @@ A leisure center designed to be enjoyed with family or friends. We offer fun, sp
     <string name="info_usuario">User information</string>
     <string name="error_cargando_usuario">Error loading user</string>
     <string name="error">Error</string>
+    <string name="no_se_puede_reservar_en_el_pasado">You cannot make a reservation in the past.</string>
+    <string name="formato_de_fecha_u_hora_inv_lido">Invalid date or time format.</string>
 
 </resources>

@@ -22,6 +22,10 @@ import android.app.NotificationManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class BolosReservasFragment : Fragment() {
 
@@ -213,6 +217,21 @@ class BolosReservasFragment : Fragment() {
             return
         }
 
+        // 🔒 Validación de fecha y hora pasada
+        try {
+            val formato = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+            val fechaReservaCompleta = formato.parse("$fecha $hora")
+            val ahora = Calendar.getInstance().time
+
+            if (fechaReservaCompleta.before(ahora)) {
+                Toast.makeText(requireContext(), getString(R.string.no_se_puede_reservar_en_el_pasado), Toast.LENGTH_LONG).show()
+                return
+            }
+        } catch (e: Exception) {
+            Toast.makeText(requireContext(), getString(R.string.formato_de_fecha_u_hora_inv_lido), Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val db = FirebaseFirestore.getInstance()
         val fechaFirestore = fecha.replace("/", "-")
         val horaFirestore = hora.replace(":", "-")
@@ -276,7 +295,6 @@ class BolosReservasFragment : Fragment() {
                                         Toast.makeText(requireContext(),
                                             getString(R.string.reserva_realizada_correctamente), Toast.LENGTH_SHORT).show()
                                         mostrarNotificacionReservaExitosa()
-                                        // Aquí no hace falta guardar bloqueo por separado, porque la reserva implica bloqueo
                                     }
                                     .addOnFailureListener {
                                         Toast.makeText(requireContext(),
