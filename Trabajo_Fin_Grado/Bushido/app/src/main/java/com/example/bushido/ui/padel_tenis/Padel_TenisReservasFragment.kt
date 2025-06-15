@@ -56,6 +56,10 @@ class Padel_TenisReservasFragment : Fragment() {
         return view
     }
 
+    /**
+     * Método llamado para configurar la fecha.
+     *  Configuración de la fecha de reserva.
+     */
     private fun configurarFecha() {
         val fechaEditText = binding.etFechaReserva
 
@@ -76,6 +80,10 @@ class Padel_TenisReservasFragment : Fragment() {
         }
     }
 
+    /**
+     * Método llamado para actualizar las horas disponibles.
+     * Actualiza las horas disponibles en función de la fecha seleccionada.
+     */
     private fun actualizarHorasDisponibles(year: Int, month: Int, day: Int) {
         val calendar = Calendar.getInstance()
         calendar.set(year, month, day)
@@ -97,6 +105,10 @@ class Padel_TenisReservasFragment : Fragment() {
         cargarBloqueosDePistas(fechaClave)
     }
 
+    /**
+     * Método llamado para cargar los bloqueos.
+     * Carga los bloqueos de pistas para la fecha seleccionada.
+     */
     private fun cargarBloqueosDePistas(fecha: String) {
         val db = FirebaseFirestore.getInstance()
         pistasBloqueadas.clear()
@@ -128,7 +140,10 @@ class Padel_TenisReservasFragment : Fragment() {
             }
     }
 
-
+    /**
+     * Método llamado para configurar la fecha.
+     *  Configuración de la fecha de reserva.
+     */
     private fun setupHoraSpinnerListener() {
         binding.spinnerHoras.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -157,6 +172,10 @@ class Padel_TenisReservasFragment : Fragment() {
         }
     }
 
+    /**
+     * Método llamado configuar los botones.
+     * Configuración de los botones de pistas.
+     */
     private fun configurarBotonesPistas() {
         val botones = listOf(
             binding.btnPista1,
@@ -195,6 +214,11 @@ class Padel_TenisReservasFragment : Fragment() {
         }
     }
 
+
+    /**
+     * Método llamado para relizar la reserva.
+     *  Realiza la reserva de la pista.
+     */
     private fun realizarReserva() {
         val userId = UserSession.id
         val userName = UserSession.nombre ?: "Invitado"
@@ -356,7 +380,10 @@ class Padel_TenisReservasFragment : Fragment() {
 
 
 
-
+    /**
+     * Método llamado para actualizar los botones.
+     * Actualiza los botones de pistas según la hora seleccionada.
+     */
     private fun actualizarBotonesPistas(horaSeleccionada: String) {
         val botones = listOf(
             binding.btnPista1,
@@ -382,6 +409,10 @@ class Padel_TenisReservasFragment : Fragment() {
         }
     }
 
+    /**
+     * Método llamado para mostrar la notificacion.
+     *  Muestra una notificación de reserva exitosa.
+     */
     private fun mostrarNotificacionReservaExitosa() {
         val channelId = "reserva_exitosa_channel"
         val notificationId = 1

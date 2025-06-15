@@ -68,6 +68,11 @@ class PerfilFragment : Fragment() {
         _binding = null
     }
 
+    /**
+     * Método llamado al cargar los datos del usuario.
+     * Obtiene los datos del usuario de Firestore y los muestra en los campos correspondientes.
+     * Si los datos no existen, muestra un mensaje de error.
+     */
     private fun cargarDatosGuardados() {
         val uid = UserSession.id ?: return
         val db = com.google.firebase.firestore.FirebaseFirestore.getInstance()
@@ -87,6 +92,11 @@ class PerfilFragment : Fragment() {
             }
     }
 
+    /**
+     * Método llamado al mostrar las opciones de la foto.
+     * Muestra un diálogo con las opciones de seleccionar desde la galería o tomar una foto con la cámara.
+     * Cuando se selecciona una opción, se llama al método correspondiente.
+     */
     private fun mostrarOpcionesFoto() {
         val opciones = arrayOf(getString(R.string.galeria), getString(R.string.camara))
         AlertDialog.Builder(requireContext())
@@ -99,6 +109,11 @@ class PerfilFragment : Fragment() {
             }.show()
     }
 
+    /**
+     * Método llamado al verificar el permiso y la camara.
+     * Si el permiso ya está otorgado, se llama a tomarFotoConCamara().
+     * Si no está otorgado, se solicita el permiso.
+     */
     private fun verificarPermisoYCamara() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             tomarFotoConCamara()
@@ -107,11 +122,20 @@ class PerfilFragment : Fragment() {
         }
     }
 
+    /**
+     * Método llamado al seleciionar desde la galeria.
+     * Abre la galería para seleccionar una imagen.
+     * Cuando se selecciona una imagen, se sube a Firebase Storage.
+     */
     private fun seleccionarDesdeGaleria() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, PICK_IMAGE)
     }
 
+    /**
+     * Método llamado al tomar una foto con la camara.
+     * Abre la cámara para tomar una foto.
+     */
     private fun tomarFotoConCamara() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent, TAKE_PHOTO)
@@ -133,6 +157,10 @@ class PerfilFragment : Fragment() {
         }
     }
 
+    /**
+     * Método llamado bitmapToUri.
+     *  Convierte un bitmap a un Uri.
+     */
     private fun bitmapToUri(bitmap: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
@@ -140,6 +168,11 @@ class PerfilFragment : Fragment() {
         return Uri.parse(path)
     }
 
+
+    /**
+     * Método llamado al subir imagen a firebase.
+     * Sube la imagen seleccionada a Firebase Storage.
+     */
     private fun subirImagenAFirebase(uri: Uri) {
         val uid = UserSession.id ?: return
         val ref = storageRef.child("FotosUser/$uid.jpg")
@@ -156,6 +189,10 @@ class PerfilFragment : Fragment() {
             }
     }
 
+    /**
+     * Método llamado para cargar la foto de perfil.
+     * Obtiene la foto de perfil de Firebase Storage y la muestra en el ImageView.
+     */
     private fun cargarFotoPerfil() {
         val uid = UserSession.id ?: return
         val ref = storageRef.child("FotosUser/$uid.jpg")
@@ -164,6 +201,10 @@ class PerfilFragment : Fragment() {
         }
     }
 
+    /**
+     * Método llamado al guardar datos del usuario.
+     * Guarda los datos del usuario en Firestore.
+     */
     private fun guardarDatosUsuario() {
         val uid = UserSession.id ?: return
         val db = com.google.firebase.firestore.FirebaseFirestore.getInstance()

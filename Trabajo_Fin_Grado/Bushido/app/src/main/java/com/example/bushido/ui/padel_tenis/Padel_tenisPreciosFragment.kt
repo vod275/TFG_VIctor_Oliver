@@ -42,6 +42,10 @@ class Padel_tenisPreciosFragment : Fragment() {
     }
 
 
+    /**
+     * Método llamado para cargar lo precios.
+     * Obtiene los precios de Firebase Firestore y los muestra en los campos correspondientes.
+     */
     private fun cargarPrecios() {
         val docRef = db.collection("TenisPadelPrecio").document("actual")
 

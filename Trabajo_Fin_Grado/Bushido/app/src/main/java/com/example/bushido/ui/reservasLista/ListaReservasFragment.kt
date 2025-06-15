@@ -46,6 +46,12 @@ class ListaReservasFragment : Fragment() {
         return view
     }
 
+    /**
+     * Método llamado al cargar las reservas.
+     * Filtra las reservas por el usuario actual y las ordena por fecha y hora.
+     * Elimina las reservas con fecha y hora anteriores a la fecha actual.
+     * Actualiza la UI con las reservas filtradas.
+     */
     private fun cargarReservas() {
         adapter = ListaReservasAdapter(listaReservas, requireContext()) { reserva ->
             borrarReserva(reserva)
@@ -111,7 +117,10 @@ class ListaReservasFragment : Fragment() {
 
 
 
-
+    /**
+     * Método llamado al borrar reservas.
+     *  Elimina la reserva de la base de datos y de la lista.
+     */
     private fun borrarReserva(reserva: Reservas) {
         db.collection("reservas").document(reserva.idReserva!!)
             .delete()

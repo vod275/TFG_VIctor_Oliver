@@ -86,7 +86,11 @@ class Padel_tenisFragment : Fragment() {
         iniciarAnimacionesVaiven()
     }
 
-    // Método para cargar imágenes desde Firebase Storage
+
+    /**
+     * Método llamado para cargar las imagenes que rotan.
+     * Obtiene las URL de las imágenes de Firebase Storage y las almacena en una lista.
+     */
     private fun cargarImagenesRotativas() {
         listaUrls.clear() // Vaciar lista para evitar duplicados
         val storageRef = storage.reference.child("FotosTenisPadel")
@@ -120,7 +124,11 @@ class Padel_tenisFragment : Fragment() {
         }
     }
 
-    // Método para descargar imágenes y guardarlas en la galería
+
+    /**
+     * Método llamado para guardar imagenes en la galeria.
+     * Esta en desuso es para mejoras fururas.
+     */
     private fun guardarImagenEnGaleria() {
         val storageRef = FirebaseStorage.getInstance().reference.child("FotosPrecioPistas")
 
@@ -152,7 +160,10 @@ class Padel_tenisFragment : Fragment() {
         }
     }
 
-    // Método para iniciar la animación vaivén en botones
+
+    /**
+     * Método para iniciar la rotacion de imagenes con animacion.
+     */
     private fun iniciarAnimacionesVaiven() {
         val animVaiven = AnimationUtils.loadAnimation(requireContext(), com.example.bushido.R.anim.descargar_anim)
 
@@ -170,7 +181,11 @@ class Padel_tenisFragment : Fragment() {
         handler.post(animacionVaivenRunnable!!)
     }
 
-    // Método para iniciar la rotación automática de imágenes con animación
+
+    /**
+     * Método llamado para iniciar la rotacion.
+     * Obtiene las URL de las imágenes de Firebase Storage y las almacena en una lista.
+     */
     private fun iniciarRotacion() {
         val slideOut = AnimationUtils.loadAnimation(requireContext(), com.example.bushido.R.anim.moverfotoizq)
         val slideIn = AnimationUtils.loadAnimation(requireContext(), com.example.bushido.R.anim.moverfotoder)
@@ -197,7 +212,10 @@ class Padel_tenisFragment : Fragment() {
         handler.post(rotarRunnable!!)
     }
 
-    // Método auxiliar para descargar una imagen desde una URL y guardarla
+    /**
+     * Método llamado para descargar y guardar la imagen.
+     *  Obtiene las URL de las imágenes de Firebase Storage y las almacena en una lista.
+     */
     private fun descargarYGuardarImagen(url: String, onImagenGuardada: () -> Unit) {
         Picasso.get().load(url).into(object : Target {
             override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
